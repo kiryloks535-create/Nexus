@@ -1280,6 +1280,7 @@ const FT_DEFAULT_MAP={id:'id',date:'date',amount:'amount',currency:'currency',ca
 function migrate(s){
   if(!s.schemaVersion) s.schemaVersion=1;
   if(!s.schedule||!s.schedule.seeded) s.schedule={template:SCHEDULE_SEED,overrides:{},dayNotes:{3:'+ dop polski',4:'+ dop polski'},seeded:true};
+  s.schedule.marks=s.schedule.marks||{}; // iso → {ключ урока: 'test'|'quiz'} — контрольные/самостоятельные
   s.settings=Object.assign({sideMin:false,showWeekends:false,campaignEnd:'2026-11-30',restTarget:300},s.settings||{});
   s.settings.fintrack=Object.assign({baseUrl:'',token:'',syncUrl:'http://127.0.0.1:8765',autoSync:true},s.settings.fintrack||{});
   s.settings.fintrack.map=Object.assign({},FT_DEFAULT_MAP,(s.settings.fintrack||{}).map||{});
@@ -1910,7 +1911,7 @@ function lessonBlock(l,iso,nowMin){
   const isPast=nowMin!=null&&nowMin>=en&&l.status!=='cancel';
   const tag=lessonTagTxt(l);
   return '<div class="lesson '+(l.status||'')+(isNow?' now':'')+(isPast?' past':'')+'" style="--lc:'+col+'" onclick="lessonDayMenu(\''+iso+'\',\''+(l.refId||'')+'\',\''+(l._ovId||'')+'\')">'+
-    '<div class="lt">'+l.start+' – '+l.end+(l.room?' · '+esc(l.room):'')+(tag?' <span class="tag">'+tag+'</span>':'')+'</div>'+
+    '<div class="lt">'+l.start+' – '+l.end+(l.room?' · '+esc(l.room):'')+(tag?' <span class="tag">'+tag+'</span>':'')+markBadge(iso,l)+'</div>'+
     '<div class="ls">'+esc(l.subject)+'</div>'+
     (l.teacher?'<div class="lte">'+esc(l.teacher)+'</div>':'')+
   '</div>';
@@ -2026,13 +2027,29 @@ function lessonDayMenu(iso,refId,ovId){
   const ls=lessonsForDate(iso);
   const l=refId?ls.find(x=>x.refId===refId):ls.find(x=>x._ovId===ovId);
   if(!l)return;
+  const mk=markKey(l), cur=lessonMark(iso,l);
   let btns='';
   if(refId) btns='<button class="btn" onclick="closeModal();lessonModal(\''+refId+'\')">'+t('l_edit_tpl')+'</button>'+
     '<button class="btn btn-danger" onclick="closeModal();cancelLessonOn(\''+iso+'\',\''+refId+'\')">'+t('l_cancel_date')+'</button>';
   else btns='<button class="btn btn-danger" onclick="closeModal();restoreLessonOn(\''+iso+'\',\''+ovId+'\')">'+t('l_restore')+'</button>';
+  btns+='<button class="btn'+(cur==='test'?' btn-primary':'')+'" onclick="closeModal();setMark(\''+iso+'\',\''+mk+'\',\'test\');toast(\'📝 Отмечено: контрольная\')">'+(cur==='test'?'✓ ':'')+'📝 Контрольная</button>'+
+    '<button class="btn'+(cur==='quiz'?' btn-primary':'')+'" onclick="closeModal();setMark(\''+iso+'\',\''+mk+'\',\'quiz\');toast(\'✍ Отмечено: самостоятельная\')">'+(cur==='quiz'?'✓ ':'')+'✍ Самостоятельная</button>'+
+    (cur?'<button class="btn btn-danger" onclick="closeModal();setMark(\''+iso+'\',\''+mk+'\',\''+cur+'\');toast(\'Отметка убрана\',{amber:true})">✕ Убрать отметку</button>':'');
   openModal('<div class="panel-title">'+esc(l.subject)+' · '+fmtShort(iso)+'</div>'+
-    '<div class="subline">'+l.start+' – '+l.end+(l.teacher?' · '+esc(l.teacher):'')+'</div>'+
-    '<div class="modal-actions">'+btns+'<button class="btn" onclick="closeModal()">'+t('close')+'</button></div>');
+    '<div class="subline">'+l.start+' – '+l.end+(l.teacher?' · '+esc(l.teacher):'')+(cur?' · <b style="color:'+(cur==='test'?'var(--err)':'#ffb300')+'">'+(cur==='test'?'📝 контрольная':'✍ самостоятельная')+'</b>':'')+'</div>'+
+    '<div class="modal-actions" style="flex-wrap:wrap">'+btns+'<button class="btn" onclick="closeModal()">'+t('close')+'</button></div>');
+}
+function markKey(l){ return l.refId?('t'+l.refId):('ov'+(l._ovId||'')); }
+function lessonMark(iso,l){ return (state.schedule.marks[iso]||{})[markKey(l)]||null; }
+function markBadge(iso,l){
+  const m=lessonMark(iso,l);
+  return m==='test'?' <span class="tag" style="color:var(--err)">📝 КОНТРОЛЬНАЯ</span>':m==='quiz'?' <span class="tag" style="color:#ffb300">✍ САМОСТОЯТ.</span>':'';
+}
+function setMark(iso,key,kind){ // toggle: тот же вид — снимает отметку
+  const m=state.schedule.marks[iso]=state.schedule.marks[iso]||{};
+  if(m[key]===kind)delete m[key]; else m[key]=kind;
+  if(!Object.keys(m).length)delete state.schedule.marks[iso];
+  emitChange();
 }
 function cancelLessonOn(iso,refId){
   (state.schedule.overrides[iso]=state.schedule.overrides[iso]||[]).push({id:uid(),kind:'cancel',lessonId:refId});
@@ -2190,7 +2207,7 @@ function renderCalWeek(){
       (ls.length?'<div class="wk-sec">'+t('cal_lessons')+'</div>'+ls.map(l=>{
         const cls=l.status==='cancel'?'cancel':l.status==='sub'?'sub':l.status==='extra'?'extra':'';
         return '<div class="lesson '+cls+'" style="--lc:'+lessonColor(l)+'" onclick="lessonDayMenu(\''+iso+'\',\''+(l.refId||'')+'\',\''+(l._ovId||'')+'\')">'+
-          '<div class="lt">'+l.start+'–'+l.end+(lessonTagTxt(l)?' <span class="tag">'+lessonTagTxt(l)+'</span>':'')+'</div>'+
+          '<div class="lt">'+l.start+'–'+l.end+(lessonTagTxt(l)?' <span class="tag">'+lessonTagTxt(l)+'</span>':'')+markBadge(iso,l)+'</div>'+
           '<div class="ls">'+esc(l.subject)+'</div></div>';
       }).join(''):'')+
       (dls.length?'<div class="wk-sec">'+t('cal_deadlines')+'</div>'+dls.map(g=>'<div class="subline err">◈ '+esc(g.title.slice(0,30))+'</div>').join(''):'')+
@@ -3873,7 +3890,7 @@ function renderDashboard(){
       '<div><div class="bignum glow">'+pad2(new Date().getDate())+'</div>'+
       '<div class="subline">'+t('wd')[new Date().getDay()]+' · W'+isoWeek(new Date())+'</div></div></div>'+
       '<div class="subline" style="margin-top:8px">'+t('top_remaining')+': <b class="amber">'+tc.today+'</b></div>'+
-      (ls.length?'<div class="wk-sec">'+t('dash_lessons')+'</div>'+ls.slice(0,4).map(l=>'<div class="kv"><span class="k">'+l.start+'</span><span class="v">'+esc(l.subject)+'</span></div>').join('')+(ls.length>4?'<div class="subline">+'+(ls.length-4)+' more</div>':''):'')+
+      (ls.length?'<div class="wk-sec">'+t('dash_lessons')+'</div>'+ls.slice(0,4).map(l=>'<div class="kv"><span class="k">'+l.start+'</span><span class="v">'+esc(l.subject)+markBadge(td,l)+'</span></div>').join('')+(ls.length>4?'<div class="subline">+'+(ls.length-4)+' more</div>':''):'')+
     '</div>'+
     '<div class="c3 panel"><div class="panel-title">'+t('dash_level')+'</div>'+
       '<div class="bignum glow">LV '+lv.level+'</div>'+
@@ -3953,7 +3970,7 @@ function renderSettings(){
     '</div>'+
     '<div class="c4 panel"><div class="panel-title">☁ Облако (телефон ↔ ноутбук)</div>'+
       '<div class="subline" style="margin-bottom:8px">Данные лежат в твоём ПРИВАТНОМ репозитории на GitHub. Один и тот же репозиторий + токен на всех устройствах. Токен не покидает устройство.</div>'+
-      '<div class="frow"><label class="f">Репозиторий (имя/репозиторий)</label><input class="f" id="cg-repo" value="'+esc((s.cloud||{}).repo||'')+'" placeholder="kiryloks535-create/nexus-cloud"></div>'+
+      '<div class="frow"><label class="f">Репозиторий (имя/репозиторий)</label><input class="f" id="cg-repo" value="'+esc((s.cloud||{}).repo||'')+'" placeholder="например: kiryloks535-create/nexus-cloud"></div>'+
       '<div class="frow"><label class="f">Токен (github_pat_…)</label><input class="f" type="password" id="cg-token" value="'+esc((s.cloud||{}).token||'')+'"></div>'+
       '<div class="frow"><label class="f">Файл состояния</label><input class="f" id="cg-file" value="'+esc((s.cloud||{}).file||'nexus-state.json')+'"></div>'+
       '<div class="kv"><span class="k">Автосинхронизация</span><span class="v"><input type="checkbox" class="sw" id="cg-auto" '+((s.cloud||{}).auto?'checked':'')+'></span></div>'+
@@ -4068,7 +4085,11 @@ function cgSave(){
   state.settings.cloud.token=$('#cg-token').value.trim();
   state.settings.cloud.file=($('#cg-file').value.trim()||'nexus-state.json').replace(/^\/+/,'');
   state.settings.cloud.auto=$('#cg-auto').checked;
-  emitChange(); toast('☁ Облако: настройки сохранены'); // emitChange → перерисовка → статус обновится
+  emitChange(); // перерисовка → статус обновится
+  if(!state.settings.cloud.repo){ toast('☁ Впиши РЕПОЗИТОРИЙ (имя/репозиторий) — серый текст в поле это подсказка, а не значение',{amber:true,ms:7000}); return; }
+  if(!state.settings.cloud.token){ toast('☁ Впиши ТОКЕН (github_pat_…) из GitHub → Settings → Developer settings',{amber:true,ms:7000}); return; }
+  toast('☁ Облако: настройки сохранены');
+  if(state.settings.cloud.auto)cloudPull(false); // автосинк стартует сразу, без перезагрузки страницы
 }
 function b64utf8(s){ return btoa(unescape(encodeURIComponent(s))); }
 let _cgT=null,_cgBusy=false;
@@ -4094,14 +4115,21 @@ async function cloudGet(){ // {sha,state} | null (файла нет)
   return {sha:j.sha,state:st};
 }
 async function cloudPush(manual){
-  if(!cgReady()){ if(manual)toast('☁ Не настроено — Настройки → Облако',{amber:true}); return false; }
+  if(!cgReady()){
+    if(manual){
+      const c=state.settings.cloud||{};
+      toast('☁ '+(c.token?'Впиши РЕПОЗИТОРИЙ (имя/репозиторий) — серый текст в поле это подсказка':'Впиши ТОКЕН (github_pat_…)')+' — Настройки → Облако',{amber:true,ms:7000});
+    }
+    return false;
+  }
   if(_cgBusy)return false; _cgBusy=true;
   try{
     const cur=await cloudGet().catch(()=>null);
     const snap=JSON.parse(JSON.stringify(state));
     if(snap.settings&&snap.settings.cloud)snap.settings.cloud.token='';    // токен не покидает устройство
     if(snap.settings&&snap.settings.fintrack)snap.settings.fintrack.token='';
-    if(cur&&cur.state&&JSON.stringify(cur.state)===JSON.stringify(snap)){
+    const cgSig=s=>JSON.stringify([s.tasks,s.goals,s.xpLog,(s.finance||{}).transactions,(s.finance||{}).workLog,s.skills,s.categories,s.status,(s.train||{}).log,(s.train||{}).miles]);
+    if(cur&&cur.state&&cgSig(cur.state)===cgSig(snap)){ // без содержательных изменений — не спамим коммитами
       try{ localStorage.setItem(KEY+'-cloudAt',String(Date.now())); }catch(e){}
       if(manual)toast('☁ Облако уже актуально'); return true;
     }
@@ -4122,7 +4150,14 @@ async function cloudPush(manual){
   finally{ _cgBusy=false; }
 }
 async function cloudPull(manual){
-  if(!cgReady()){ if(manual)toast('☁ Не настроено — Настройки → Облако',{amber:true}); return false; }
+  if(!manual&&(!(state.settings.cloud||{}).auto||!cgReady()))return false; // авто-режим: только когда включён и настроен
+  if(!cgReady()){
+    if(manual){
+      const c=state.settings.cloud||{};
+      toast('☁ '+(c.token?'Впиши РЕПОЗИТОРИЙ (имя/репозиторий) — серый текст в поле это подсказка':'Впиши ТОКЕН (github_pat_…)')+' — Настройки → Облако',{amber:true,ms:7000});
+    }
+    return false;
+  }
   try{
     const cur=await cloudGet();
     if(!cur){ if(manual)toast('☁ В облаке пусто — выгружаю локальные данные'); await cloudPush(false); return true; }
@@ -4308,7 +4343,7 @@ if(IS_POPOUT){ // separate status window: app shell hidden, drawer = window body
   setTimeout(maybeDailyCheck,500); // Block A: first visit of the day
   renderNav(); renderTopbar(); renderView();
   netPull(); setInterval(netPull,30000); // phone/LAN sync: pull server state, push on edits
-  if(cgReady()&&(state.settings.cloud||{}).auto){ cloudPull(false); setInterval(cloudPull,60000); } // ☁ GitHub cloud sync
+  setInterval(cloudPull,60000); // ☁ GitHub cloud sync: cloudPull сам проверяет auto/cgReady, перезагрузка после включения не нужна
   setInterval(renderTopbar,60000); // live clock/date
   setTimeout(routeHash,650); // PWA shortcuts (#dashboard/#quick-add/#status/#today) — после возможного чек-ина
 }
