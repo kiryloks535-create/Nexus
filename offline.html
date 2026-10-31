@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS // OFFLINE</title>
+<style>
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(900px 500px at 70% -10%,rgba(0,255,127,.08),transparent 60%),#050806;
+    color:#39d98a;font-family:'Consolas','Courier New',monospace;text-align:center;padding:24px}
+  .box{border:1px solid rgba(0,255,127,.4);box-shadow:0 0 40px rgba(0,255,127,.12),inset 0 0 30px rgba(0,255,127,.05);
+    padding:34px 28px;max-width:420px;position:relative}
+  .box::before{content:'';position:absolute;top:-1px;left:-1px;width:14px;height:14px;border-top:2px solid #00ff7f;border-left:2px solid #00ff7f}
+  .box::after{content:'';position:absolute;bottom:-1px;right:-1px;width:14px;height:14px;border-bottom:2px solid #00ff7f;border-right:2px solid #00ff7f}
+  h1{font-size:16px;letter-spacing:.3em;margin:0 0 14px;color:#00ff7f;text-shadow:0 0 14px rgba(0,255,127,.6)}
+  p{font-size:13px;line-height:1.8;color:#7fa38c;margin:0 0 8px}
+  .sync{font-size:11px;color:#5f7a99;margin:14px 0 22px}
+  button{font:inherit;font-size:12px;letter-spacing:.2em;color:#050806;background:#00ff7f;border:none;
+    padding:11px 26px;cursor:pointer;box-shadow:0 0 16px rgba(0,255,127,.45)}
+  button:active{transform:translateY(1px)}
+  .rune{margin-top:20px;font-size:11px;letter-spacing:.5em;color:#2f5c3c}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>// NEXUS OFFLINE</h1>
+  <p>Your data is saved locally.<br>Reconnect to continue.</p>
+  <div class="sync" id="lastsync">last sync: unknown</div>
+  <button type="button" onclick="location.reload()">TRY AGAIN</button>
+  <div class="rune">ᚱ ᚢ ᚾ ᛖ</div>
+</div>
+<script>
+try{
+  var ls=localStorage.getItem('nexus-life-os-lastsync');
+  if(ls){ var d=new Date(parseInt(ls,10));
+    document.getElementById('lastsync').textContent='last sync: '+d.toLocaleDateString()+' '+d.toLocaleTimeString(); }
+}catch(e){}
+</script>
+</body>
+</html>
