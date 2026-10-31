@@ -672,7 +672,7 @@ body.side-open #side-backdrop{display:block}
   <aside id="sidebar">
     <div class="brand">NEXUS<span>// LIFE OS</span></div>
     <nav id="nav"></nav>
-    <div class="side-foot" id="side-foot">NEXUS v1.3 · ВСЕ ЭТАПЫ ✓</div>
+    <div class="side-foot" id="side-foot">NEXUS v1.6 · ВСЕ ЭТАПЫ ✓</div>
   </aside>
   <div id="main">
     <header id="topbar"></header>
@@ -1387,8 +1387,8 @@ function restoreBackup(i){
    SECTION 4 — XP engine (strict mode per decision 5B)
    ============================================================ */
 const PRIORITY_MULT={1:1.0,2:1.25,3:1.5,4:2.0,5:3.0};
-const xpForLevel=n=>Math.round(100*Math.pow(n,1.5));
-const xpForSkillLevel=n=>Math.round(50*Math.pow(n,1.4));
+const xpForLevel=n=>Math.round(700*Math.pow(n,1.5)); // ×7 (запрос 2026-10-31): уровень качается в 7 раз дольше
+const xpForSkillLevel=n=>Math.round(500*Math.pow(n,1.4)); // ×10 от исходных 50 (запрос 2026-10-31): 1→2 = 500 XP
 const streakMult=s=>Math.min(1+0.1*(s||0),3.0);
 const totalXP=()=>state.xpLog.reduce((a,e)=>a+e.amount,0);
 function levelFromXP(total){
@@ -4175,8 +4175,20 @@ function quickAdd(presetDate,presetGoal){
   const g0=presetGoal?state.goals.find(g=>g.id===presetGoal):null;
   const opts=state.goals.map(g=>{ const pct=Math.round(goalPercent(g).pct); return '<option value="'+g.id+'"'+(presetGoal===g.id?' selected':'')+'>'+esc(g.title.slice(0,42))+' · '+pct+'%</option>'; }).join('');
   const prioSel=g0?g0.priority:3;
+  // «Мои задачи»: список уже записанных (уникальные по названию, свежие сверху) — тап подставляет название+цель+приоритет
+  _qaRecent=[];
+  const seen={};
+  state.tasks.slice().sort((a,b)=>(b.updatedAt||b.createdAt||'')>(a.updatedAt||a.createdAt||'')?1:-1).forEach(tk=>{
+    const key=tk.title.trim().toLowerCase();
+    if(!key||seen[key])return; seen[key]=1;
+    _qaRecent.push({title:tk.title,goalId:tk.goalId,priority:tk.priority});
+  });
+  const chips=_qaRecent.slice(0,12).map((r,i)=>
+    '<button type="button" class="mini-btn" style="margin:0 6px 6px 0" onclick="qaPick('+i+')" title="подставить">'+esc(r.title.slice(0,34))+(r.goalId?' ◈':'')+'</button>').join('');
+  const dl=_qaRecent.slice(0,40).map(r=>'<option value="'+esc(r.title)+'"></option>').join('');
   openModal('<div class="panel-title">'+t('qa_title')+'</div><form id="qa-form">'+
-    '<div class="frow"><label class="f">'+t('qa_name')+'</label><input class="f" id="qa-name" required maxlength="120"></div>'+
+    (chips?'<div class="wk-sec">Мои задачи — тап, чтобы подставить</div><div style="margin-bottom:8px">'+chips+'</div>':'')+
+    '<div class="frow"><label class="f">'+t('qa_name')+' — впиши другую (сохранится в общий список)</label><input class="f" id="qa-name" required maxlength="120" list="qa-dl" autocomplete="off"><datalist id="qa-dl">'+dl+'</datalist></div>'+
     '<div class="frow"><label class="f">'+t('qa_goal')+'</label><select class="f" id="qa-goal" onchange="qaPrioSync()"><option value="">'+t('qa_none')+'</option>'+opts+'</select></div>'+
     '<div class="frow2"><div class="frow"><label class="f">'+t('qa_date')+'</label><input class="f" type="date" id="qa-date" value="'+(presetDate||todayISO())+'"></div>'+
     '<div class="frow"><label class="f">'+t('qa_prio')+'</label><select class="f" id="qa-prio">'+
@@ -4194,6 +4206,13 @@ function quickAdd(presetDate,presetGoal){
     state.tasks.push({id:uid(),title,goalId:gid||null,date:$('#qa-date').value||todayISO(),priority:prio,value:val===''?null:parseFloat(val),done:false,doneAt:null,createdAt:todayISO(),updatedAt:Date.now()});
     closeModal(); emitChange(); toast(t('task_added'));
   };
+}
+let _qaRecent=[];
+function qaPick(i){ // подставить существующую задачу: название + цель (если была) + приоритет
+  const r=_qaRecent[i]; if(!r)return;
+  $('#qa-name').value=r.title;
+  if(r.goalId){ const sel=$('#qa-goal'); if([...sel.options].some(o=>o.value===r.goalId))sel.value=r.goalId; }
+  $('#qa-prio').value=r.priority||3;
 }
 function qaPrioSync(){
   const g=$('#qa-goal').value?state.goals.find(g=>g.id===$('#qa-goal').value):null;
