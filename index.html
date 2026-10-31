@@ -1283,6 +1283,7 @@ function migrate(s){
   s.settings=Object.assign({sideMin:false,showWeekends:false,campaignEnd:'2026-11-30',restTarget:300},s.settings||{});
   s.settings.fintrack=Object.assign({baseUrl:'',token:'',syncUrl:'http://127.0.0.1:8765',autoSync:true},s.settings.fintrack||{});
   s.settings.fintrack.map=Object.assign({},FT_DEFAULT_MAP,(s.settings.fintrack||{}).map||{});
+  s.settings.cloud=Object.assign({token:'',repo:'',file:'nexus-state.json',auto:false},s.settings.cloud||{}); // ☁ phone↔laptop через приватный репозиторий
   // THEME v2 upgrade (one-time): game HUD look + Russian default
   if(!s.settings._theme2){
     s.settings._theme2=true;
@@ -1345,7 +1346,7 @@ function loadState(){
   return seed();
 }
 function saveState(){
-  try{ state._savedAt=Date.now(); localStorage.setItem(KEY,JSON.stringify(state)); if(typeof scheduleNetPush==='function')scheduleNetPush(); }
+  try{ state._savedAt=Date.now(); localStorage.setItem(KEY,JSON.stringify(state)); if(typeof scheduleNetPush==='function')scheduleNetPush(); if(typeof scheduleCloudPush==='function')scheduleCloudPush(); }
   catch(e){ memOnly=true; } // graceful fallback: state lives in memory this session
 }
 // ---- rolling daily backups (3 snapshots in separate localStorage keys) ----
@@ -3950,6 +3951,18 @@ function renderSettings(){
       '<button class="btn" onclick="ftSaveMap();FinTrackAdapter.test()">'+t('ft_test')+'</button></div>'+
       '<div class="subline" style="margin-top:8px">'+t('ft_note')+'</div>'+
     '</div>'+
+    '<div class="c4 panel"><div class="panel-title">☁ Облако (телефон ↔ ноутбук)</div>'+
+      '<div class="subline" style="margin-bottom:8px">Данные лежат в твоём ПРИВАТНОМ репозитории на GitHub. Один и тот же репозиторий + токен на всех устройствах. Токен не покидает устройство.</div>'+
+      '<div class="frow"><label class="f">Репозиторий (имя/репозиторий)</label><input class="f" id="cg-repo" value="'+esc((s.cloud||{}).repo||'')+'" placeholder="kiryloks535-create/nexus-cloud"></div>'+
+      '<div class="frow"><label class="f">Токен (github_pat_…)</label><input class="f" type="password" id="cg-token" value="'+esc((s.cloud||{}).token||'')+'"></div>'+
+      '<div class="frow"><label class="f">Файл состояния</label><input class="f" id="cg-file" value="'+esc((s.cloud||{}).file||'nexus-state.json')+'"></div>'+
+      '<div class="kv"><span class="k">Автосинхронизация</span><span class="v"><input type="checkbox" class="sw" id="cg-auto" '+((s.cloud||{}).auto?'checked':'')+'></span></div>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">'+
+        '<button class="btn" onclick="cgSave()">Сохранить</button>'+
+        '<button class="btn" onclick="cloudPush(true)">↑ В облако</button>'+
+        '<button class="btn" onclick="cloudPull(true)">↓ Из облака</button></div>'+
+      '<div class="subline" style="margin-top:8px" id="cg-status">'+cgStatus()+'</div>'+
+    '</div>'+
     '<div class="c4 panel"><div class="panel-title">'+t('st_blockB')+'</div>'+
       '<div class="frow"><label class="f">'+t('st_edit_name')+'</label><input class="f" id="ch-name" value="'+esc(state.status.name)+'"></div>'+
       '<div class="frow"><label class="f">'+t('set_mantra')+'</label><input class="f" id="ch-mantra" value="'+esc(s.mantra)+'"></div>'+
@@ -4034,6 +4047,93 @@ function resetAll(){
     state=seed(); _tIdx=null;
     saveState(); applySettings(); emitChange(); toast(t('reset_done'));
   });
+}
+
+/* ============================================================
+   ☁ CLOUD SYNC (GitHub) — телефон ↔ ноутбук через приватный репозиторий.
+   Файл состояния лежит в api.github.com Contents; мерж как в LAN-синке.
+   Токен НИКУДА не выгружается: из снапшота для облака он вырезается.
+   ============================================================ */
+function cgReady(){ const c=state.settings.cloud||{}; return !!(c.token&&c.repo); }
+function cgApi(){ const c=state.settings.cloud; return 'https://api.github.com/repos/'+c.repo+'/contents/'+encodeURIComponent(c.file||'nexus-state.json'); }
+function cgHeaders(){ return {Authorization:'Bearer '+state.settings.cloud.token,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'}; }
+function cgStatus(){
+  if(!cgReady())return 'не настроено — вставь репозиторий и токен ниже';
+  const t=localStorage.getItem(KEY+'-cloudAt');
+  return 'подключено · последняя синхронизация: '+(t?new Date(+t).toLocaleString('ru-RU'):'ещё не было');
+}
+function cgSave(){
+  state.settings.cloud=state.settings.cloud||{};
+  state.settings.cloud.repo=$('#cg-repo').value.trim().replace(/^https?:\/\/github\.com\//i,'').replace(/\.git$/i,'').replace(/\/+$/,'');
+  state.settings.cloud.token=$('#cg-token').value.trim();
+  state.settings.cloud.file=($('#cg-file').value.trim()||'nexus-state.json').replace(/^\/+/,'');
+  state.settings.cloud.auto=$('#cg-auto').checked;
+  saveState(); toast('☁ Облако: настройки сохранены');
+  if(state.settings.cloud.auto)cloudPull(true);
+}
+function b64utf8(s){ return btoa(unescape(encodeURIComponent(s))); }
+let _cgT=null,_cgBusy=false;
+function scheduleCloudPush(){ if(!cgReady()||!(state.settings.cloud||{}).auto)return; clearTimeout(_cgT); _cgT=setTimeout(()=>cloudPush(false),4000); }
+function applyCloudState(m){
+  const keepTok=(state.settings.cloud||{}).token, keepFt=(state.settings.fintrack||{}).token;
+  state=migrate(m); _tIdx=null; state.goals.forEach(g=>delete g._c);
+  if(keepTok){ state.settings.cloud=state.settings.cloud||{}; state.settings.cloud.token=keepTok; } // токен живёт только локально
+  if(keepFt){ state.settings.fintrack=state.settings.fintrack||{}; state.settings.fintrack.token=keepFt; }
+  try{ state._savedAt=Date.now(); localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){}
+  applySettings(); renderNav(); renderTopbar(); renderView();
+}
+async function cloudGet(){ // {sha,state} | null (файла нет)
+  const r=await fetch(cgApi(),{headers:cgHeaders(),cache:'no-store'});
+  if(r.status===404)return null;
+  if(r.status===401)throw new Error('токен неверный или истёк (401)');
+  if(!r.ok)throw new Error('GitHub API '+r.status);
+  const j=await r.json();
+  let txt='';
+  try{ txt=decodeURIComponent(escape(atob(String(j.content||'').replace(/\s/g,'')))); }catch(e){ throw new Error('в облаке не JSON'); }
+  const st=JSON.parse(txt);
+  if(!st||!st.schemaVersion||!Array.isArray(st.goals))throw new Error('в облаке чужой файл');
+  return {sha:j.sha,state:st};
+}
+async function cloudPush(manual){
+  if(!cgReady()){ if(manual)toast('☁ Не настроено — Настройки → Облако',{amber:true}); return false; }
+  if(_cgBusy)return false; _cgBusy=true;
+  try{
+    const cur=await cloudGet().catch(()=>null);
+    const snap=JSON.parse(JSON.stringify(state));
+    if(snap.settings&&snap.settings.cloud)snap.settings.cloud.token='';    // токен не покидает устройство
+    if(snap.settings&&snap.settings.fintrack)snap.settings.fintrack.token='';
+    if(cur&&cur.state&&JSON.stringify(cur.state)===JSON.stringify(snap)){
+      try{ localStorage.setItem(KEY+'-cloudAt',String(Date.now())); }catch(e){}
+      if(manual)toast('☁ Облако уже актуально'); return true;
+    }
+    const put=sha=>fetch(cgApi(),{method:'PUT',headers:cgHeaders(),body:JSON.stringify({message:'NEXUS sync',content:b64utf8(JSON.stringify(snap)),sha})});
+    let r=await put(cur?cur.sha:undefined);
+    if(r.status===409){ // файл обновил другое устройство: тянем, мержим, повторяем
+      const p=await cloudGet(); if(p)applyCloudState(mergeState(state,p.state));
+      const snap2=JSON.parse(JSON.stringify(state));
+      if(snap2.settings&&snap2.settings.cloud)snap2.settings.cloud.token='';
+      const cur2=await cloudGet();
+      r=await put(cur2?cur2.sha:undefined);
+    }
+    if(!r.ok)throw new Error('GitHub API '+r.status);
+    try{ localStorage.setItem(KEY+'-cloudAt',String(Date.now())); }catch(e){}
+    if(manual)toast('☁ Выгружено в облако');
+    return true;
+  }catch(e){ if(manual)toast('☁ Облако: '+e.message,{amber:true}); return false; }
+  finally{ _cgBusy=false; }
+}
+async function cloudPull(manual){
+  if(!cgReady()){ if(manual)toast('☁ Не настроено — Настройки → Облако',{amber:true}); return false; }
+  try{
+    const cur=await cloudGet();
+    if(!cur){ if(manual)toast('☁ В облаке пусто — выгружаю локальные данные'); await cloudPush(false); return true; }
+    const sig=s=>JSON.stringify([s.tasks,s.goals,s.xpLog,(s.finance||{}).transactions,(s.finance||{}).workLog,s.skills,s.categories]);
+    if(sig(state)===sig(cur.state)){ if(manual)toast('☁ Облако уже актуально'); return false; }
+    applyCloudState(mergeState(state,cur.state));
+    try{ localStorage.setItem(KEY+'-cloudAt',String(Date.now())); }catch(e){}
+    if(manual)toast('☁ Данные из облака загружены');
+    return true;
+  }catch(e){ if(manual)toast('☁ Облако: '+e.message,{amber:true}); return false; }
 }
 
 /* ---------- quick add task ---------- */
@@ -4209,6 +4309,7 @@ if(IS_POPOUT){ // separate status window: app shell hidden, drawer = window body
   setTimeout(maybeDailyCheck,500); // Block A: first visit of the day
   renderNav(); renderTopbar(); renderView();
   netPull(); setInterval(netPull,30000); // phone/LAN sync: pull server state, push on edits
+  if(cgReady()&&(state.settings.cloud||{}).auto){ cloudPull(false); setInterval(cloudPull,60000); } // ☁ GitHub cloud sync
   setInterval(renderTopbar,60000); // live clock/date
   setTimeout(routeHash,650); // PWA shortcuts (#dashboard/#quick-add/#status/#today) — после возможного чек-ина
 }
@@ -4304,7 +4405,7 @@ function replayQueue(){
       }).catch(function(){});
   }catch(e){}
 }
-window.addEventListener('online',function(){ setTimeout(replayQueue,800); netPull(); });
+window.addEventListener('online',function(){ setTimeout(replayQueue,800); netPull(); if(cgReady())cloudPull(false); });
 setInterval(function(){ if(navigator.onLine)replayQueue(); },60000);
 function scheduleNetPush(){ if(!netOn())return; clearTimeout(_netPushT); _netPushT=setTimeout(netPush,1500); }
 function unionBy(A,B,better){ // слияние списков по id: элементы обеих сторон, конфликт решает better()
