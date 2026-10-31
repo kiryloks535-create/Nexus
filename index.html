@@ -618,7 +618,10 @@ hr::after{content:'✦';position:absolute;left:50%;top:50%;transform:translate(-
 @keyframes whisper-rise{0%{opacity:0;transform:translateY(24px) rotate(-8deg)}14%{opacity:.4}100%{opacity:0;transform:translateY(-150px) rotate(7deg)}}
 @media (prefers-reduced-motion:reduce){.arcane-whisper{display:none}.lvup-box::after{animation:none}}
 /* ── PHONE (≤700px): off-canvas sidebar, stacked columns, touch sizing ── */
-#side-backdrop{position:fixed;inset:0;background:rgba(4,2,10,.55);z-index:170}
+/* backdrop живёт ВНУТРИ #app (stacking context z1) и виден только при открытом меню —
+   иначе навсегда перекрывает экран (баг «телефон не переходит по меню») */
+#side-backdrop{position:fixed;inset:0;background:rgba(4,2,10,.55);z-index:170;display:none}
+body.side-open #side-backdrop{display:block}
 @media (max-width:700px){
   #sidebar{position:fixed;left:-270px;top:0;bottom:0;width:264px;z-index:180;transition:left .25s ease;
     box-shadow:10px 0 40px rgba(0,0,0,.6);display:flex;flex-direction:column}
@@ -669,7 +672,7 @@ hr::after{content:'✦';position:absolute;left:50%;top:50%;transform:translate(-
   <aside id="sidebar">
     <div class="brand">NEXUS<span>// LIFE OS</span></div>
     <nav id="nav"></nav>
-    <div class="side-foot" id="side-foot">NEXUS v1.0 · ALL 8 STAGES ✓</div>
+    <div class="side-foot" id="side-foot">NEXUS v1.3 · ВСЕ ЭТАПЫ ✓</div>
   </aside>
   <div id="main">
     <header id="topbar"></header>
@@ -749,7 +752,7 @@ const I18N={
     go_add:'+ Goal', go_bulk:'Bulk add', go_all:'ALL', go_replan:'Re-plan', go_needed:'needed/day',
     go_behind:'BEHIND SCHEDULE', go_hard:'HARD DEADLINE', go_active:'ACTIVE', go_done_g:'DONE',
     go_stats:'Stats', go_history:'History', go_tasks:'Linked tasks', go_check_all:'✓ all',
-    go_desc:'Description', go_del_goal:'Delete goal', go_formula:'Formula', go_result:'result',
+    go_desc:'Description', go_del_goal:'Delete goal', go_markdone:'✓ Mark done', go_undone:'↩ Unmark', go_formula:'Formula', go_result:'result',
     go_f_title:'Title', go_f_cat:'Category', go_f_type:'Type', go_f_target:'Target', go_f_unit:'Unit',
     go_f_period:'Period', go_f_deadline:'Deadline', go_f_prio:'Priority', go_f_color:'Color',
     go_f_xp:'XP reward', go_f_skills:'Linked skills', go_f_formula:'Progress formula', go_preview:'Preview',
@@ -877,7 +880,7 @@ const I18N={
     go_add:'+ Цель', go_bulk:'Массово', go_all:'ВСЕ', go_replan:'Пересмотреть', go_needed:'нужно/день',
     go_behind:'ОТСТАЁТ', go_hard:'ЖЁСТКИЙ ДЕДЛАЙН', go_active:'АКТИВНА', go_done_g:'ГОТОВО',
     go_stats:'Статы', go_history:'История', go_tasks:'Связанные задачи', go_check_all:'✓ все',
-    go_desc:'Описание', go_del_goal:'Удалить цель', go_formula:'Формула', go_result:'результат',
+    go_desc:'Описание', go_del_goal:'Удалить цель', go_markdone:'✓ Отметить выполненной', go_undone:'↩ Снять отметку', go_formula:'Формула', go_result:'результат',
     go_f_title:'Название', go_f_cat:'Категория', go_f_type:'Тип', go_f_target:'Целевое значение', go_f_unit:'Единица',
     go_f_period:'Период', go_f_deadline:'Дедлайн', go_f_prio:'Приоритет', go_f_color:'Цвет',
     go_f_xp:'XP-награда', go_f_skills:'Связанные навыки', go_f_formula:'Формула прогресса', go_preview:'Превью',
@@ -1001,7 +1004,7 @@ const I18N={
     go_add:'+ Cel', go_bulk:'Masowo', go_all:'WSZYSTKIE', go_replan:'Przelicz', go_needed:'potrzeba/dzień',
     go_behind:'W TYLE', go_hard:'TWARDY TERMIN', go_active:'AKTYWNY', go_done_g:'GOTOWE',
     go_stats:'Statystyki', go_history:'Historia', go_tasks:'Powiązane zadania', go_check_all:'✓ wszystkie',
-    go_desc:'Opis', go_del_goal:'Usuń cel', go_formula:'Formuła', go_result:'wynik',
+    go_desc:'Opis', go_del_goal:'Usuń cel', go_markdone:'✓ Oznacz jako wykonane', go_undone:'↩ Cofnij oznaczenie', go_formula:'Formuła', go_result:'wynik',
     go_f_title:'Nazwa', go_f_cat:'Kategoria', go_f_type:'Typ', go_f_target:'Wartość docelowa', go_f_unit:'Jednostka',
     go_f_period:'Okres', go_f_deadline:'Termin', go_f_prio:'Priorytet', go_f_color:'Kolor',
     go_f_xp:'Nagroda XP', go_f_skills:'Powiązane umiejętności', go_f_formula:'Formuła postępu', go_preview:'Podgląd',
@@ -1342,7 +1345,7 @@ function loadState(){
   return seed();
 }
 function saveState(){
-  try{ localStorage.setItem(KEY,JSON.stringify(state)); if(typeof scheduleNetPush==='function')scheduleNetPush(); }
+  try{ state._savedAt=Date.now(); localStorage.setItem(KEY,JSON.stringify(state)); if(typeof scheduleNetPush==='function')scheduleNetPush(); }
   catch(e){ memOnly=true; } // graceful fallback: state lives in memory this session
 }
 // ---- rolling daily backups (3 snapshots in separate localStorage keys) ----
@@ -1505,6 +1508,7 @@ function goalPercent(g){
   const r=evalFormula(g.formula,ctx);
   let pct=0;
   if(r.ok){ pct=r.value===true?100:r.value===false?0:r.value; pct=Math.max(0,Math.min(100,Math.round(pct*10)/10)); }
+  if(g.doneManual)pct=100; // ручная отметка «выполнена» перекрывает формулу
   const was=g.lastPercent||0;
   g.lastPercent=pct; g._lastEval=r;
   if(pct>=100&&was<100&&!g._awarded){
@@ -1555,6 +1559,7 @@ function replanModal(gid){
     if(v==='extend'){ g.history.push({date:td,text:'REPLAN: deadline → '+newDl}); g.deadline=newDl; }
     else if(v==='cut'){ g.history.push({date:td,text:'REPLAN: target '+g.target+' → '+newTarget+' '+g.unit}); g.target=newTarget; }
     else { g.history.push({date:td,text:'REPLAN: keep target, pace '+(bs.perDay!=null?bs.perDay.toFixed(2):'?')+'/'+t('go_needed')}); }
+    g.updatedAt=Date.now();
     closeModal(); emitChange(); toast(t('replan_done'));
   };
 }
@@ -1796,6 +1801,7 @@ const byPrioDate=(a,b)=>b.priority-a.priority||(a.date<b.date?-1:a.date>b.date?1
 function toggleTask(id){
   const tk=state.tasks.find(x=>x.id===id); if(!tk)return;
   tk.done=!tk.done;
+  tk.updatedAt=Date.now();
   if(tk.done){
     tk.doneAt=todayISO();
     const xp=Math.round(50*(PRIORITY_MULT[tk.priority]||1)*streakMult(globalStreak()));
@@ -1817,7 +1823,7 @@ function delTask(id){
 }
 function moveTask(id,iso){
   const tk=state.tasks.find(x=>x.id===id); if(!tk)return;
-  tk.date=iso; toast(t('moved')+' '+fmtShort(iso)); emitChange();
+  tk.date=iso; tk.updatedAt=Date.now(); toast(t('moved')+' '+fmtShort(iso)); emitChange();
 }
 function dragTask(ev,id){ ev.dataTransfer.setData('text/plain','task:'+id); }
 function dropTask(ev,iso){
@@ -1860,7 +1866,8 @@ function toggleSide(){
   if(window.matchMedia&&window.matchMedia('(max-width:700px)').matches){ // phone: off-canvas drawer
     document.body.classList.toggle('side-open');
     if(document.body.classList.contains('side-open')&&!document.getElementById('side-backdrop')){
-      var b=document.createElement('div');b.id='side-backdrop';b.onclick=function(){document.body.classList.remove('side-open')};document.body.appendChild(b);
+      var b=document.createElement('div');b.id='side-backdrop';b.onclick=function(){document.body.classList.remove('side-open')};
+      var app=document.getElementById('app'); (app||document.body).appendChild(b); // внутри #app: sidebar(z180) выше backdrop(z170)
     }
     return;
   }
@@ -2272,13 +2279,14 @@ function goalRowHTML(g){
   const late=g.deadline&&pct<100&&td>g.deadline;
   const open=expandedGoal===g.id;
   const icon=g.main?'<span class="mini-tag main">'+t('main_tag')+'</span>':'';
+  const doneTag=g.doneManual?'<span class="mini-tag main" style="color:var(--accent)">✓ '+t('go_done_g')+'</span>':'';
   const hardTag=hard?'<span class="mini-tag hard">'+t('go_hard')+(late?'':' · '+daysBetween(td,g.deadline)+t('d_short'))+'</span>':'';
   const lateTag=late?'<span class="mini-tag over">+'+Math.abs(daysBetween(g.deadline,td))+'d '+t('dash_overdue')+'</span>':'';
   const skIcons=(g.skills||[]).map(sid=>{const s=state.skills.find(x=>x.id===sid);return s?s.icon:'';}).join(' ');
   let head='<div class="goal-head" onclick="toggleExpand(\''+g.id+'\')" title="нажми — откроются связанные задачи и описание цели">'+
     '<span class="gdot" style="background:'+col+'"></span>'+
     '<span class="pbadge">P'+g.priority+'</span>'+
-    '<span class="gtitle" ondblclick="inlineEditGoal(\''+g.id+'\',this)" title="double-click to rename">'+esc(g.title)+'</span>'+icon+hardTag+lateTag+
+    '<span class="gtitle" ondblclick="inlineEditGoal(\''+g.id+'\',this)" title="double-click to rename">'+esc(g.title)+'</span>'+icon+doneTag+hardTag+lateTag+
     '<span class="goal-bar"><i style="width:'+pct+'%;background:'+barColorFor(pct,!!bs)+'"></i></span>'+
     '<span class="goal-pct'+(bs?' amber':'')+'">'+pct+'%</span>'+
     '<span class="gactions">'+
@@ -2308,7 +2316,9 @@ function goalRowHTML(g){
         (tks.length?' <button class="mini-btn" onclick="checkAllTasks(\''+g.id+'\')">'+t('go_check_all')+'</button>':'')+'</div>'+
       (tks.length?tks.map(x=>taskChip(x,{del:true})).join(''):'<div class="subline">'+t('uf_notasks')+'</div>')+
       (hist?'<div class="wk-sec">'+t('go_history')+'</div>'+hist:'')+
-      '<div style="margin-top:10px;display:flex;gap:8px"><button class="btn btn-danger" onclick="deleteGoal(\''+g.id+'\')">'+t('go_del_goal')+'</button></div>'+
+      '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">'+
+        '<button class="btn'+(g.doneManual?'':' btn-primary')+'" onclick="toggleGoalDone(\''+g.id+'\')">'+(g.doneManual?t('go_undone'):t('go_markdone'))+'</button>'+
+        '<button class="btn btn-danger" onclick="deleteGoal(\''+g.id+'\')">'+t('go_del_goal')+'</button></div>'+
     '</div>';
   }
   return '<div class="goal-row'+(g.main?' ismain':'')+'" draggable="true" ondragstart="dragGoal(event,\''+g.id+'\')" '+
@@ -2319,7 +2329,7 @@ function toggleExpand(id){ expandedGoal=expandedGoal===id?null:id; renderView();
 function checkAllTasks(gid){
   const tks=state.tasks.filter(x=>x.goalId===gid&&!x.done);
   tks.forEach(tk=>{
-    tk.done=true; tk.doneAt=todayISO();
+    tk.done=true; tk.doneAt=todayISO(); tk.updatedAt=Date.now();
     const xp=Math.round(50*(PRIORITY_MULT[tk.priority]||1)*streakMult(globalStreak()));
     tk.xpAwarded=xp; addXP(xp,'task: '+tk.title,{taskId:tk.id});
     const g=state.goals.find(g=>g.id===gid);
@@ -2334,7 +2344,7 @@ function inlineEditGoal(gid,el){
   input.className='f'; input.value=g.title; input.maxLength=120;
   el.replaceWith(input); input.focus(); input.select();
   let fin=false;
-  const done=()=>{ if(fin)return; fin=true; const v=input.value.trim(); if(v&&v!==g.title){g.title=v;g.history.push({date:todayISO(),text:'renamed'});} emitChange(); };
+  const done=()=>{ if(fin)return; fin=true; const v=input.value.trim(); if(v&&v!==g.title){g.title=v;g.updatedAt=Date.now();g.history.push({date:todayISO(),text:'renamed'});} emitChange(); };
   input.onkeydown=e=>{ if(e.key==='Enter')done(); if(e.key==='Escape'){fin=true;emitChange();} };
   input.onblur=done;
 }
@@ -2355,6 +2365,14 @@ function deleteGoal(gid){
   if(expandedGoal===gid)expandedGoal=null;
   emitChange();
   toast('Goal deleted',{amber:true,ms:5000,action:()=>{state.goals.splice(i,0,g);emitChange();}});
+}
+function toggleGoalDone(gid){ // ручная отметка «цель выполнена» — перекрывает формулу (goalPercent)
+  const g=state.goals.find(x=>x.id===gid); if(!g)return;
+  g.doneManual=!g.doneManual;
+  g.updatedAt=Date.now();
+  g.history.push({date:todayISO(),text:g.doneManual?'отмечена выполненной (вручную)':'снята отметка «выполнена»'});
+  emitChange();
+  toast(g.doneManual?'Цель отмечена выполненной · XP начислен':'Отметка снята · XP не отнимается');
 }
 function renderGoals(){
   const cats=state.categories.filter(c=>goalFilter==='all'||goalFilter===c.id);
@@ -2421,7 +2439,7 @@ function goalModal(gid){
       desc:$('#go-desc').value.trim(), target:parseFloat($('#go-target').value)||1, unit:$('#go-unit').value.trim(),
       period:$('#go-period').value||null, deadline:$('#go-dl').value||null,
       priority:parseInt($('#go-prio').value,10), xp:parseInt($('#go-xp').value,10)||0,
-      color:$('#go-color').value, formula:$('#go-formula').value.trim()||'done / target * 100',
+      color:$('#go-color').value, formula:$('#go-formula').value.trim()||'done / target * 100', updatedAt:Date.now(),
       skills:[...document.querySelectorAll('.go-sk:checked')].map(x=>x.value),
     };
     if(gid){
@@ -2450,7 +2468,7 @@ function bulkModal(){
       const cat=state.categories.find(c=>c.name.toLowerCase()===parts[0].toLowerCase()||c.id===parts[0].toLowerCase());
       if(!cat||!parts[1]){errs.push((idx+1)+': '+(cat?t('bulk_err'):t('bulk_badcat')));return;}
       state.goals.push({id:uid(),cat:cat.id,title:parts[1],type:'cumulative',target:parseFloat(parts[2])||1,
-        unit:parts[3]||'',period:parts[4]||null,deadline:null,priority:3,xp:150,skills:[],color:'',
+        unit:parts[3]||'',period:parts[4]||null,deadline:null,priority:3,xp:150,skills:[],color:'',updatedAt:Date.now(),
         formula:'done / target * 100',createdAt:todayISO(),history:[{date:todayISO(),text:'created via bulk add'}]});
       ok++;
     });
@@ -4039,7 +4057,7 @@ function quickAdd(presetDate,presetGoal){
     const g=gid?state.goals.find(g=>g.id===gid):null;
     const prio=g?g.priority:parseInt($('#qa-prio').value,10);
     const val=$('#qa-value').value;
-    state.tasks.push({id:uid(),title,goalId:gid||null,date:$('#qa-date').value||todayISO(),priority:prio,value:val===''?null:parseFloat(val),done:false,doneAt:null,createdAt:todayISO()});
+    state.tasks.push({id:uid(),title,goalId:gid||null,date:$('#qa-date').value||todayISO(),priority:prio,value:val===''?null:parseFloat(val),done:false,doneAt:null,createdAt:todayISO(),updatedAt:Date.now()});
     closeModal(); emitChange(); toast(t('task_added'));
   };
 }
@@ -4289,20 +4307,44 @@ function replayQueue(){
 window.addEventListener('online',function(){ setTimeout(replayQueue,800); netPull(); });
 setInterval(function(){ if(navigator.onLine)replayQueue(); },60000);
 function scheduleNetPush(){ if(!netOn())return; clearTimeout(_netPushT); _netPushT=setTimeout(netPush,1500); }
+function unionBy(A,B,better){ // слияние списков по id: элементы обеих сторон, конфликт решает better()
+  var out=[],idx={};
+  function add(x){
+    if(!x||x.id==null)return;
+    var id=String(x.id);
+    if(idx[id]==null){ idx[id]=out.length; out.push(x); }
+    else out[idx[id]]=better(out[idx[id]],x);
+  }
+  (A||[]).forEach(add); (B||[]).forEach(add);
+  return out;
+}
+function mergeState(loc,srv){ // phone/LAN sync: слияние вместо затирания — задачи/цели/XP не пропадают
+  var m=JSON.parse(JSON.stringify((srv._savedAt||0)>=(loc._savedAt||0)?srv:loc));
+  var nU=function(a,b){ return ((a.updatedAt||0)>=((b||{}).updatedAt||0))?a:b; };
+  m.tasks=unionBy(loc.tasks,srv.tasks,nU);
+  m.goals=unionBy(loc.goals,srv.goals,nU);
+  m.xpLog=unionBy(loc.xpLog,srv.xpLog,function(a,b){ return (a.cancelled&&!b.cancelled)?a:b; });
+  loc.finance=loc.finance||{}; srv.finance=srv.finance||{}; m.finance=m.finance||{};
+  m.finance.transactions=unionBy(loc.finance.transactions,srv.finance.transactions,function(a,b){ return a; });
+  m.finance.workLog=unionBy(loc.finance.workLog,srv.finance.workLog,function(a,b){ return a; });
+  m.skills=unionBy(loc.skills,srv.skills,function(a,b){ return ((a.level||0)*1000+(a.xp||0))>=((b.level||0)*1000+(b.xp||0))?a:b; });
+  m.categories=unionBy(loc.categories,srv.categories,function(a,b){ return a; });
+  return m;
+}
 async function netPull(){
   if(!netOn())return false;
   try{
     var r=await fetch('/api/state',{cache:'no-store'}); if(!r.ok)return false;
     var j=await r.json(); var srv=j&&j.data;
-    var lt=0; try{ var l=JSON.parse(localStorage.getItem(KEY)); lt=(l&&l._savedAt)||0; }catch(e){}
-    var st=(srv&&srv._savedAt)||0;
-    if(srv&&srv.schemaVersion&&st>lt){
-      state=migrate(srv); _tIdx=null; state.goals.forEach(function(g){delete g._c;});
+    if(!srv||!srv.schemaVersion){ netPush(); return false; } // первый запуск: заливаем локальное состояние на сервер
+    var merged=mergeState(state,srv);
+    var sig=function(s){ return JSON.stringify([s.tasks,s.goals,s.xpLog,(s.finance||{}).transactions,(s.finance||{}).workLog,s.skills,s.categories,s._savedAt]); };
+    if(sig(state)!==sig(merged)){
+      state=migrate(merged); _tIdx=null; state.goals.forEach(function(g){delete g._c;});
       saveState(); applySettings(); renderNav(); renderTopbar(); renderView();
-      toast('данные обновлены с сервера');
+      toast('данные синхронизированы');
       return true;
     }
-    if(!srv){ netPush(); } // первый запуск: заливаем локальное состояние на сервер
     return false;
   }catch(e){ return false; }
 }
