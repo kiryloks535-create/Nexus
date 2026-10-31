@@ -3959,8 +3959,8 @@ function renderSettings(){
       '<div class="kv"><span class="k">Автосинхронизация</span><span class="v"><input type="checkbox" class="sw" id="cg-auto" '+((s.cloud||{}).auto?'checked':'')+'></span></div>'+
       '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">'+
         '<button class="btn" onclick="cgSave()">Сохранить</button>'+
-        '<button class="btn" onclick="cloudPush(true)">↑ В облако</button>'+
-        '<button class="btn" onclick="cloudPull(true)">↓ Из облака</button></div>'+
+        '<button class="btn" onclick="cgSave();cloudPush(true)">↑ В облако</button>'+
+        '<button class="btn" onclick="cgSave();cloudPull(true)">↓ Из облака</button></div>'+
       '<div class="subline" style="margin-top:8px" id="cg-status">'+cgStatus()+'</div>'+
     '</div>'+
     '<div class="c4 panel"><div class="panel-title">'+t('st_blockB')+'</div>'+
@@ -4058,7 +4058,7 @@ function cgReady(){ const c=state.settings.cloud||{}; return !!(c.token&&c.repo)
 function cgApi(){ const c=state.settings.cloud; return 'https://api.github.com/repos/'+c.repo+'/contents/'+encodeURIComponent(c.file||'nexus-state.json'); }
 function cgHeaders(){ return {Authorization:'Bearer '+state.settings.cloud.token,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'}; }
 function cgStatus(){
-  if(!cgReady())return 'не настроено — вставь репозиторий и токен ниже';
+  if(!cgReady())return 'не настроено — вставь репозиторий и токен выше и нажми Сохранить';
   const t=localStorage.getItem(KEY+'-cloudAt');
   return 'подключено · последняя синхронизация: '+(t?new Date(+t).toLocaleString('ru-RU'):'ещё не было');
 }
@@ -4068,8 +4068,7 @@ function cgSave(){
   state.settings.cloud.token=$('#cg-token').value.trim();
   state.settings.cloud.file=($('#cg-file').value.trim()||'nexus-state.json').replace(/^\/+/,'');
   state.settings.cloud.auto=$('#cg-auto').checked;
-  saveState(); toast('☁ Облако: настройки сохранены');
-  if(state.settings.cloud.auto)cloudPull(true);
+  emitChange(); toast('☁ Облако: настройки сохранены'); // emitChange → перерисовка → статус обновится
 }
 function b64utf8(s){ return btoa(unescape(encodeURIComponent(s))); }
 let _cgT=null,_cgBusy=false;
