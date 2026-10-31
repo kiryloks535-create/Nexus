@@ -672,7 +672,7 @@ body.side-open #side-backdrop{display:block}
   <aside id="sidebar">
     <div class="brand">NEXUS<span>// LIFE OS</span></div>
     <nav id="nav"></nav>
-    <div class="side-foot" id="side-foot">NEXUS v1.6 · ВСЕ ЭТАПЫ ✓</div>
+    <div class="side-foot" id="side-foot">NEXUS v1.7 · ВСЕ ЭТАПЫ ✓</div>
   </aside>
   <div id="main">
     <header id="topbar"></header>
@@ -3516,6 +3516,37 @@ function howXpModal(){
   openModal('<div class="panel-title">'+t('rpg_how')+'</div>'+lines.map(l=>'<div class="ins-line">'+esc(l)+'</div>').join('')+
     '<div class="modal-actions"><button class="btn" onclick="closeModal()">'+t('close')+'</button></div>');
 }
+function skillModal(sid){ // + навык / редактирование (запрос 2026-10-31)
+  const s=sid?state.skills.find(x=>x.id===sid):null;
+  const icons=['⚔️','🖥️','🎨','🎬','🤖','💪','📚','🇬🇧','🇵🇱','📖','🪵','🏊','🔨','🎸','🍳','✏️','🧠','🛠️','🗣️','♟️','🏃','🐕','🌱','⚡'];
+  const cur=s?s.icon:'⚔️';
+  const row=icons.map(ic=>'<label style="display:inline-flex;align-items:center;gap:4px;margin:0 10px 6px 0;cursor:pointer"><input type="radio" name="sk-ico" value="'+ic+'"'+(ic===cur?' checked':'')+'> '+ic+'</label>').join('');
+  openModal('<div class="panel-title">'+(sid?'Навык · изменить':'Новый навык')+'</div><form id="sk-form">'+
+    '<div class="frow"><label class="f">Название</label><input class="f" id="sk-name" required maxlength="40" value="'+esc(s?s.name:'')+'"></div>'+
+    '<div class="frow"><label class="f">Иконка</label>'+row+'</div>'+
+    '<div class="frow"><label class="f">Начальный уровень (1–30)</label><input class="f" type="number" min="1" max="30" id="sk-lvl" value="'+(s?s.level:1)+'"></div>'+
+    '<div class="modal-actions">'+(sid?'<button type="button" class="btn btn-danger left" id="sk-del">Удалить</button>':'')+
+    '<button type="button" class="btn" onclick="closeModal()">'+t('cancel')+'</button>'+
+    '<button type="submit" class="btn btn-primary">'+t('save')+'</button></div></form>');
+  $('#sk-form').onsubmit=e=>{
+    e.preventDefault();
+    const name=$('#sk-name').value.trim(); if(!name)return;
+    const ic=(document.querySelector('input[name="sk-ico"]:checked')||{}).value||'⚔️';
+    const lvl=Math.max(1,Math.min(30,parseInt($('#sk-lvl').value,10)||1));
+    if(sid){ const i=state.skills.findIndex(x=>x.id===sid); state.skills[i]={...state.skills[i],name,icon:ic,level:lvl}; }
+    else state.skills.push({id:'sk-'+uid(),name,icon:ic,level:lvl,xp:0,goals:[]});
+    closeModal(); emitChange(); toast(ic+' '+name+' сохранён');
+  };
+  if(sid){
+    $('#sk-del').onclick=()=>{
+      const i=state.skills.findIndex(x=>x.id===sid); if(i<0)return;
+      const [old]=state.skills.splice(i,1);
+      state.goals.forEach(g=>{ if(g.skills)g.skills=g.skills.filter(x=>x!==sid); }); // убрать мёртвые ссылки из целей
+      closeModal(); emitChange();
+      toast('Навык удалён',{amber:true,action:()=>{ state.skills.splice(i,0,old); emitChange(); }});
+    };
+  }
+}
 function practiceModal(sid){
   const s=state.skills.find(x=>x.id===sid); if(!s)return;
   openModal('<div class="panel-title">'+t('rpg_practice')+' · '+s.icon+' '+esc(s.name)+'</div><form id="pr-form">'+
@@ -3568,7 +3599,8 @@ function renderRPG(){
       '<div class="sk-name glow-soft">LV '+s.level+'</div>'+
       '<div class="goal-bar" style="width:100%"><i style="width:'+Math.min(100,Math.round(s.xp/need*100))+'%"></i></div>'+
       '<div class="subline">'+s.xp+'/'+need+' XP</div>'+
-      '<button class="mini-btn" style="margin-top:6px" onclick="practiceModal(\''+s.id+'\')">'+t('rpg_practice')+'</button></div>';
+      '<button class="mini-btn" style="margin-top:6px" onclick="practiceModal(\''+s.id+'\')">'+t('rpg_practice')+'</button>'+
+      '<button class="mini-btn" style="margin-top:6px" title="изменить навык" onclick="skillModal(\''+s.id+'\')">✎</button></div>';
   }).join('');
   const slog=state.rpg.skillLog.slice(-15).reverse().map(e=>'<div class="kv"><span class="k">'+e.date+' · '+esc(e.skill)+(e.reason?' · '+esc(e.reason):'')+'</span><span class="v acc">+'+e.amt+'</span></div>').join('');
   const dlog=state.rpg.log.slice(-10).reverse().map(e=>'<div class="kv"><span class="k">'+e.date+'</span><span class="v '+(e.text.startsWith('PENALTY')?'ern':'acc')+'">'+esc(e.text)+'</span></div>').join('');
@@ -3595,7 +3627,7 @@ function renderRPG(){
         '<div class="kv"><span class="k">Креатив · разработка ×6 + медиа</span><span class="v acc">'+stats.creativity+'</span></div>'+
         (recent?'<div class="subline" style="margin-top:8px">'+recent+'</div>':'')+'</div>'+
       '<div class="c4 panel"><div class="panel-title">'+t('rpg_ach')+' · '+state.achievements.length+'/'+ACH.length+'</div><div class="ach-grid" style="grid-template-columns:1fr">'+achHtml+'</div></div>'+
-      '<div class="c12 panel"><div class="panel-title">'+t('rpg_tree')+' · '+state.skills.length+' навыков</div><div class="sk-tree">'+tree+'</div></div>'+
+      '<div class="c12 panel"><div class="panel-title" style="display:flex;align-items:center;gap:10px">'+t('rpg_tree')+' · '+state.skills.length+' навыков <button class="mini-btn" onclick="skillModal()">+ навык</button></div><div class="sk-tree">'+tree+'</div></div>'+
       '<div class="c6 panel"><div class="panel-title">Журнал XP навыков</div>'+(slog||'<div class="subline">XP навыков пока нет — выполняй связанные задачи или записывай практику</div>')+'</div>'+
       '<div class="c6 panel"><div class="panel-title">'+t('rpg_log')+'</div>'+(dlog||'<div class="subline">чисто — без пенальти</div>')+
         '<div class="subline" style="margin-top:6px">Дисциплина '+state.rpg.discipline+'/100 · пенальти '+(state.settings.penalty?'ВКЛ (−5 за пропуск, пол 0)':'ВЫКЛ')+'</div></div>'+
