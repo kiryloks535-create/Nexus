@@ -1429,6 +1429,11 @@ function migrate(s){
     s.schedule.template=s.schedule.template||[];
     if(!s.schedule.template.some(l=>l.subject==='Бой-лагерь (дом)')) s.schedule.template.push(L(5,'18:00','19:30','Бой-лагерь (дом)'));
   }
+  if(!s.schedule._kaizenSeed){ // v1.2.7: Пт кайдзен-практика 2 ч (запрос юзера 2026-11-01)
+    s.schedule._kaizenSeed=true;
+    s.schedule.template=s.schedule.template||[];
+    if(!s.schedule.template.some(l=>l.subject==='Кайдзен — практика (2 ч)')) s.schedule.template.push(L(5,'16:00','18:00','Кайдзен — практика (2 ч)'));
+  }
   if(!s.settings._trainWeekend){ // показывать выходные в сетке расписания
     s.settings._trainWeekend=true;
     s.settings.showWeekends=true;
