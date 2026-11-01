@@ -4477,7 +4477,8 @@ function goalScheduleModal(iso){
     const tks=state.tasks.filter(x=>x.goalId===g.id&&!x.done).sort(byPrioDate);
     const items=tks.map(tk=>'<label class="gs-tk" style="display:flex;align-items:center;gap:8px;padding:5px 6px;border:1px solid var(--border);margin:4px 0;cursor:pointer;border-radius:6px">'+
       '<input type="checkbox" class="gs-cb" value="'+tk.id+'"'+(tk.date===iso?' checked':'')+'> '+
-      '<span style="flex:1;min-width:0">'+esc(tk.title)+(tk.time?' <span class="mini-tag main">⏰ '+tk.time+'</span>':'')+(tk.date?' <span class="subline">· '+fmtShort(tk.date)+'</span>':'')+'</span>'+
+      '<span style="flex:1;min-width:0">'+esc(tk.title)+(tk.date&&tk.date!==iso?' <span class="subline">· '+fmtShort(tk.date)+'</span>':'')+'</span>'+
+      '<input type="time" class="f gs-tk-time" data-id="'+tk.id+'" value="'+(tk.time||'')+'" style="width:98px;flex:none;padding:2px 4px;font-size:11px" onclick="event.stopPropagation()">'+
       '<span class="mini-tag">P'+tk.priority+'</span></label>').join('');
     return '<div class="gs-item" data-t="'+esc((g.title+' '+(g.desc||'')).toLowerCase())+'">'+
       '<div style="display:flex;align-items:center;gap:8px;margin:10px 0 4px"><span class="gdot" style="width:9px;height:9px;flex:none;background:'+esc(g.color||cat.color||'#7fa38c')+'"></span>'+
@@ -4485,26 +4486,26 @@ function goalScheduleModal(iso){
       (items?items:'<div class="subline" style="margin:4px 0 8px">'+t('gs_no_tasks')+' · <button class="mini-btn" onclick="closeModal();quickAdd(\''+iso+'\',\''+g.id+'\')">+'+t('uf_addtask')+'</button></div>')+
     '</div>';
   }).join('');
-  const preset=(state.tasks.find(x=>x.date===iso&&x.time)||{}).time||'12:00';
   openModal('<div class="panel-title">'+t('gs_title')+' · '+fmtShort(iso)+'</div>'+
     '<input class="f" id="gs-q" placeholder="'+t('gs_search')+'" oninput="gsFilter()" autocomplete="off">'+
     '<div style="max-height:320px;overflow-y:auto;margin:10px 0">'+(list||'<div class="subline">'+t('gs_none')+'</div>')+'</div>'+
-    '<div class="frow"><label class="f">'+t('gs_time')+' (HH:MM)</label><input class="f" type="time" id="gs-time" value="'+preset+'"></div>'+
+    '<div class="subline" style="margin:6px 0">'+t('gs_time')+' (HH:MM) — своя у каждой задачи</div>'+
     '<div class="modal-actions"><button type="button" class="btn" onclick="closeModal()">'+t('cancel')+'</button>'+
     '<button type="button" class="btn btn-primary" onclick="gsSave(\''+iso+'\')">'+t('save')+'</button></div>');
   const q=$('#gs-q'); if(q)q.focus();
 }
 function gsSave(iso){
-  const time=$('#gs-time').value||null;
   const ids=[...document.querySelectorAll('.gs-cb:checked')].map(x=>x.value);
   if(!ids.length){ toast(t('gs_pick'),{amber:true}); return; }
-  let n=0;
+  const times=new Set(); let n=0;
   ids.forEach(id=>{
     const tk=state.tasks.find(x=>x.id===id); if(!tk)return;
-    tk.date=iso; tk.time=time; tk.updatedAt=Date.now(); n++;
+    const ti=document.querySelector('.gs-tk-time[data-id="'+id+'"]');
+    tk.time=(ti&&ti.value)||null; tk.date=iso; tk.updatedAt=Date.now(); n++;
+    if(tk.time)times.add(tk.time);
   });
   closeModal(); emitChange();
-  toast(t('gs_planned')+': '+n+(time?' · ⏰ '+time:''));
+  toast(t('gs_planned')+': '+n+(times.size?' · ⏰ '+[...times].sort().join(', '):''));
 }
 
 /* ============================================================
