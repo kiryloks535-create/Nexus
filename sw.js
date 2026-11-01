@@ -4,7 +4,7 @@
    Background Sync replay for /api/state writes (IDB queue);
    push scaffold (server key required to activate).
    ============================================================ */
-const CACHE = 'nexus-v3.22';
+const CACHE = 'nexus-v3.23';
 const PRECACHE = [
   './',
   './index.html',
