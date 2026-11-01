@@ -362,6 +362,68 @@ input[type=checkbox].ck:checked::before{content:'✓';position:absolute;inset:0;
 /* boss bar */
 .bossbar{height:14px;background:#0a120c;border:1px solid rgba(255,56,96,.5)}
 .bossbar>i{display:block;height:100%;background:linear-gradient(90deg,#ff3860,#ffb300);box-shadow:0 0 10px rgba(255,56,96,.4);transition:width .2s}
+.bossbar{position:relative}
+.boss-hp-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;letter-spacing:.5px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.85);font-variant-numeric:tabular-nums;pointer-events:none}
+/* BUG 1: inline-валидация вместо нативного попапа браузера */
+.f.err{border-color:#ff3860!important;box-shadow:0 0 0 1px rgba(255,56,96,.45)}
+.ferr{display:none;color:#ff6b81;font-size:11px;margin-top:3px}
+/* FEATURE 1: задачи из целей на таймлайне дня */
+.tl-block.tk-block{cursor:pointer;border-left-style:dashed}
+.tl-block.tk-block.done{opacity:.45}
+.tl-block.tk-block.done .ts{text-decoration:line-through}
+.gs-tk:hover{border-color:var(--accent)!important}
+/* NEW 1/4/10: фокус дня, помодоро в шапке, полосы блоков фокуса */
+.focus-root{position:fixed;inset:0;z-index:300;background:radial-gradient(900px 500px at 70% -10%,#141233 0%,#07060f 60%);display:flex;align-items:center;justify-content:center}
+.focus-card{width:min(560px,92vw);background:rgba(14,13,28,.94);border:1px solid rgba(160,107,255,.35);border-radius:14px;padding:24px 28px;box-shadow:0 30px 80px rgba(0,0,0,.6);position:relative}
+.focus-card .fc-title{font-size:20px;font-weight:700;margin:8px 0 4px}
+.focus-card .fc-goal{display:flex;align-items:center;gap:8px;color:var(--dim);font-size:12px}
+.focus-nav{display:flex;gap:8px;margin-top:18px}
+.pomo-run{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid rgba(255,56,96,.5);border-radius:8px;color:#ffb3c1;font-variant-numeric:tabular-nums;cursor:pointer;font-size:12px;white-space:nowrap}
+.xp-burst{position:absolute;left:50%;top:16%;transform:translateX(-50%);font-size:26px;font-weight:800;color:var(--accent);text-shadow:0 0 18px rgba(0,255,127,.8);animation:xpUp .9s ease-out forwards;pointer-events:none}
+@keyframes xpUp{0%{opacity:0;transform:translate(-50%,14px) scale(.7)}20%{opacity:1}100%{opacity:0;transform:translate(-50%,-42px) scale(1.15)}}
+.fb-band{position:absolute;left:0;right:0;border-left:3px solid;border-radius:4px;pointer-events:none}
+.fb-band>span{position:absolute;top:2px;left:6px;font-size:9.5px;letter-spacing:.08em;opacity:.85;white-space:nowrap;font-weight:600}
+/* NEW 2/3/5/7/9: разбор недели, карта привычек, дедлайны, карта целей */
+.hm0{background:#20262e}
+.hm1{background:#6d4fd466}
+.hm2{background:#8b5cf6}
+.hm3{background:#b388ff}
+.hm4{background:#22d3ee;box-shadow:0 0 6px rgba(34,211,238,.7)}
+.dl-urg{border-left:3px solid transparent;padding-left:8px;border-radius:3px}
+.dl-yellow{border-color:#ffb300}
+.dl-orange{border-color:#ff7a1a}
+.dl-red{border-color:#ff3860;animation:dlPulse 1.6s infinite}
+@keyframes dlPulse{0%,100%{box-shadow:-3px 0 0 rgba(255,56,96,0)}50%{box-shadow:-3px 0 14px rgba(255,56,96,.45)}}
+/* SECTION 19: NEXUS AI */
+.sys-alert{position:fixed;top:64px;right:14px;z-index:400;width:min(340px,86vw);background:linear-gradient(160deg,rgba(20,8,28,.97),rgba(8,4,14,.98));border:1px solid rgba(160,107,255,.6);box-shadow:0 0 24px rgba(160,107,255,.35),inset 0 0 30px rgba(255,56,96,.08);border-radius:8px;padding:12px 14px;font-family:'Cascadia Mono','Consolas',monospace;animation:sysIn .25s ease-out}
+.sys-alert.out{opacity:0;transform:translateX(24px);transition:.4s}
+.sys-tag{color:#ff3860;font-size:11px;letter-spacing:.22em;margin-bottom:6px;text-shadow:0 0 8px rgba(255,56,96,.6)}
+.sys-txt{color:#e8e2d0;font-size:12px;line-height:1.55;white-space:pre-wrap}
+@keyframes sysIn{from{opacity:0;transform:translateX(30px)}to{opacity:1}}
+#ai-bubble{position:fixed;left:14px;bottom:18px;z-index:290;background:radial-gradient(circle at 30% 30%,#241a3f,#0d0a1a);border:1px solid rgba(160,107,255,.55);color:#cbb8ff;border-radius:999px;padding:10px 16px;font-family:inherit;font-size:11px;letter-spacing:.18em;cursor:pointer;box-shadow:0 0 18px rgba(160,107,255,.4)}
+#ai-bubble:hover{box-shadow:0 0 26px rgba(160,107,255,.7)}
+#ai-chat{position:fixed;left:14px;bottom:66px;z-index:395;width:min(360px,92vw);height:min(480px,70vh);display:flex;flex-direction:column;background:rgba(10,8,20,.98);border:1px solid rgba(160,107,255,.5);border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.7)}
+.ai-chat-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid rgba(160,107,255,.25);font-size:11px;letter-spacing:.2em;color:#cbb8ff}
+.ai-chat-head button{margin-left:auto}
+.ai-chat-body{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:8px}
+.ai-msg{max-width:86%;padding:8px 10px;border-radius:10px;font-size:12.5px;line-height:1.5;white-space:pre-wrap}
+.ai-msg.me{align-self:flex-end;background:rgba(0,255,127,.12);border:1px solid rgba(0,255,127,.3)}
+.ai-msg.ai{align-self:flex-start;background:rgba(160,107,255,.12);border:1px solid rgba(160,107,255,.35)}
+.ai-chat-in{display:flex;gap:6px;padding:8px;border-top:1px solid rgba(160,107,255,.25)}
+.ai-chat-in input{flex:1}
+.ai-loading{padding:18px 6px;text-align:center;color:#cbb8ff;letter-spacing:.2em;font-size:12px;animation:aiPulse 1.2s infinite}
+@keyframes aiPulse{0%,100%{opacity:.45}50%{opacity:1}}
+.ai-txt{white-space:pre-wrap;font-size:12.5px;line-height:1.6;padding:6px 2px}
+.ai-txt.dim{opacity:.85}
+.ai-insight{border-left:3px solid;padding:8px 10px;margin:6px 0;font-size:12px;line-height:1.5;border-radius:4px;background:rgba(255,255,255,.03)}
+.ai-insight.red{border-color:#ff3860}.ai-insight.amber{border-color:#ffb300}.ai-insight.green{border-color:#00ff7f}.ai-insight.violet{border-color:#a06bff}
+/* SECTION 20: ВОИН-190 */
+.w19-banner{background:linear-gradient(90deg,rgba(255,56,96,.16),rgba(255,56,96,.05));border:1px solid rgba(255,56,96,.55);color:#ffb3c1;padding:10px 14px;border-radius:8px;font-size:12.5px;letter-spacing:.06em;margin-bottom:10px}
+.w19-banner.err{background:linear-gradient(90deg,rgba(255,0,40,.25),rgba(255,56,96,.08));animation:dlPulse 1.6s infinite}
+.w19-table{border-collapse:collapse;width:100%;font-size:11.5px}
+.w19-table th,.w19-table td{border:1px solid rgba(160,107,255,.18);padding:4px 6px;text-align:left}
+.w19-table th{color:var(--dim);font-weight:600;letter-spacing:.06em;font-size:10px;white-space:nowrap}
+.w19-table input{background:transparent;border:1px solid var(--border);color:var(--parch);border-radius:4px}
 
 /* ---------- responsive ---------- */
 @media(max-width:920px){
@@ -639,7 +701,7 @@ body.side-open #side-backdrop{display:block}
   .tr-day{gap:6px;padding:8px 4px}
   .tr-ck{margin-right:8px;white-space:normal}
   .frow2{flex-direction:column}
-  #view{padding-bottom:24px}
+  #view{padding-bottom:calc(60px + env(safe-area-inset-bottom))} /* UI FIX 3: контент не заезжает под нижнюю навигацию */
   #app{padding-bottom:calc(64px + env(safe-area-inset-bottom))}
   /* bottom navigation */
   #bottomnav{position:fixed;left:0;right:0;bottom:0;z-index:160;display:flex;
@@ -672,7 +734,7 @@ body.side-open #side-backdrop{display:block}
   <aside id="sidebar">
     <div class="brand">NEXUS<span>// LIFE OS</span></div>
     <nav id="nav"></nav>
-    <div class="side-foot" id="side-foot">NEXUS v1.7 · ВСЕ ЭТАПЫ ✓</div>
+    <div class="side-foot" id="side-foot">NEXUS v2.1 · ВОИН-190</div>
   </aside>
   <div id="main">
     <header id="topbar"></header>
@@ -682,6 +744,7 @@ body.side-open #side-backdrop{display:block}
 <div id="modal-root"></div>
 <div id="toast-root"></div>
 <div id="overlay-root"></div>
+<button id="ai-bubble" onclick="aiChatToggle()" title="ЧЁРНЫЙ ЯЩИК · НЕКСУС">◆ НЕКСУС</button>
 <aside id="status-drawer" aria-label="My Status"></aside>
 <div id="status-backdrop" onclick="toggleStatus()"></div>
 <nav id="bottomnav" aria-label="Mobile navigation">
@@ -725,7 +788,19 @@ const I18N={
     dash_skills:'Top skills', dash_categories:'Goals by category',
     dash_roadmap:'Build roadmap', dash_lessons:'Lessons today', dash_unfinished:'Unfinished · top open',
     dash_no_open:'No open tasks.',
-    qa_title:'Quick add task', qa_name:'Task name', qa_goal:'Goal (optional)', qa_none:'— none —',
+    qa_title:'Quick add task', qa_name:'Task name', qa_goal:'Goal (optional)', qa_none:'— none —', qa_err:'Fill in the task name', boss_hp_left:'{p}% HP remaining',
+    gs_title:'Schedule task from goal', gs_search:'Search goals…', gs_time:'Time', gs_no_tasks:'no open tasks', gs_planned:'Scheduled', gs_none:'No active goals', gs_pick:'Pick at least one task',
+    fm_title:'FOCUS OF THE DAY', fm_done:'Complete', fm_next:'Next', fm_empty:'No tasks for today', fm_all:'Mission complete!', pomo_title:'Pomodoro 25 min',
+    fb_title:'Focus blocks', fb_add:'block', fb_name:'Name', fb_empty_tom:'Tomorrow\'s block "{n}" is empty — schedule a task!',
+    en_energy:'Energy of the day', en_set:'log energy', en_light:'Low energy — start light:', en_corr:'On energy-4+ days you finish {p}% more tasks',
+    wr_title:'WEEKLY REVIEW', wr_step2:'What went wrong?', wr_step3:'Next week priorities', wr_save:'Save review', wr_log:'Decision log', wr_open:'Weekly review', wr_none:'no reviews yet', heat_empty:'No tasks that day',
+    map_list:'List', map_link:'Link to…', map_unlink:'Clear links', map_open:'Open in list',
+    boss_goals:'Goals completed', boss_xp:'Month XP', boss_skill:'Best skill', boss_disc:'Discipline', boss_next:'Next boss HP: {p} — stronger performers face tuned bosses',
+    ai_opt_title:'DAY OPTIMIZATION', ai_opt_btn:'ОПТИМИЗИРОВАТЬ', ai_aut_title:'GOAL AUTOPSY', ai_aut_btn:'Разобрать цель', ai_gen_title:'TASK GENERATOR', ai_gen_btn:'AI задачи',
+    ai_sk_title:'SKILL ADVISOR', ai_sk_btn:'Совет', ai_boss_title:'СТРАТЕГИЯ', ai_brief_btn:'ПРИКАЗ НА ДЕНЬ',
+    en_move:'Move heavy tasks to tomorrow', en_attack:'Attack: pull top-priority task from backlog',
+    ai_persona:'AI personality', ai_freq:'Notification frequency', ai_brieftime:'Briefing time', ai_tasks_t:'AI task suggestions', ai_sys_t:'Solo Leveling notifications', ai_chat_t:'NEXUS chat bubble', ai_chat_reset:'Reset chat history', ai_privacy:'Key stays local, never synced. Finances and personal notes are never sent to the API.',
+    ai_pat_title:'PATTERN DETECTOR', ai_pat_scan:'scan', hm_legend:'0% серый → 25% фиолетовый → 50% лаванда → 100% циан · тап по дню = детали',
     qa_date:'Due date', qa_prio:'Priority (1–5)', qa_value:'Value (optional, e.g. grade 1–6)',
     save:'Save', cancel:'Cancel', close:'Close', del:'Delete', dup:'Duplicate',
     set_title:'Settings', set_appearance:'Appearance', set_glow:'Neon glow', set_scan:'Scanlines',
@@ -854,7 +929,19 @@ const I18N={
     dash_directive:'Директива дня', dash_directive_none:'Нет открытых приоритетных целей — добавь задачи через + Добавить.', dash_no_tasks:'нет задач',
     dash_skills:'Топ навыков', dash_categories:'Цели по категориям', dash_roadmap:'План сборки',
     dash_lessons:'Уроки сегодня', dash_unfinished:'Незакрытое · топ', dash_no_open:'Нет открытых задач.',
-    qa_title:'Быстрая задача', qa_name:'Название задачи', qa_goal:'Цель (необяз.)', qa_none:'— нет —',
+    qa_title:'Быстрая задача', qa_name:'Название задачи', qa_goal:'Цель (необяз.)', qa_none:'— нет —', qa_err:'Заполни название задачи', boss_hp_left:'{p}% HP осталось',
+    gs_title:'Задача из цели', gs_search:'Поиск целей…', gs_time:'Время', gs_no_tasks:'нет открытых задач', gs_planned:'Запланировано', gs_none:'Нет активных целей', gs_pick:'Выбери хотя бы одну задачу',
+    fm_title:'ФОКУС ДНЯ', fm_done:'Выполнить', fm_next:'Дальше', fm_empty:'Нет задач на сегодня', fm_all:'Миссия дня выполнена!', pomo_title:'Помодоро 25 мин',
+    fb_title:'Блоки фокуса', fb_add:'блок', fb_name:'Название', fb_empty_tom:'Завтрашний блок «{n}» пуст — назначь задачу!',
+    en_energy:'Энергия дня', en_set:'отметить энергию', en_light:'Мало энергии — начни с лёгких:', en_corr:'В дни с энергией 4+ ты выполняешь на {p}% больше задач',
+    wr_title:'РАЗБОР НЕДЕЛИ', wr_step2:'Что пошло не так?', wr_step3:'Приоритеты на следующую неделю', wr_save:'Сохранить разбор', wr_log:'История решений', wr_open:'Разбор недели', wr_none:'разборов ещё нет', heat_empty:'В этот день задач не было',
+    map_list:'Список', map_link:'Связать с…', map_unlink:'Убрать связи', map_open:'Открыть в списке',
+    boss_goals:'Цели завершено', boss_xp:'XP за месяц', boss_skill:'Лучший навык', boss_disc:'Дисциплина', boss_next:'HP следующего босса: {p} — чем выше результат, тем настроеннее босс',
+    ai_opt_title:'ОПТИМИЗАЦИЯ ДНЯ', ai_opt_btn:'ОПТИМИЗИРОВАТЬ', ai_aut_title:'РАЗБОР ПРОВАЛА', ai_aut_btn:'Разобрать цель', ai_gen_title:'ГЕНЕРАТОР ЗАДАЧ', ai_gen_btn:'AI задачи',
+    ai_sk_title:'СОВЕТНИК НАВЫКОВ', ai_sk_btn:'Совет', ai_boss_title:'СТРАТЕГИЯ', ai_brief_btn:'ПРИКАЗ НА ДЕНЬ',
+    en_move:'Перенести тяжёлые на завтра', en_attack:'Атака: добавить приоритет из бэклога',
+    ai_persona:'Характер AI', ai_freq:'Частота уведомлений', ai_brieftime:'Время приказа', ai_tasks_t:'AI-подсказки задач', ai_sys_t:'Системные уведомления (Solo Leveling)', ai_chat_t:'Чат НЕКСУС', ai_chat_reset:'Сбросить историю чата', ai_privacy:'Ключ хранится только локально и не синхронизируется. Финансы и личные заметки в API не отправляются.',
+    ai_pat_title:'ДЕТЕКТОР ПАТТЕРНОВ', ai_pat_scan:'скан', hm_legend:'0% серый → 25% фиолетовый → 50% лаванда → 100% циан · тап по дню = детали',
     qa_date:'Срок', qa_prio:'Приоритет (1–5)', qa_value:'Значение (необяз., напр. оценка 1–6)',
     save:'Сохранить', cancel:'Отмена', close:'Закрыть', del:'Удалить', dup:'Дублировать',
     set_title:'Настройки', set_appearance:'Внешний вид', set_glow:'Неоновое свечение', set_scan:'Сканлайны',
@@ -978,7 +1065,19 @@ const I18N={
     dash_directive:'Dyrektywa dnia', dash_directive_none:'Brak otwartych celów priorytetowych — dodaj zadania przez + Dodaj.', dash_no_tasks:'brak zadań',
     dash_skills:'Top umiejętności', dash_categories:'Cele wg kategorii', dash_roadmap:'Mapa budowy',
     dash_lessons:'Zajęcia dzisiaj', dash_unfinished:'Zaległe · top', dash_no_open:'Brak otwartych zadań.',
-    qa_title:'Szybkie zadanie', qa_name:'Nazwa zadania', qa_goal:'Cel (opcj.)', qa_none:'— brak —',
+    qa_title:'Szybkie zadanie', qa_name:'Nazwa zadania', qa_goal:'Cel (opcj.)', qa_none:'— brak —', qa_err:'Wpisz nazwę zadania', boss_hp_left:'{p}% HP pozostało',
+    gs_title:'Zadanie z celu', gs_search:'Szukaj celów…', gs_time:'Czas', gs_no_tasks:'brak otwartych zadań', gs_planned:'Zaplanowano', gs_none:'Brak aktywnych celów', gs_pick:'Wybierz co najmniej jedno zadanie',
+    fm_title:'FOKUS DNIA', fm_done:'Wykonaj', fm_next:'Dalej', fm_empty:'Brak zadań na dziś', fm_all:'Misja dnia wykonana!', pomo_title:'Pomodoro 25 min',
+    fb_title:'Bloki fokusowe', fb_add:'blok', fb_name:'Nazwa', fb_empty_tom:'Jutrzejszy blok „{n}" jest pusty — zaplanuj zadanie!',
+    en_energy:'Energia dnia', en_set:'zapisz energię', en_light:'Mało energii — zacznij od lekkich:', en_corr:'W dni z energią 4+ kończysz o {p}% więcej zadań',
+    wr_title:'PRZEGLĄD TYGODNIA', wr_step2:'Co poszło nie tak?', wr_step3:'Priorytety na przyszły tydzień', wr_save:'Zapisz przegląd', wr_log:'Dziennik decyzji', wr_open:'Przegląd tygodnia', wr_none:'jeszcze brak przeglądów', heat_empty:'Tego dnia nie było zadań',
+    map_list:'Lista', map_link:'Powiąż z…', map_unlink:'Usuń powiązania', map_open:'Otwórz na liście',
+    boss_goals:'Cele ukończone', boss_xp:'XP za miesiąc', boss_skill:'Najlepsza umiejętność', boss_disc:'Dyscyplina', boss_next:'HP następnego bossa: {p}',
+    ai_opt_title:'OPTYMALIZACJA DNIA', ai_opt_btn:'OPTYMALIZUJ', ai_aut_title:'SEKCJA PORAŻKI CELU', ai_aut_btn:'Przeanalizuj cel', ai_gen_title:'GENERATOR ZADAŃ', ai_gen_btn:'AI zadania',
+    ai_sk_title:'DORADCA UMIEJĘTNOŚCI', ai_sk_btn:'Rada', ai_boss_title:'STRATEGIA', ai_brief_btn:'ROZKAZ DNIA',
+    en_move:'Przenieś ciężkie na jutro', en_attack:'Atak: dodaj priorytet z zaległości',
+    ai_persona:'Osobowość AI', ai_freq:'Częstotliwość powiadomień', ai_brieftime:'Czas rozkazu', ai_tasks_t:'Podpowiedzi AI', ai_sys_t:'Powiadomienia systemowe', ai_chat_t:'Czat NEXUS', ai_chat_reset:'Wyczyść historię czatu', ai_privacy:'Klucz zostaje lokalnie. Finanse i notatki nie trafiają do API.',
+    ai_pat_title:'DETEKTOR WZORCÓW', ai_pat_scan:'skan', hm_legend:'0% szary → 25% fiolet → 50% lawenda → 100% cyjan · kliknij dzień',
     qa_date:'Termin', qa_prio:'Priorytet (1–5)', qa_value:'Wartość (opcj., np. ocena 1–6)',
     save:'Zapisz', cancel:'Anuluj', close:'Zamknij', del:'Usuń', dup:'Duplikuj',
     set_title:'Ustawienia', set_appearance:'Wygląd', set_glow:'Neonowa poświata', set_scan:'Linie skanujące',
@@ -1347,7 +1446,8 @@ function loadState(){
   return seed();
 }
 function saveState(){
-  try{ state._savedAt=Date.now(); localStorage.setItem(KEY,JSON.stringify(state)); if(typeof scheduleNetPush==='function')scheduleNetPush(); if(typeof scheduleCloudPush==='function')scheduleCloudPush(); }
+  try{ state._savedAt=Date.now(); localStorage.setItem(KEY,JSON.stringify(state)); if(typeof _cloudDirty!=='undefined')_cloudDirty=true; // PERF 1: были реальные изменения
+    if(typeof scheduleNetPush==='function')scheduleNetPush(); if(typeof scheduleCloudPush==='function')scheduleCloudPush(); }
   catch(e){ memOnly=true; } // graceful fallback: state lives in memory this session
 }
 // ---- rolling daily backups (3 snapshots in separate localStorage keys) ----
@@ -1387,8 +1487,8 @@ function restoreBackup(i){
    SECTION 4 — XP engine (strict mode per decision 5B)
    ============================================================ */
 const PRIORITY_MULT={1:1.0,2:1.25,3:1.5,4:2.0,5:3.0};
-const xpForLevel=n=>Math.round(700*Math.pow(n,1.5)); // ×7 (запрос 2026-10-31): уровень качается в 7 раз дольше
-const xpForSkillLevel=n=>Math.round(500*Math.pow(n,1.4)); // ×10 от исходных 50 (запрос 2026-10-31): 1→2 = 500 XP
+const xpForLevel=n=>Math.round(7000*Math.pow(n,1.5)); // ×10 поверх ×7 (запрос 2026-11-01): LV1→2 = 7000 XP
+const xpForSkillLevel=n=>Math.round(2000*Math.pow(n,1.4)); // ×4 поверх ×10 (запрос 2026-11-01): навык 1→2 = 2000 XP
 const streakMult=s=>Math.min(1+0.1*(s||0),3.0);
 const totalXP=()=>state.xpLog.reduce((a,e)=>a+e.amount,0);
 function levelFromXP(total){
@@ -1403,7 +1503,9 @@ function addXP(amount,reason,meta={}){
   const before=levelFromXP(totalXP()).level;
   state.xpLog.push({id:uid(),date:todayISO(),amount:Math.round(amount),reason,...meta});
   const after=levelFromXP(totalXP()).level;
-  if(amount>0&&after>before) showLevelUp(after);
+  if(amount>0&&after>before){ showLevelUp(after); sysNotify('levelup',{level:after}); }
+  const tb=document.getElementById('topbar'); // BUG 3: XP-бар шапки и текст LV обновляются сразу, без перезагрузки
+  if(tb&&typeof renderTopbar==='function')renderTopbar();
 }
 function globalStreak(){ // consecutive days (ending today/yesterday) with ≥1 task completed
   const ds=[...new Set(state.tasks.filter(x=>x.done&&x.doneAt).map(x=>x.doneAt))].sort().reverse();
@@ -1746,6 +1848,7 @@ const NAV=[
   {id:'life',icon:'life',label:'nav_life'},
   {id:'rpg',icon:'rpg',label:'nav_rpg'},
   {id:'train',icon:'train',label:'nav_train'},
+  {id:'warrior',icon:'train',label:'⚔ ВОИН-190'},
   {id:'settings',icon:'settings',label:'nav_settings'},
 ];
 const STAGES=[
@@ -1806,9 +1909,15 @@ function toggleTask(id){
   tk.updatedAt=Date.now();
   if(tk.done){
     tk.doneAt=todayISO();
-    const xp=Math.round(50*(PRIORITY_MULT[tk.priority]||1)*streakMult(globalStreak()));
+    const fb=fbInBlock(tk.time); // NEW 10: задача внутри блока фокуса = +10% XP
+    const xp=Math.round(50*(PRIORITY_MULT[tk.priority]||1)*streakMult(globalStreak())*(fb?1.1:1));
     tk.xpAwarded=xp;
-    addXP(xp,'задача: '+tk.title,{taskId:tk.id});
+    addXP(xp,'задача: '+tk.title+(fb?' · блок «'+fb.name+'»':''),{taskId:tk.id});
+    sysNotify('task',{title:tk.title.slice(0,40),xp}); // AI-F1
+    const doneToday=state.tasks.filter(x=>x.doneAt===todayISO()).length;
+    if(doneToday===3)sysNotify('triple'); // AI-F1: ТРЁХЗАДАЧНЫЙ УДАР
+    const st=globalStreak();
+    if([3,7,14,30].includes(st))sysNotify('streak',{days:st}); // AI-F1: вехи серии
     const g=tk.goalId?state.goals.find(g=>g.id===tk.goalId):null;
     if(g&&g.skills) addSkillXP(g.skills,20,'task');
   }else{
@@ -1839,7 +1948,9 @@ function taskChip(tk,opts={}){
   return '<div class="tchip'+(tk.done?' done':'')+'" draggable="'+(!tk.done)+'" ondragstart="dragTask(event,\''+tk.id+'\')">'+
     '<input type="checkbox" class="ck" '+(tk.done?'checked':'')+' onchange="toggleTask(\''+tk.id+'\')">'+
     '<div style="flex:1;min-width:0"><div class="tt'+(overdue?' amber':'')+'">'+esc(tk.title)+'</div>'+
-    '<div class="g">'+(g?'◈ '+esc(g.title.slice(0,26))+' · ':'')+'P'+tk.priority+(tk.value!=null?' · '+esc(String(tk.value)):'')+(overdue?' · '+Math.abs(daysBetween(todayISO(),tk.date))+t('uf_overdue'):'')+'</div></div>'+
+    '<div class="g">'+(g?'<span class="gdot" style="width:7px;height:7px;display:inline-block;margin-right:4px;vertical-align:1px;background:'+esc(g.color||(state.categories.find(c=>c.id===g.cat)||{}).color||'#7fa38c')+'"></span>'+esc(g.title.slice(0,26))+' · ':'')+'P'+tk.priority+(tk.time?' <span class="mini-tag main">⏰ '+tk.time+(tk.date?' · '+fmtShort(tk.date):'')+'</span>':'')+(tk.value!=null?' · '+esc(String(tk.value)):'')+(overdue?' · '+Math.abs(daysBetween(todayISO(),tk.date))+t('uf_overdue'):'')+'</div></div>'+
+    (opts.pomo!==false&&!tk.done?'<button class="mini-btn" title="'+t('pomo_title')+'" onclick="event.stopPropagation();pomoStart(\''+tk.id+'\')">▶</button>':'')+
+    (tk.pomos?'<span class="mini-tag" title="помодоро">🍅'+tk.pomos+'</span>':'')+
     (opts.del?'<span class="x" onclick="delTask(\''+tk.id+'\')">✕</span>':'')+
   '</div>';
 }
@@ -1862,7 +1973,7 @@ function renderTopbar(){
     '<div class="tb-level"><span class="lv">LV '+lv.level+' ['+rankFor(lv.level)+']</span>'+
       '<div class="bar"><i style="width:'+pct+'%"></i></div>'+
       '<span class="tb-xptxt">'+lv.into+'/'+lv.need+' XP</span></div>'+
-    '<button class="btn btn-primary" onclick="quickAdd()">'+t('top_add')+'</button>';
+    '<span id="pomo-box">'+pomoBoxHTML()+'</span><button class="btn btn-primary" onclick="quickAdd()">'+t('top_add')+'</button>';
 }
 function toggleSide(){
   if(window.matchMedia&&window.matchMedia('(max-width:700px)').matches){ // phone: off-canvas drawer
@@ -2211,7 +2322,7 @@ function renderCalWeek(){
           '<div class="ls">'+esc(l.subject)+'</div></div>';
       }).join(''):'')+
       (dls.length?'<div class="wk-sec">'+t('cal_deadlines')+'</div>'+dls.map(g=>'<div class="subline err">◈ '+esc(g.title.slice(0,30))+'</div>').join(''):'')+
-      '<div class="wk-sec">'+t('cal_tasks')+(tks.length?' · '+done+'/'+tks.length:'')+'</div>'+
+      '<div class="wk-sec">'+t('cal_tasks')+(tks.length?' · '+done+'/'+tks.length:'')+' <button class="mini-btn" onclick="goalScheduleModal(\''+iso+'\')" title="'+t('gs_title')+'">+</button></div>'+
       (tks.length?tks.map(x=>taskChip(x,{del:true})).join(''):'<div class="subline">'+t('cal_no_tasks')+'</div>')+
     '</div>');
   }
@@ -2241,13 +2352,21 @@ function renderCalDay(){
     blocks+='<div class="tl-block '+cls+'" style="top:'+top+'px;height:'+hh+'px;--lc:'+lessonColor(l)+'" onclick="lessonDayMenu(\''+iso+'\',\''+(l.refId||'')+'\',\''+(l._ovId||'')+'\')">'+
       '<span class="lt">'+l.start+'–'+l.end+(tag?' · '+tag:'')+'</span> <span class="ts">'+esc(l.subject)+'</span></div>';
   }
+  for(const tk of tks.filter(x=>x.time)){ // FEATURE 1: задачи со временем — цветные блоки на таймлайне дня
+    const g2=tk.goalId?state.goals.find(g=>g.id===tk.goalId):null;
+    const col=g2?(g2.color||(state.categories.find(c=>c.id===g2.cat)||{}).color||'#00ff7f'):'#00ff7f';
+    const top=(minsOf(tk.time)-START)/60*ROWH;
+    blocks+='<div class="tl-block tk-block'+(tk.done?' done':'')+'" style="top:'+top+'px;height:22px;--lc:'+col+'" onclick="toggleTask(\''+tk.id+'\')">'+
+      '<span class="lt">'+tk.time+'</span> <span class="ts">'+(tk.done?'✓ ':'')+esc(tk.title)+'</span></div>';
+  }
   const nowLine=iso===td&&nowMin>=START?'<div class="tl-now" style="top:'+((nowMin-START)/60*ROWH)+'px"></div>':'';
   const note=state.calendarNotes[iso]||'';
   return '<div class="toolbar">'+crumbHTML()+'<span class="crumb" id="tl-count"></span><span class="sp"></span>'+
-    '<button class="btn" onclick="calShift(-1)">◂</button><button class="btn" onclick="calToday()">'+t('cal_today')+'</button><button class="btn" onclick="calShift(1)">▸</button></div>'+
+    '<button class="btn" onclick="calShift(-1)">◂</button><button class="btn" onclick="calToday()">'+t('cal_today')+'</button><button class="btn" onclick="calShift(1)">▸</button>'+
+    '<button class="btn" onclick="aiOptimize()">⚡ '+t('ai_opt_btn')+'</button></div>'+ // AI-F3
     '<div class="grid">'+
       '<div class="c7 panel"><div class="panel-title">'+fmtDate(iso)+' · '+t('cal_lessons')+'</div>'+
-        '<div class="tl">'+tl+blocks+nowLine+'</div>'+
+        '<div class="tl">'+fbBandsHTML(START,ROWH)+tl+blocks+nowLine+'</div>'+
         '<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">'+
           '<button class="btn" onclick="extraLessonModal(\''+iso+'\',\'extra\')">'+t('l_extra')+'</button>'+
           '<button class="btn" onclick="extraLessonModal(\''+iso+'\',\'sub\')">'+t('l_sub')+'</button>'+
@@ -2255,7 +2374,8 @@ function renderCalDay(){
       '<div class="c5 panel"><div class="panel-title">'+t('cal_tasks')+' · '+t('cal_progress')+'</div>'+
         '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">'+svgRing(pct,44)+'<span class="subline">'+done+' / '+tks.length+'</span></div>'+
         (tks.length?tks.map(x=>taskChip(x,{del:true})).join(''):'<div class="subline">'+t('cal_no_tasks')+'</div>')+
-        '<div style="margin:10px 0"><button class="btn" onclick="quickAdd(\''+iso+'\')">'+t('cal_addtask')+'</button></div>'+
+        '<div style="margin:10px 0;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" onclick="goalScheduleModal(\''+iso+'\')">'+t('cal_addtask')+'</button>'+
+        '<button class="btn" onclick="quickAdd(\''+iso+'\')">'+t('top_add')+'</button></div>'+
         (dls.length?'<div class="wk-sec">'+t('cal_deadlines')+'</div>'+dls.map(g=>'<div class="subline err">◈ '+esc(g.title)+'</div>').join(''):'')+
         '<div class="wk-sec">'+t('cal_notes')+'</div>'+
         '<textarea class="f" onchange="saveNote(\''+iso+'\',this.value)" placeholder="'+t('cal_note_ph')+'">'+esc(note)+'</textarea>'+
@@ -2293,6 +2413,7 @@ function goalRowHTML(g){
   const bs=behindSchedule(g);
   const cat=state.categories.find(c=>c.id===g.cat)||{color:'#7fa38c',name:''};
   const col=g.color||cat.color;
+  const schN=state.tasks.filter(x=>x.goalId===g.id&&x.time).length; // FEATURE 1: задач запланировано в календаре
   const hard=g.hardFlagFrom&&pct<100&&td>=g.hardFlagFrom;
   const late=g.deadline&&pct<100&&td>g.deadline;
   const open=expandedGoal===g.id;
@@ -2318,6 +2439,7 @@ function goalRowHTML(g){
     '<span>'+(g.type==='daily'?t('uf_streak')+' 🔥'+ctx.streak:ctx.done+'/'+(g.target||1)+' '+esc(g.unit||''))+'</span>'+
     (g.deadline?'<span>⏱ '+fmtShort(g.deadline)+(g.deadline>=td?' · '+daysBetween(td,g.deadline)+t('d_short'):'')+'</span>':'<span>'+t('per_none_l')+'</span>')+
     (skIcons?'<span>'+skIcons+'</span>':'')+
+    (schN?'<span class="mini-tag main" title="'+t('gs_title')+'">⏰ '+schN+'</span>':'')+
     (bs?'<span class="amber">'+t('go_behind')+' · '+t('go_needed')+': '+(bs.perDay!=null?bs.perDay.toFixed(2):'?')+' '+esc(g.unit||'')+'</span>':'')+
   '</div>';
   let expand='';
@@ -2336,6 +2458,8 @@ function goalRowHTML(g){
       (hist?'<div class="wk-sec">'+t('go_history')+'</div>'+hist:'')+
       '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">'+
         '<button class="btn'+(g.doneManual?'':' btn-primary')+'" onclick="toggleGoalDone(\''+g.id+'\')">'+(g.doneManual?t('go_undone'):t('go_markdone'))+'</button>'+
+        '<button class="btn" onclick="aiAutopsy(\''+g.id+'\')">🔍 '+t('ai_aut_btn')+'</button>'+ // AI-F4
+        '<button class="btn" onclick="aiGenTasks(\''+g.id+'\')">🤖 '+t('ai_gen_btn')+'</button>'+ // AI-F6
         '<button class="btn btn-danger" onclick="deleteGoal(\''+g.id+'\')">'+t('go_del_goal')+'</button></div>'+
     '</div>';
   }
@@ -2344,6 +2468,17 @@ function goalRowHTML(g){
     head+meta+expand+'</div>';
 }
 function toggleExpand(id){ expandedGoal=expandedGoal===id?null:id; renderView(); }
+const _goalRowCache={}; // PERF 2: мемо-кэш строки цели — строка перестраивается только при изменении своих данных
+function goalRowCached(g){
+  const {ctx}=goalPercent(g);
+  const open=expandedGoal===g.id;
+  const sig=[g.id,g.title,g.priority,g.deadline,g.hardFlagFrom,g.main,g.color,g.doneManual,g.lastPercent,g.updatedAt,(g.history||[]).length,(g.skills||[]).join(','),ctx.done,ctx.streak,state.tasks.filter(x=>x.goalId===g.id&&x.time).length,state.settings.lang,todayISO()].join('¦');
+  const c=_goalRowCache[g.id];
+  if(c&&!open&&c.sig===sig)return c.html; // развёрнутая строка всегда строится заново (внутри живой список задач)
+  const html=goalRowHTML(g);
+  _goalRowCache[g.id]={sig,html};
+  return html;
+}
 function checkAllTasks(gid){
   const tks=state.tasks.filter(x=>x.goalId===gid&&!x.done);
   tks.forEach(tk=>{
@@ -2403,13 +2538,15 @@ function renderGoals(){
     doneList=doneList.concat(gs.filter(g=>(g.lastPercent||0)>=100));
     if(!gs.length&&goalFilter!=='all')continue;
     body+='<div class="cat-head"><span class="cn">'+esc(c.name)+'</span><span class="subline">'+active.length+'</span></div>'+
-      (active.length?active.map(goalRowHTML).join(''):'<div class="subline" style="margin-bottom:12px"активных целей нет</div>');
+      (active.length?active.map(goalRowCached).join(''):'<div class="subline" style="margin-bottom:12px">активных целей нет</div>');
   }
   if(doneList.length) body+='<div class="cat-head"><span class="cn" style="color:var(--dim)">'+t('go_archive')+'</span><span class="subline">'+doneList.length+'</span></div>'+
-    doneList.map(goalRowHTML).join('');
+    doneList.map(goalRowCached).join('');
   const doneN=state.goals.filter(g=>(g.lastPercent||0)>=100).length;
+  if(goalMapView)return goalsMapHTML(); // NEW 5: вид-карта зависимостей
   return '<div class="toolbar">'+chips+'<span class="sp"></span>'+
     '<span class="subline">'+state.goals.length+' целей · '+doneN+' '+t('go_done_g')+'</span>'+
+    '<button class="btn'+(goalMapView?' on':'')+'" onclick="goalMapView=!goalMapView;renderView()">🗺 Карта</button>'+
     '<button class="btn" onclick="bulkModal()">'+t('go_bulk')+'</button>'+
     '<button class="btn btn-primary" onclick="goalModal(null)">'+t('go_add')+'</button></div>'+body;
 }
@@ -2622,17 +2759,20 @@ function renderAnalytics(){
   const dist=catDistribution();
   const xp=xpSeries();
   const td=todayISO();
-  const ws0=startOfWeekISO(addDays(startOfWeekISO(td),-11*7));
-  let hmCols='';
-  for(let w=0;w<12;w++){
-    let col='<div class="hm-col">';
-    for(let d=0;d<7;d++){
-      const iso=addDays(ws0,w*7+d);
-      const n=dayTasks(iso).filter(x=>x.done).length;
-      col+='<div class="hm-c h'+heatLevel(n)+(iso>td?'" style="opacity:.25':'')+'" title="'+iso+' · '+n+' выполнено"></div>';
-    }
-    hmCols+=col+'</div>';
+  const hm0=addDays(td,-89); // NEW 3: карта привычек — 90 дней, шкала по % выполнения
+  const lead=(fromISO(hm0).getDay()+6)%7;
+  let hmCols='<div class="hm-col">'+'<div class="hm-c" style="visibility:hidden"></div>'.repeat(lead);
+  let hmN=lead;
+  for(let i=0;i<90;i++){
+    const iso=addDays(hm0,i);
+    const tks=dayTasks(iso), sch=tks.length, dn=tks.filter(x=>x.done).length;
+    const r=sch?dn/sch:0;
+    const cls=r===0?'hm0':r<.25?'hm1':r<.5?'hm2':r<.75?'hm3':'hm4';
+    if(hmN&&hmN%7===0)hmCols+='</div><div class="hm-col">';
+    hmCols+='<div class="hm-c '+cls+'" title="'+iso+' · '+dn+'/'+sch+'" onclick="heatDay(\''+iso+'\')" style="cursor:pointer"></div>';
+    hmN++;
   }
+  hmCols+='</div>';
   const wsStat=weekdayStats();
   const order=state.settings.weekStart==='sun'?[0,1,2,3,4,5,6]:[1,2,3,4,5,6,0];
   const wdItems=order.map(wd=>({label:t('wd')[wd],val:wsStat[wd].total?Math.round(wsStat[wd].done/wsStat[wd].total*100):null}));
@@ -2667,7 +2807,10 @@ function renderAnalytics(){
       '<div class="c6 panel"><div class="panel-title">'+t('an_month')+'</div><div class="chart-wrap">'+svgBarChart(mo,460,170)+'</div></div>'+
       '<div class="c6 panel"><div class="panel-title">'+t('an_cat')+'</div>'+(dist.length?svgDonut(dist):'<div class="subline">выполненных задач пока нет</div>')+'</div>'+
       '<div class="c6 panel"><div class="panel-title">'+t('an_xp')+'</div>'+(xp.length>1?svgLineChart(xp,460,170,{min:0,max:Math.max(100,Math.ceil(totalXP()*1.1/100)*100)}):'<div class="subline">XP пока не записан</div>')+'</div>'+
-      '<div class="c12 panel"><div class="panel-title">'+t('an_heat')+'</div><div class="hm">'+hmCols+'</div></div>'+
+      '<div class="c12 panel"><div class="panel-title">'+t('an_heat')+'</div><div class="hm">'+hmCols+'</div>'+
+        '<div class="subline" style="margin-top:6px">'+t('hm_legend')+'</div></div>'+
+      '<div class="c12 panel"><div class="panel-title">'+t('ai_pat_title')+' <button class="mini-btn" onclick="detectPatternsAI()">🔍 '+t('ai_pat_scan')+'</button></div>'+
+        '<div id="ai-pat">'+(((state.status.patterns||{}).items||[]).map(i=>'<div class="ai-insight '+i.t+'">'+esc(i.txt)+'</div>').join('')||'<div class="subline">запусти скан — ищем закономерности за 30 дней</div>')+'</div></div>'+
       '<div class="c6 panel"><div class="panel-title">'+t('an_wd')+'</div><div class="chart-wrap">'+wdChart+'</div></div>'+
       '<div class="c6 panel"><div class="panel-title">'+t('an_streaks')+' · '+t('an_insights')+'</div>'+
         '<div class="kv"><span class="k">'+t('an_cur')+'</span><span class="v acc glow-soft">🔥 '+cur+' '+t('an_days')+'</span></div>'+
@@ -3387,7 +3530,17 @@ function generateQuests(d){ // deterministic per date — same quests on every r
 function ensureQuests(d){
   state.rpg.quests=state.rpg.quests||{};
   if(!state.rpg.quests[d]){ state.rpg.quests[d]=generateQuests(d); saveState(); }
-  return state.rpg.quests[d];
+  const qs=state.rpg.quests[d];
+  if(!qs._w19){ // SECTION 20: фиксированные квесты ВОИН-190
+    qs._w19=1;
+    [{type:'writual',title:'Утренний ритуал (7 мин)',target:6,xp:30},
+     {type:'wtrain',title:'Тренировка по плану ВОИН-190',target:1,xp:50},
+     {type:'wprotein',title:'Белок ≥140 г сегодня',target:140,xp:20},
+     {type:'wlog',title:'Записать тренировку в журнал',target:1,xp:15}]
+      .forEach(q=>{ if(!qs.some(x=>x.type===q.type))qs.push({...q,awarded:false}); });
+    saveState();
+  }
+  return qs;
 }
 function questProgress(q,d){
   const done=state.tasks.filter(x=>x.doneAt===d);
@@ -3396,6 +3549,10 @@ function questProgress(q,d){
   if(q.type==='sleep'){ const e=state.lifeBalance.sleep.find(x=>x.date===d); return e?sleepHours(e):0; }
   if(q.type==='rest')return state.lifeBalance.rest.filter(x=>x.date===d).reduce((a,x)=>a+x.minutes,0);
   if(q.type==='goal')return done.filter(x=>x.goalId===q.goalId).length;
+  if(q.type==='writual')return (((state.warrior190||{}).morningRitual||{}).log[d]||{n:0}).n; // SECTION 20
+  if(q.type==='wtrain')return ((state.warrior190||{workoutLog:[]}).workoutLog||[]).some(x=>x.date===d)?1:0;
+  if(q.type==='wprotein')return (((state.warrior190||{}).nutrition||{}).log[d]||{protein:0}).protein;
+  if(q.type==='wlog')return ((state.warrior190||{workoutLog:[]}).workoutLog||[]).some(x=>x.date===d&&(x.notes||x.prog||x.video))?1:0;
   return 0;
 }
 function rerollQuest(i){ // replace one quest — 1 per day
@@ -3422,6 +3579,11 @@ function processPenalties(){ // once per day: yesterday's missed quests → −5
   const td=todayISO();
   if(state.rpg._penaltyDone===addDays(td,-1))return;
   if(!state.rpg._penaltyDone){ // first ever run: grace — no retroactive penalties
+    state.rpg._penaltyDone=addDays(td,-1);
+    saveState();
+    return;
+  }
+  if(fromISO(td).getDate()===1){ // BUG 2: 1-е число месяца/кампании — грейс-период, пенальти не начисляются
     state.rpg._penaltyDone=addDays(td,-1);
     saveState();
     return;
@@ -3484,6 +3646,11 @@ const ACH=[
   {id:'income-1000',icon:'🏦',name:'Четыре цифры',desc:'Накопить 1 000 дохода',check:()=>state.finance.transactions.filter(x=>x.type==='income').reduce((a,x)=>a+x.amount,0)>=1000},
   {id:'media-5',icon:'🍿',name:'Киноман',desc:'Посмотреть 5 тайтлов',check:()=>state.lifeBalance.media.filter(m=>m.status==='watched').length>=5},
   {id:'goal-1',icon:'🏆',name:'Крушитель целей',desc:'Первая цель достигает 100%',check:()=>state.goals.some(g=>(g.lastPercent||0)>=100)},
+  {id:'w19-gym1',icon:'🏋️',name:'Первый зал',desc:'Первая тренировка Вт/Чт по плану',check:()=>((state.warrior190||{}).workoutLog||[]).some(x=>x.type==='tue'||x.type==='thu')},
+  {id:'w19-pillars',icon:'🏛️',name:'7 столпов',desc:'Все 7 столпов выполнены в один день',check:()=>{ const td=todayISO(); const p=(state.warrior190||{}).pillars; return !!(p&&p.log&&p.log[td]&&p.log[td].all7); }},
+  {id:'w19-perfect',icon:'⚔️',name:'Железная неделя',desc:'Чек-лист ВОИН-190 14/14',check:()=>Object.values((state.warrior190||{}).weeklyChecklists||{}).some(r=>r.a200)},
+  {id:'w19-sword10',icon:'🗡️',name:'Меченосец',desc:'10 сессий меча/боя',check:()=>((state.warrior190||{}).workoutLog||[]).filter(x=>x.type==='battle'||x.type==='sat').length+Object.values((state.warrior190||{}).weeklyChecklists||{}).filter(r=>r.items&&r.items.w6).length>=10},
+  {id:'w19-warrior',icon:'👑',name:'ВОИН-190',desc:'Финальное достижение: 20 недель пройдены',check:()=>w19Boss()<=0},
 ];
 function checkAch(){
   ACH.forEach(a=>{
@@ -3508,7 +3675,7 @@ function howXpModal(){
     'Навыки: связанная задача +20 XP навыка · практика = 1 XP навыка за минуту',
     'Баланс жизни: сон ≥ цели +30 XP/день · отдых ≥30 мин +20 XP/день (каждый раз раз в день)',
     'Ежедневные квесты: 40–50 XP за каждый · все квесты закрыты = сундук +250 XP',
-    'Кривая уровня: 100·n^1.5 за уровень · Кривая навыка: 50·n^1.4 за уровень',
+    'Кривая уровня: '+xpForLevel(1)+'·n^1.5 XP за уровень (множитель Level ×10) · Кривая навыка: '+xpForSkillLevel(1)+'·n^1.4 XP за уровень (множитель Skills ×4)',
     'Пенальти (вкл/выкл в Настройках): пропущенный ежедневный квест = −5 Дисциплины, пол 0 — XP и уровень не трогает',
     'Ранги: E 1–4 · D 5–9 · C 10–14 · B 15–19 · A 20–29 · S 30–39 · NATIONAL 40+',
     'Статы (окно 30д): Интеллект=задачи учёбы · Выносливость=задачи физ. + бонус сна · Богатство=доход/20 · Креатив=задачи разработки + медиа · Дисциплина=запас + 2×стрик',
@@ -3549,15 +3716,27 @@ function skillModal(sid){ // + навык / редактирование (зап
 }
 function practiceModal(sid){
   const s=state.skills.find(x=>x.id===sid); if(!s)return;
-  openModal('<div class="panel-title">'+t('rpg_practice')+' · '+s.icon+' '+esc(s.name)+'</div><form id="pr-form">'+
-    '<div class="frow"><label class="f">'+t('rpg_practice_q')+'</label><input class="f" type="number" min="1" max="600" step="5" id="pr-min" value="30" required></div>'+
+  const goals=state.goals.filter(g=>(g.lastPercent||0)<100);
+  openModal('<div class="panel-title">'+t('rpg_practice')+' · '+s.icon+' '+esc(s.name)+'</div><form id="pr-form" novalidate>'+ // NEW 8: журнал практики
+    '<div class="frow2"><div class="frow"><label class="f">'+t('rpg_practice_q')+'</label><input class="f" type="number" min="1" max="600" id="pr-min" value="30" oninput="document.getElementById(\'pr-xp\').value=this.value"></div>'+
+    '<div class="frow"><label class="f">XP навыка (1 мин = 1 XP)</label><input class="f" type="number" min="0" id="pr-xp" value="30"></div></div>'+
+    '<div class="frow"><label class="f">«Что практиковал сегодня?»</label><textarea class="f" id="pr-note" maxlength="200" placeholder="например: слайдер, UV-развёртка, диалоги…"></textarea></div>'+
+    '<div class="frow"><label class="f">Привязать к цели (необяз.)</label><select class="f" id="pr-goal"><option value="">— '+t('qa_none')+' —</option>'+
+      goals.map(g=>'<option value="'+g.id+'">'+esc(g.title.slice(0,42))+'</option>').join('')+'</select></div>'+
     '<div class="modal-actions"><button type="button" class="btn" onclick="closeModal()">'+t('cancel')+'</button>'+
     '<button type="submit" class="btn btn-primary">'+t('save')+'</button></div></form>');
   $('#pr-form').onsubmit=e=>{
     e.preventDefault();
     const m=parseInt($('#pr-min').value,10)||0;
-    addSkillXP([sid],m,'practice');
-    closeModal(); emitChange(); toast(s.icon+' '+s.name+' +'+m+' XP');
+    const xp=parseInt($('#pr-xp').value,10)||m;
+    if(xp<=0){ toast('Укажи XP практики',{amber:true}); return; }
+    const note=$('#pr-note').value.trim();
+    addSkillXP([sid],xp,'practice'+(note?': '+note.slice(0,40):''));
+    const log=state.rpg.practice=state.rpg.practice||{};
+    const arr=log[sid]=log[sid]||[];
+    arr.push({date:todayISO(),min:m,xp,note:note.slice(0,200),goalId:$('#pr-goal').value||null});
+    if(arr.length>30)log[sid]=arr.slice(-30);
+    closeModal(); emitChange(); toast(s.icon+' '+s.name+' +'+xp+' XP');
   };
 }
 function renderRPG(){
@@ -3595,26 +3774,37 @@ function renderRPG(){
   const tree=state.skills.map(s=>{
     const need=xpForSkillLevel(s.level);
     const tier=s.level>=10?'t3':s.level>=4?'t2':'t1';
+    const pr=(state.rpg.practice&&state.rpg.practice[s.id])||[]; // NEW 8: давность практики
+    const last=pr.length?pr[pr.length-1].date:null;
+    const lpd=last?daysBetween(last,td):null;
+    const lpCls=lpd==null?'':lpd>7?'err':lpd>3?'amber':'acc';
+    const lpHtml='<div class="subline '+lpCls+'">'+(last?'последняя практика: '+(lpd===0?'сегодня':lpd+' дн назад'):'практик ещё не было')+'</div>';
     return '<div class="sk-node '+tier+'"><div class="sk-ico">'+s.icon+'</div><div class="sk-name">'+esc(s.name)+'</div>'+
       '<div class="sk-name glow-soft">LV '+s.level+'</div>'+
       '<div class="goal-bar" style="width:100%"><i style="width:'+Math.min(100,Math.round(s.xp/need*100))+'%"></i></div>'+
-      '<div class="subline">'+s.xp+'/'+need+' XP</div>'+
+      '<div class="subline">'+s.xp+'/'+need+' XP</div>'+lpHtml+
       '<button class="mini-btn" style="margin-top:6px" onclick="practiceModal(\''+s.id+'\')">'+t('rpg_practice')+'</button>'+
+      '<button class="mini-btn" style="margin-top:6px" onclick="aiSkillAdvice(\''+s.id+'\')">🧠 '+t('ai_sk_btn')+'</button>'+ // AI-F8
       '<button class="mini-btn" style="margin-top:6px" title="изменить навык" onclick="skillModal(\''+s.id+'\')">✎</button></div>';
   }).join('');
   const slog=state.rpg.skillLog.slice(-15).reverse().map(e=>'<div class="kv"><span class="k">'+e.date+' · '+esc(e.skill)+(e.reason?' · '+esc(e.reason):'')+'</span><span class="v acc">+'+e.amt+'</span></div>').join('');
   const dlog=state.rpg.log.slice(-10).reverse().map(e=>'<div class="kv"><span class="k">'+e.date+'</span><span class="v '+(e.text.startsWith('PENALTY')?'ern':'acc')+'">'+esc(e.text)+'</span></div>').join('');
   const recent=state.achievements.slice(-3).reverse().map(x=>{ const a=ACH.find(y=>y.id===x.id); return a?a.icon+' '+esc(a.name):''; }).filter(Boolean).join(' · ');
   const bossAvg=Math.round(state.goals.reduce((a,g)=>a+goalPercent(g).pct,0)/Math.max(1,state.goals.length));
-  const bossHp=100-bossAvg; // boss "dies" when all November goals hit 100%
+  const bossStart=state.rpg.bossStartHp||100; // NEW 9: HP задаётся итогом прошлого месяца
+  const bossHp=Math.max(0,Math.min(100,bossStart-bossAvg)); // boss "dies" when all goals hit 100%
+  const prevPhase=state.rpg._bossPhase==null?bossHp:state.rpg._bossPhase; // AI-F1: фазы босса 75/50/25
+  const phase=[75,50,25].find(p=>prevPhase>p&&bossHp<=p);
+  if(phase){ state.rpg._bossPhase=bossHp; sysNotify('boss',{hp:bossHp}); }
+  else if(bossHp>prevPhase)state.rpg._bossPhase=bossHp;
   return '<div class="toolbar">'+
       '<span class="crumb"><span class="crumb-cur">LV '+lv.level+' ['+rankFor(lv.level)+']</span></span>'+
       '<div class="bar" style="width:180px"><i style="width:'+(lv.need?Math.round(lv.into/lv.need*100):0)+'%"></i></div>'+
       '<span class="subline">'+lv.into+'/'+lv.need+' XP · всего '+totalXP()+'</span>'+
       '<span class="sp"></span><button class="btn" onclick="howXpModal()">'+t('rpg_how')+'</button></div>'+
     '<div class="grid">'+
-      '<div class="c12 panel"><div class="panel-title">НОЯ БОСС · HP</div>'+
-        '<div class="bossbar"><i style="width:'+bossHp+'%"></i></div>'+
+      '<div class="c12 panel"><div class="panel-title">НОЯ БОСС · HP <button class="mini-btn" onclick="aiBossStrategy()">⚔ '+t('ai_boss_title')+'</button></div>'+
+        '<div class="bossbar"><i style="width:'+bossHp+'%"></i><span class="boss-hp-label">'+t('boss_hp_left').replace('{p}',bossHp)+'</span></div>'+
         '<div class="subline" style="margin-top:6px">HP '+bossHp+'% · средний по целям '+bossAvg+'% · босс повержен = все цели ноября на 100%</div></div>'+
       '<div class="c12 panel"><div class="panel-title">'+t('rpg_quests')+' · '+fmtDate(td)+'</div>'+questHtml+
         '<div style="display:flex;align-items:center;gap:10px;margin-top:8px"><span class="goal-bar" style="width:200px"><i style="width:'+(quests.length?Math.round(doneN/quests.length*100):0)+'%"></i></span>'+chestHtml+'</div></div>'+
@@ -3788,6 +3978,7 @@ function renderStatusDrawer(){
     miniBar(t('st_cat_dev'),catAvgPct('dev'))+
     miniBar(t('st_english'),engAvgPct());
   d.innerHTML=
+    reviewLogDrawerHTML()+ // NEW 2: «История решений» + кнопка разбора недели
     '<details open class="st-block"><summary>'+t('st_blockA')+'</summary><div class="st-body">'+
       (check
         ?'<div style="display:flex;align-items:center;gap:12px">'+
@@ -3807,6 +3998,7 @@ function renderStatusDrawer(){
         '<div class="bar" style="width:100%;margin-top:6px"><i style="width:'+(lv.need?Math.round(lv.into/lv.need*100):0)+'%"></i></div>'+
         '<div class="subline">'+lv.into+' / '+lv.need+' XP · '+(lv.need?Math.round(lv.into/lv.need*100):0)+'%</div></div></div>'+
       '<div style="margin-top:8px">'+svgRadar([bs.intellect,bs.discipline,bs.endurance,bs.wealth,bs.creativity],['INT','DIS','END','WEA','CRE'],210).replace('<svg','<svg class="radar-anim"')+'</div>'+
+      w19BossBarHTML()+ // SECTION 20: финальный босс ВОИН-190
       '<div class="wk-sec">'+t('st_buffs')+'</div>'+
       (buffs.length?buffs.map(b=>'<span class="buff-badge '+b.t+'">'+esc(b.h)+'</span>').join(''):'<span class="subline">'+t('st_none')+'</span>')+
       '<div class="wk-sec">'+t('st_skills')+' · <span class="crumb-l" onclick="go(\'rpg\')">→ RPG</span></div>'+skillsTop+
@@ -3868,6 +4060,7 @@ function openStatusCheck(){
     if(!m||!en||!f){ toast('Отметь все три шкалы 1–5',{amber:true}); return; }
     state.status.daily[td]={m,e:en,f,note:$('#ds-note').value.trim()};
     state.status._promptDate=td;
+    if(en<=2)sysNotify('energy_low'); else if(en>=4)sysNotify('energy_peak'); // AI-F7
     closeModal(); emitChange();
     const sc=stateScore(td);
     toast('STATE SCORE: '+(sc==null?'—':sc.toFixed(1))+' · '+stateLabel(sc)[0]);
@@ -3875,6 +4068,9 @@ function openStatusCheck(){
 }
 function maybeDailyCheck(){
   const td=todayISO();
+  checkDeadlineNotifs(); // NEW 7: напоминания за 3д/1д
+  monthBossCheck(); // NEW 9: итог месяца
+  wrAutoCheck(); // NEW 2: воскресный разбор недели
   if(!state.status.daily[td]&&state.status._promptDate!==td)openStatusCheck();
 }
 
@@ -3887,14 +4083,16 @@ function renderDashboard(){
   const tsk=state.tasks.filter(x=>x.date===td);
   const dayPct=tsk.length?Math.round(tsk.filter(x=>x.done).length/tsk.length*100):null;
   const ls=lessonsForDate(td).filter(l=>l.status!=='cancel');
-  const dl=state.goals.filter(g=>g.deadline)
-    .sort((a,b)=>a.deadline<b.deadline?-1:1).slice(0,6)
+  const dl=state.goals.filter(g=>g.deadline&&(g.lastPercent||0)<100)
+    .sort((a,b)=>a.deadline===b.deadline?(a.lastPercent||0)-(b.lastPercent||0):(a.deadline<b.deadline?-1:1)).slice(0,6) // NEW 7: сортировка по срочности
     .map(g=>{
       const d=daysBetween(td,g.deadline);
-      const late=d<0, soon=d<=7&&!late;
-      const cls=late?'ern':soon?'amb':'acc';
-      return '<div class="kv"><span class="k">'+esc(g.title)+(g.main?'<span class="mini-tag main">'+t('main_tag')+'</span>':'')+'</span>'+
-        '<span class="v '+cls+'">'+(late?Math.abs(d)+'d '+t('dash_overdue'):d+' '+t('dash_days'))+'</span></div>';
+      const late=d<0;
+      const u=late||d<=1?'dl-red':d<=3?'dl-orange':d<=7?'dl-yellow':'';
+      const rem=Math.max(0,(g.target||1)-((goalPercent(g).ctx||{}).done||0));
+      const avail=Math.max(0,d)*3; // ~3 свободных часа в день
+      return '<div class="kv dl-urg '+u+'"><span class="k">'+esc(g.title)+(g.main?'<span class="mini-tag main">'+t('main_tag')+'</span>':'')+'</span>'+
+        '<span class="v '+(late?'ern':'acc')+'">'+(late?Math.abs(d)+'d '+t('dash_overdue'):d+' '+t('dash_days'))+' · ~'+rem+'ч/'+avail+'ч</span></div>';
     }).join('');
   const openAll=state.tasks.filter(x=>!x.done);
   const directive=openAll.slice().sort(byPrioDate)[0];
@@ -3923,6 +4121,9 @@ function renderDashboard(){
       '<div class="subline">'+t('wd')[new Date().getDay()]+' · W'+isoWeek(new Date())+'</div></div></div>'+
       '<div class="subline" style="margin-top:8px">'+t('top_remaining')+': <b class="amber">'+tc.today+'</b></div>'+
       (ls.length?'<div class="wk-sec">'+t('dash_lessons')+'</div>'+ls.slice(0,4).map(l=>'<div class="kv"><span class="k">'+l.start+'</span><span class="v">'+esc(l.subject)+markBadge(td,l)+'</span></div>').join('')+(ls.length>4?'<div class="subline">+'+(ls.length-4)+' more</div>':''):'')+
+      '<div class="wk-sec">'+t('en_energy')+'</div>'+dashEnergyHTML()+ // NEW 6
+      '<button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="focusOpen()">🎯 '+t('fm_title')+'</button>'+ // NEW 1
+      '<button class="btn" style="width:100%;margin-top:6px" onclick="aiBriefing()">⚡ '+t('ai_brief_btn')+'</button>'+ // AI-F2
     '</div>'+
     '<div class="c3 panel"><div class="panel-title">'+t('dash_level')+'</div>'+
       '<div class="bignum glow">LV '+lv.level+'</div>'+
@@ -3952,6 +4153,7 @@ function renderDashboard(){
     '<div class="c3 panel"><div class="panel-title">'+t('dash_skills')+'</div>'+top+
       '<div class="subline" style="margin-top:8px">'+state.skills.length+' навыков всего</div></div>'+
     '<div class="c3 panel"><div class="panel-title">'+t('dash_categories')+'</div>'+cats+'</div>'+
+    w19DashCard()+ // SECTION 20: мини-карточка ВОИН-190
     '<div class="c12 panel"><div class="panel-title">'+t('dash_roadmap')+'</div>'+stages+'</div>'+
   '</div>';
 }
@@ -3972,9 +4174,11 @@ function renderSettings(){
     '</div>'+
     '<div class="c4 panel"><div class="panel-title">'+t('set_rpg')+'</div>'+
       '<div class="kv"><span class="k">'+t('set_penalty')+'</span><span class="v"><input type="checkbox" class="sw" '+(s.penalty?'checked':'')+' onchange="setBool(\'penalty\',this.checked)"></span></div>'+
-      '<div class="subline" style="margin-top:8px">XP = 50 × приоритет(×1.0–3.0) × стрик(×1.0–3.0)</div>'+
-      '<div class="subline">Level curve: 100·n^1.5 · Skill curve: 50·n^1.4 · linked task: +20 skill XP</div>'+
+      '<div class="subline" style="margin-top:8px">XP = 50 × приоритет(×1.0–3.0) × стрик(×1.0–3.0) — награды и квесты не масштабируются</div>'+
+      '<div class="subline" style="color:var(--accent)">XP multipliers: Level ×10, Skills ×4 (2026-11-01)</div>'+
+      '<div class="subline">Level curve: '+xpForLevel(1)+'·n^1.5 · Skill curve: '+xpForSkillLevel(1)+'·n^1.4 · linked task: +20 skill XP</div>'+
     '</div>'+
+    fbSettingsHTML()+aiSettingsHTML()+ // NEW 10 + SECTION 19: NEXUS AI
     '<div class="c4 panel"><div class="panel-title">'+t('set_locale')+'</div>'+
       '<div class="frow"><label class="f">Language / Язык / Język</label><select class="f" onchange="setVal(\'lang\',this.value)">'+
         ['en','ru','pl'].map(l=>'<option value="'+l+'"'+(s.lang===l?' selected':'')+'>'+l.toUpperCase()+'</option>').join('')+'</select></div>'+
@@ -4124,8 +4328,9 @@ function cgSave(){
   if(state.settings.cloud.auto)cloudPull(false); // автосинк стартует сразу, без перезагрузки страницы
 }
 function b64utf8(s){ return btoa(unescape(encodeURIComponent(s))); }
-let _cgT=null,_cgBusy=false;
-function scheduleCloudPush(){ if(!cgReady()||!(state.settings.cloud||{}).auto)return; clearTimeout(_cgT); _cgT=setTimeout(()=>cloudPush(false),4000); }
+let _cgT=null,_cgBusy=false; var _cloudDirty=false; // PERF 1: флаг «есть изменения с последней синхронизации»
+function scheduleCloudPush(){ if(!cgReady()||!(state.settings.cloud||{}).auto)return; if(!_cloudDirty)return; // PERF 1: пуш только при реальных изменениях
+  clearTimeout(_cgT); _cgT=setTimeout(()=>cloudPush(false),4000); }
 function applyCloudState(m){
   const keepTok=(state.settings.cloud||{}).token, keepFt=(state.settings.fintrack||{}).token;
   state=migrate(m); _tIdx=null; state.goals.forEach(g=>delete g._c);
@@ -4160,8 +4365,9 @@ async function cloudPush(manual){
     const snap=JSON.parse(JSON.stringify(state));
     if(snap.settings&&snap.settings.cloud)snap.settings.cloud.token='';    // токен не покидает устройство
     if(snap.settings&&snap.settings.fintrack)snap.settings.fintrack.token='';
-    const cgSig=s=>JSON.stringify([s.tasks,s.goals,s.xpLog,(s.finance||{}).transactions,(s.finance||{}).workLog,s.skills,s.categories,s.status,(s.train||{}).log,(s.train||{}).miles]);
+    const cgSig=s=>JSON.stringify([s.tasks,s.goals,s.xpLog,(s.finance||{}).transactions,(s.finance||{}).workLog,s.skills,s.categories,s.status,(s.train||{}).log,(s.train||{}).miles,s.warrior190]);
     if(cur&&cur.state&&cgSig(cur.state)===cgSig(snap)){ // без содержательных изменений — не спамим коммитами
+      _cloudDirty=false; // PERF 1: содержимое совпало — сбрасываем dirty
       try{ localStorage.setItem(KEY+'-cloudAt',String(Date.now())); }catch(e){}
       if(manual)toast('☁ Облако уже актуально'); return true;
     }
@@ -4175,6 +4381,7 @@ async function cloudPush(manual){
       r=await put(cur2?cur2.sha:undefined);
     }
     if(!r.ok)throw new Error('GitHub API '+r.status);
+    _cloudDirty=false; // PERF 1: успешно выгружено
     try{ localStorage.setItem(KEY+'-cloudAt',String(Date.now())); }catch(e){}
     if(manual)toast('☁ Выгружено в облако');
     return true;
@@ -4193,7 +4400,7 @@ async function cloudPull(manual){
   try{
     const cur=await cloudGet();
     if(!cur){ if(manual)toast('☁ В облаке пусто — выгружаю локальные данные'); await cloudPush(false); return true; }
-    const sig=s=>JSON.stringify([s.tasks,s.goals,s.xpLog,(s.finance||{}).transactions,(s.finance||{}).workLog,s.skills,s.categories]);
+    const sig=s=>JSON.stringify([s.tasks,s.goals,s.xpLog,(s.finance||{}).transactions,(s.finance||{}).workLog,s.skills,s.categories,s.warrior190]);
     if(sig(state)===sig(cur.state)){ if(manual)toast('☁ Облако уже актуально'); return false; }
     applyCloudState(mergeState(state,cur.state));
     try{ localStorage.setItem(KEY+'-cloudAt',String(Date.now())); }catch(e){}
@@ -4218,9 +4425,9 @@ function quickAdd(presetDate,presetGoal){
   const chips=_qaRecent.slice(0,12).map((r,i)=>
     '<button type="button" class="mini-btn" style="margin:0 6px 6px 0" onclick="qaPick('+i+')" title="подставить">'+esc(r.title.slice(0,34))+(r.goalId?' ◈':'')+'</button>').join('');
   const dl=_qaRecent.slice(0,40).map(r=>'<option value="'+esc(r.title)+'"></option>').join('');
-  openModal('<div class="panel-title">'+t('qa_title')+'</div><form id="qa-form">'+
+  openModal('<div class="panel-title">'+t('qa_title')+'</div><form id="qa-form" novalidate>'+
     (chips?'<div class="wk-sec">Мои задачи — тап, чтобы подставить</div><div style="margin-bottom:8px">'+chips+'</div>':'')+
-    '<div class="frow"><label class="f">'+t('qa_name')+' — впиши другую (сохранится в общий список)</label><input class="f" id="qa-name" required maxlength="120" list="qa-dl" autocomplete="off"><datalist id="qa-dl">'+dl+'</datalist></div>'+
+    '<div class="frow"><label class="f">'+t('qa_name')+' — впиши другую (сохранится в общий список)</label><input class="f" id="qa-name" maxlength="120" list="qa-dl" autocomplete="off" oninput="qaClearErr()"><datalist id="qa-dl">'+dl+'</datalist><div class="ferr" id="qa-name-err">'+t('qa_err')+'</div></div>'+
     '<div class="frow"><label class="f">'+t('qa_goal')+'</label><select class="f" id="qa-goal" onchange="qaPrioSync()"><option value="">'+t('qa_none')+'</option>'+opts+'</select></div>'+
     '<div class="frow2"><div class="frow"><label class="f">'+t('qa_date')+'</label><input class="f" type="date" id="qa-date" value="'+(presetDate||todayISO())+'"></div>'+
     '<div class="frow"><label class="f">'+t('qa_prio')+'</label><select class="f" id="qa-prio">'+
@@ -4230,7 +4437,8 @@ function quickAdd(presetDate,presetGoal){
     '<button type="submit" class="btn btn-primary">'+t('save')+'</button></div></form>');
   $('#qa-form').onsubmit=e=>{
     e.preventDefault();
-    const title=$('#qa-name').value.trim(); if(!title)return;
+    const nameEl=$('#qa-name'), title=nameEl.value.trim();
+    if(!title){ nameEl.classList.add('err'); const er=$('#qa-name-err'); if(er)er.style.display='block'; nameEl.focus(); return; } // BUG 1: красная рамка + текст под полем вместо нативного попапа
     const gid=$('#qa-goal').value;
     const g=gid?state.goals.find(g=>g.id===gid):null;
     const prio=g?g.priority:parseInt($('#qa-prio').value,10);
@@ -4249,6 +4457,1433 @@ function qaPick(i){ // подставить существующую задач�
 function qaPrioSync(){
   const g=$('#qa-goal').value?state.goals.find(g=>g.id===$('#qa-goal').value):null;
   if(g)$('#qa-prio').value=g.priority;
+}
+function qaClearErr(){ // BUG 1: снять подсветку ошибки при вводе
+  const n=$('#qa-name'); if(n)n.classList.remove('err');
+  const er=$('#qa-name-err'); if(er)er.style.display='none';
+}
+
+/* ---------- FEATURE 1: «Задача из цели» — планировка связанных задач на слот дня ---------- */
+function gsFilter(){
+  const q=($('#gs-q').value||'').trim().toLowerCase();
+  document.querySelectorAll('.gs-item').forEach(el=>{
+    el.style.display=!q||el.getAttribute('data-t').indexOf(q)!==-1?'':'none';
+  });
+}
+function goalScheduleModal(iso){
+  const goals=state.goals.filter(g=>(g.lastPercent||0)<100).sort(byPrioDate);
+  const list=goals.map(g=>{
+    const cat=state.categories.find(c=>c.id===g.cat)||{};
+    const tks=state.tasks.filter(x=>x.goalId===g.id&&!x.done).sort(byPrioDate);
+    const items=tks.map(tk=>'<label class="gs-tk" style="display:flex;align-items:center;gap:8px;padding:5px 6px;border:1px solid var(--border);margin:4px 0;cursor:pointer;border-radius:6px">'+
+      '<input type="checkbox" class="gs-cb" value="'+tk.id+'"'+(tk.date===iso?' checked':'')+'> '+
+      '<span style="flex:1;min-width:0">'+esc(tk.title)+(tk.time?' <span class="mini-tag main">⏰ '+tk.time+'</span>':'')+(tk.date?' <span class="subline">· '+fmtShort(tk.date)+'</span>':'')+'</span>'+
+      '<span class="mini-tag">P'+tk.priority+'</span></label>').join('');
+    return '<div class="gs-item" data-t="'+esc((g.title+' '+(g.desc||'')).toLowerCase())+'">'+
+      '<div style="display:flex;align-items:center;gap:8px;margin:10px 0 4px"><span class="gdot" style="width:9px;height:9px;flex:none;background:'+esc(g.color||cat.color||'#7fa38c')+'"></span>'+
+      '<b style="flex:1;min-width:0">'+esc(g.title)+'</b><span class="subline">'+Math.round(g.lastPercent||0)+'%</span></div>'+
+      (items?items:'<div class="subline" style="margin:4px 0 8px">'+t('gs_no_tasks')+' · <button class="mini-btn" onclick="closeModal();quickAdd(\''+iso+'\',\''+g.id+'\')">+'+t('uf_addtask')+'</button></div>')+
+    '</div>';
+  }).join('');
+  const preset=(state.tasks.find(x=>x.date===iso&&x.time)||{}).time||'12:00';
+  openModal('<div class="panel-title">'+t('gs_title')+' · '+fmtShort(iso)+'</div>'+
+    '<input class="f" id="gs-q" placeholder="'+t('gs_search')+'" oninput="gsFilter()" autocomplete="off">'+
+    '<div style="max-height:320px;overflow-y:auto;margin:10px 0">'+(list||'<div class="subline">'+t('gs_none')+'</div>')+'</div>'+
+    '<div class="frow"><label class="f">'+t('gs_time')+' (HH:MM)</label><input class="f" type="time" id="gs-time" value="'+preset+'"></div>'+
+    '<div class="modal-actions"><button type="button" class="btn" onclick="closeModal()">'+t('cancel')+'</button>'+
+    '<button type="button" class="btn btn-primary" onclick="gsSave(\''+iso+'\')">'+t('save')+'</button></div>');
+  const q=$('#gs-q'); if(q)q.focus();
+}
+function gsSave(iso){
+  const time=$('#gs-time').value||null;
+  const ids=[...document.querySelectorAll('.gs-cb:checked')].map(x=>x.value);
+  if(!ids.length){ toast(t('gs_pick'),{amber:true}); return; }
+  let n=0;
+  ids.forEach(id=>{
+    const tk=state.tasks.find(x=>x.id===id); if(!tk)return;
+    tk.date=iso; tk.time=time; tk.updatedAt=Date.now(); n++;
+  });
+  closeModal(); emitChange();
+  toast(t('gs_planned')+': '+n+(time?' · ⏰ '+time:''));
+}
+
+/* ============================================================
+   SECTION 18.7 — FOCUS MODE · POMODORO · FOCUS BLOCKS · ENERGY (NEW 1/4/6/10, 2026-11-01)
+   ============================================================ */
+let _focus={open:false,idx:0,esc:null};
+let _pomo={taskId:null,left:0,timer:null,title:''};
+function pomoBoxHTML(){ // NEW 4: обратный отсчёт в шапке
+  if(!_pomo.taskId)return '';
+  return '<span class="pomo-run" onclick="pomoStop()" title="'+t('pomo_title')+' — клик = стоп">🍅 '+pad2(Math.floor(_pomo.left/60))+':'+pad2(_pomo.left%60)+' · '+esc(_pomo.title.slice(0,18))+'</span>';
+}
+function renderPomoBox(){ const el=document.getElementById('pomo-box'); if(el)el.innerHTML=pomoBoxHTML(); }
+function pomoStart(taskId){
+  const tk=state.tasks.find(x=>x.id===taskId); if(!tk)return;
+  if(_pomo.timer)clearInterval(_pomo.timer);
+  _pomo={taskId,left:25*60,timer:null,title:tk.title};
+  _pomo.timer=setInterval(pomoTick,1000);
+  renderPomoBox(); toast('▶ '+t('pomo_title')+': '+tk.title.slice(0,40));
+}
+function pomoTick(){ _pomo.left--; if(_pomo.left<=0)pomoFinish(); else renderPomoBox(); }
+function pomoFinish(){
+  clearInterval(_pomo.timer);
+  const tk=state.tasks.find(x=>x.id===_pomo.taskId);
+  _pomo.taskId=null; renderPomoBox();
+  if(!tk)return;
+  tk.pomos=(tk.pomos||0)+1;
+  addXP(15,'помодоро: '+tk.title,{taskId:tk.id,pomo:true});
+  pomoBeep(); emitChange();
+  toast('🍅 +15 XP · '+tk.title.slice(0,34));
+  if(tk.pomos%4===0){ addXP(20,'перерыв 15 мин после 4 помодоро (Endurance)',{taskId:tk.id,breakQuest:true}); toast('🧘 4 помодоро подряд — 15 мин перерыва? +20 XP (Endurance)'); }
+}
+function pomoStop(){ if(_pomo.timer)clearInterval(_pomo.timer); _pomo.taskId=null; renderPomoBox(); toast('⏹ помодоро остановлено',{amber:true}); }
+function pomoBeep(){ // NEW 4: звуковой сигнал без файлов
+  try{
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    [880,1320].forEach((f,i)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.frequency.value=f; o.type='sine'; o.connect(g); g.connect(ctx.destination);
+      g.gain.setValueAtTime(0.001,ctx.currentTime+i*0.18);
+      g.gain.exponentialRampToValueAtTime(0.2,ctx.currentTime+i*0.18+0.02);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.18+0.16);
+      o.start(ctx.currentTime+i*0.18); o.stop(ctx.currentTime+i*0.18+0.18);
+    });
+  }catch(e){}
+}
+function focusTasks(){ // NEW 1: задачи дня — по времени, выполненные в конец
+  const td=todayISO();
+  return state.tasks.filter(x=>x.date===td).sort((a,b)=>(a.done-b.done)||((a.time?minsOf(a.time):9999)-(b.time?minsOf(b.time):9999))||b.priority-a.priority);
+}
+function focusOpen(){ // NEW 1: фокус дня — фуллскрин-стек карточек
+  _focus.open=true; _focus.idx=0; focusRender();
+  _focus.esc=e=>{ if(e.key==='Escape')focusClose(); else if(e.key==='ArrowRight')focusNext(); };
+  document.addEventListener('keydown',_focus.esc);
+}
+function focusClose(){
+  _focus.open=false;
+  if(_focus.esc)document.removeEventListener('keydown',_focus.esc);
+  const el=document.getElementById('focus-root'); if(el)el.remove();
+}
+function focusNext(){ const n=focusTasks().filter(x=>!x.done).length; _focus.idx=n?(_focus.idx+1)%n:0; focusRender(); }
+function focusRender(){
+  let root=document.getElementById('focus-root');
+  if(!root){ root=document.createElement('div'); root.id='focus-root'; document.body.appendChild(root); }
+  const list=focusTasks(), open=list.filter(x=>!x.done), doneN=list.length-open.length;
+  if(!list.length){
+    root.innerHTML='<div class="focus-root"><div class="focus-card" style="text-align:center"><div class="panel-title">'+t('fm_title')+'</div>'+
+      '<div class="subline" style="margin:14px 0">'+t('fm_empty')+'</div>'+
+      '<button class="btn btn-primary" onclick="focusClose();quickAdd()">'+t('top_add')+'</button> <button class="btn" onclick="focusClose()">'+t('close')+'</button></div></div>';
+    return;
+  }
+  if(!open.length){
+    root.innerHTML='<div class="focus-root"><div class="focus-card" style="text-align:center"><div class="bignum glow">🏆</div>'+
+      '<div class="panel-title">'+t('fm_all')+'</div>'+
+      '<div class="subline" style="margin:10px 0">'+doneN+'/'+list.length+' · +'+list.reduce((a,x)=>a+(x.xpAwarded||0),0)+' XP</div>'+
+      '<button class="btn" onclick="focusClose()">'+t('close')+'</button></div></div>';
+    return;
+  }
+  const tk=open[Math.min(_focus.idx,open.length-1)];
+  const g=tk.goalId?state.goals.find(g=>g.id===tk.goalId):null;
+  const cat=g?state.categories.find(c=>c.id===g.cat):null;
+  const col=g?(g.color||cat.color||'#7fa38c'):'#7fa38c';
+  root.innerHTML='<div class="focus-root"><div class="focus-card">'+
+    '<div style="display:flex;align-items:center;gap:10px"><span class="mini-tag">'+(_focus.idx+1)+'/'+open.length+'</span>'+
+      (tk.time?'<span class="mini-tag main">⏰ '+tk.time+'</span>':'')+
+      '<span class="subline" style="margin-left:auto">'+t('fm_title')+' · <button class="mini-btn" onclick="focusClose()">✕</button></span></div>'+
+    '<div class="fc-goal" style="margin-top:14px"><span class="gdot" style="width:10px;height:10px;flex:none;background:'+col+'"></span>'+(g?esc(g.title.slice(0,44)):'—')+'</div>'+
+    '<div class="fc-title">'+esc(tk.title)+'</div>'+
+    '<div class="subline">P'+tk.priority+(g?' · '+Math.round(goalPercent(g).pct)+'%':'')+(tk.pomos?' · 🍅'+tk.pomos:'')+'</div>'+
+    '<div class="focus-nav"><button class="btn btn-primary" style="flex:1" onclick="focusComplete(\''+tk.id+'\')">✓ '+t('fm_done')+'</button>'+
+      '<button class="btn" onclick="pomoStart(\''+tk.id+'\')">▶ 25:00</button>'+
+      '<button class="btn" onclick="focusNext()">'+t('fm_next')+' →</button></div>'+
+  '</div></div>';
+}
+function focusComplete(id){ // NEW 1: XP-анимация при выполнении из фокуса
+  const tk=state.tasks.find(x=>x.id===id); if(!tk||tk.done)return;
+  toggleTask(id);
+  const root=document.getElementById('focus-root');
+  if(root){ const b=document.createElement('div'); b.className='xp-burst'; b.textContent='+'+(tk.xpAwarded||0)+' XP';
+    const card=root.querySelector('.focus-card'); if(card)card.appendChild(b); setTimeout(()=>b.remove(),950); }
+  setTimeout(focusRender,380);
+}
+function fbInBlock(time){ // NEW 10: блок фокуса для HH:MM
+  if(!time)return null;
+  const m=minsOf(time);
+  return (state.settings.focusBlocks||[]).find(b=>b.start&&b.end&&m>=minsOf(b.start)&&m<minsOf(b.end))||null;
+}
+function fbBandsHTML(START,ROWH){ // NEW 10: цветные полосы блоков на таймлайне дня
+  return (state.settings.focusBlocks||[]).filter(b=>b.start&&b.end).map(b=>{
+    const s=minsOf(b.start),e=minsOf(b.end); if(e<=s)return '';
+    const col=b.color||'#a06bff';
+    return '<div class="fb-band" style="top:'+Math.max(0,(s-START)/60*ROWH)+'px;height:'+(e-s)/60*ROWH+'px;border-color:'+col+';background:'+col+'14"><span style="color:'+col+'">'+esc(b.name||'')+'</span></div>';
+  }).join('');
+}
+function fbSettingsHTML(){ // NEW 10: редактор блоков в Настройках (до 3)
+  const fbs=state.settings.focusBlocks=state.settings.focusBlocks||[];
+  const rows=fbs.map((b,i)=>'<div style="display:flex;gap:6px;align-items:center;margin:6px 0">'+
+    '<input class="f" style="flex:1;min-width:0" value="'+esc(b.name||'')+'" placeholder="'+t('fb_name')+'" onchange="fbUpd('+i+',\'name\',this.value)">'+
+    '<input class="f" type="time" style="width:90px" value="'+(b.start||'09:00')+'" onchange="fbUpd('+i+',\'start\',this.value)">'+
+    '<input class="f" type="time" style="width:90px" value="'+(b.end||'11:00')+'" onchange="fbUpd('+i+',\'end\',this.value)">'+
+    '<input type="color" value="'+(b.color||'#a06bff')+'" onchange="fbUpd('+i+',\'color\',this.value)" title="цвет" style="width:30px;height:30px;padding:0;border:none;background:none;cursor:pointer">'+
+    '<button class="mini-btn" onclick="fbDel('+i+')">✕</button></div>').join('');
+  return '<div class="c4 panel"><div class="panel-title">'+t('fb_title')+' · '+fbs.length+'/3</div>'+
+    (rows||'<div class="subline" style="margin:6px 0">09:00–11:00 = Глубокая работа…</div>')+
+    (fbs.length<3?'<button class="btn" style="margin-top:8px" onclick="fbAdd()">+ '+t('fb_add')+'</button>':'')+
+    '<div class="subline" style="margin-top:6px">задача в блоке = +10% XP · пустой блок в 22:00 = напоминание</div></div>';
+}
+function fbAdd(){ const fbs=state.settings.focusBlocks=state.settings.focusBlocks||[]; if(fbs.length>=3)return; fbs.push({name:'Блок '+(fbs.length+1),start:'09:00',end:'11:00',color:'#a06bff'}); emitChange(); }
+function fbDel(i){ state.settings.focusBlocks.splice(i,1); emitChange(); }
+function fbUpd(i,k,v){ const b=state.settings.focusBlocks[i]; if(!b)return; b[k]=v; emitChange(); }
+let _fbWarned={};
+function checkFocusBlocks(){ // NEW 10: после 22:00 — напоминание о пустых блоках завтра
+  if(new Date().getHours()<22)return;
+  const tom=addDays(todayISO(),1);
+  (state.settings.focusBlocks||[]).forEach((b,i)=>{
+    if(!b.start||!b.end||_fbWarned[i])return;
+    const m1=minsOf(b.start),m2=minsOf(b.end);
+    const has=state.tasks.some(x=>x.date===tom&&x.time&&minsOf(x.time)>=m1&&minsOf(x.time)<m2);
+    if(!has){
+      _fbWarned[i]=1;
+      const msg=t('fb_empty_tom').replace('{n}',b.name||'');
+      if(window.Notification&&Notification.permission==='granted'){ try{ new Notification('NEXUS',{body:msg}); }catch(e){} }
+      toast('🔔 '+msg,{amber:true,ms:9000});
+    }
+  });
+}
+function dashEnergyHTML(){ // NEW 6: энергия дня + корреляция + лёгкие задачи
+  const td=todayISO(), cur=state.status.daily[td]||{};
+  const EMO=['💤','🪫','🔋','⚡','🚀'];
+  if(!cur.e)return '<div class="kv"><span class="k">'+t('en_energy')+'</span><span class="v"><button class="mini-btn" onclick="openStatusCheck()">'+t('en_set')+'</button></span></div>';
+  let html='<div class="kv"><span class="k">'+t('en_energy')+'</span><span class="v acc">'+EMO[cur.e-1]+' '+cur.e+'/5</span></div>';
+  const corr=energyCorr();
+  if(corr!=null)html+='<div class="subline glow-soft">⚡ '+t('en_corr').replace('{p}',corr)+'</div>';
+  if(cur.e<=2){
+    const light=state.tasks.filter(x=>!x.done&&x.date>=td).sort((a,b)=>a.priority-b.priority).slice(0,2);
+    if(light.length)html+='<div class="subline amber">'+t('en_light')+' '+light.map(x=>esc(x.title.slice(0,30))).join(' · ')+'</div>';
+    html+='<button class="mini-btn" style="margin-top:4px" onclick="aiEnergyLowMove()">🛡 '+t('en_move')+'</button>'; // AI-F7
+  }else if(cur.e>=4){
+    html+='<button class="mini-btn" style="margin-top:4px" onclick="aiEnergyPeakAttack()">⚡ '+t('en_attack')+'</button>'; // AI-F7
+  }
+  return html;
+}
+function aiEnergyLowMove(){ // AI-F7: энергия 1–2 — тяжёлое на завтра
+  const td=todayISO(), tom=addDays(td,1);
+  const heavy=state.tasks.filter(x=>!x.done&&x.date===td&&(x.priority>=4||x.time)).slice(0,5);
+  heavy.forEach(x=>{ x.date=tom; x.updatedAt=Date.now(); });
+  emitChange();
+  toast('🛡 Перенесено на завтра: '+heavy.length+(sysNotify?'':'' )+' · восстановление — тоже тактика');
+  sysNotify('energy_low');
+}
+function aiEnergyPeakAttack(){ // AI-F7: энергия 4–5 — задача из бэклога в сегодня
+  const td=todayISO();
+  const pick=state.tasks.filter(x=>!x.done&&x.date>td).sort(byPrioDate)[0];
+  if(!pick){ toast('Бэклог пуст — атаковать нечего',{amber:true}); return; }
+  pick.date=td; pick.updatedAt=Date.now();
+  emitChange();
+  toast('⚡ В сегодня: '+pick.title.slice(0,40));
+  sysNotify('energy_peak');
+}
+function energyCorr(){ // NEW 6: % разницы выполнения в дни с энергией 4+ против 1–3
+  const hi=[],lo=[];
+  for(let i=0;i<30;i++){
+    const d=addDays(todayISO(),-i), c=state.status.daily[d];
+    if(!c||!c.e)continue;
+    const sch=state.tasks.filter(x=>x.date===d).length; if(!sch)continue;
+    const done=state.tasks.filter(x=>x.date===d&&x.done).length;
+    (c.e>=4?hi:lo).push(done/sch);
+  }
+  if(hi.length<2||lo.length<2)return null;
+  const avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
+  const l=avg(lo); if(!l)return null;
+  return Math.round((avg(hi)-l)/l*100);
+}
+
+/* ============================================================
+   SECTION 18.8 — BATCH 4: разбор недели · карта привычек · дерево
+   зависимостей · дедлайн-алерты · журнал практики · итог месяца (2026-11-01)
+   ============================================================ */
+function heatDay(iso){ // NEW 3: тап по дню карты привычек
+  const tks=dayTasks(iso), done=tks.filter(x=>x.done);
+  openModal('<div class="panel-title">'+fmtDate(iso)+'</div>'+
+    '<div class="subline" style="margin-bottom:8px">'+t('cal_progress')+': '+done.length+'/'+tks.length+'</div>'+
+    (done.length?done.map(x=>'<div class="kv"><span class="k">✓ '+esc(x.title)+'</span><span class="v acc">'+(x.goalId?'◈ '+esc((state.goals.find(g=>g.id===x.goalId)||{}).title?.slice(0,26)||''):'')+'</span></div>').join('')
+      :'<div class="subline">'+t('heat_empty')+'</div>')+
+    '<div class="modal-actions"><button class="btn" onclick="closeModal()">'+t('close')+'</button></div>');
+}
+let _wr={};
+function wrAutoCheck(){ // NEW 2: воскресенье — авто-разбор недели
+  if(new Date().getDay()!==0)return;
+  const wk=startOfWeekISO(todayISO());
+  if(state.status._wrWeek===wk)return;
+  state.status._wrWeek=wk; saveState(); wrOpen();
+}
+function wrOpen(){ // NEW 2: шаг 1 — статистика недели
+  const td=todayISO(), ws=startOfWeekISO(td), we=endOfWeekISO(td);
+  const tks=state.tasks.filter(x=>x.date>=ws&&x.date<=we);
+  const done=tks.filter(x=>x.done).length;
+  const pct=tks.length?Math.round(done/tks.length*100):0;
+  const xpW=state.xpLog.filter(x=>x.date>=ws&&x.date<=we&&x.amount>0).reduce((a,x)=>a+x.amount,0);
+  _wr={ws,we,done,total:tks.length,pct};
+  openModal('<div class="panel-title">'+t('wr_title')+' · W'+isoWeek(new Date(ws+'T12:00'))+'</div>'+
+    '<div class="kv"><span class="k">'+t('cal_tasks')+'</span><span class="v acc">'+done+' / '+tks.length+' · '+pct+'%</span></div>'+
+    '<div class="bar" style="width:100%;margin:6px 0"><i style="width:'+pct+'%"></i></div>'+
+    '<div class="kv"><span class="k">XP за неделю</span><span class="v acc">+'+xpW+'</span></div>'+
+    '<div class="kv"><span class="k">'+t('st_streaks')+'</span><span class="v acc">🔥 '+globalStreak()+' · рекорд '+longestStreak()+'</span></div>'+
+    '<div class="kv"><span class="k">Дисциплина</span><span class="v acc">'+state.rpg.discipline+'/100</span></div>'+
+    '<div class="modal-actions"><button class="btn" onclick="closeModal()">'+t('cancel')+'</button>'+
+    '<button class="btn btn-primary" onclick="wrStep2()">'+t('fm_next')+' →</button></div>');
+}
+function wrStep2(){ // NEW 2: шаг 2 — что пошло не так
+  const reasons=['не хватило времени','не хватило энергии','забыл','неверный приоритет'];
+  openModal('<div class="panel-title">'+t('wr_title')+' · '+t('wr_step2')+'</div>'+
+    '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">'+
+      reasons.map(r=>'<button type="button" class="mini-btn wr-reason" onclick="this.classList.toggle(\'on\')">'+r+'</button>').join('')+'</div>'+
+    '<textarea class="f" id="wr-text" rows="3" maxlength="300" placeholder="Своими словами — что помешало / что помогло…"></textarea>'+
+    '<div class="modal-actions"><button class="btn" onclick="wrOpen()">←</button>'+
+    '<button class="btn btn-primary" onclick="wrStep3()">'+t('fm_next')+' →</button></div>');
+}
+function wrStep3(){ // NEW 2: шаг 3 — авто-приоритеты (просроченные цели, ближайший дедлайн)
+  const td=todayISO();
+  const top3=state.goals.filter(g=>(g.lastPercent||0)<100&&g.deadline)
+    .sort((a,b)=>a.deadline===b.deadline?(a.lastPercent||0)-(b.lastPercent||0):(a.deadline<b.deadline?-1:1))
+    .slice(0,3).map(g=>g.title.slice(0,44)+' ('+Math.round(g.lastPercent||0)+'% · до '+fmtShort(g.deadline)+')');
+  if(top3.length<3) state.goals.filter(g=>(g.lastPercent||0)<100&&!g.deadline).sort(byPrioDate).slice(0,3-top3.length)
+    .forEach(g=>top3.push(g.title.slice(0,44)));
+  _wr.reasons=[...document.querySelectorAll('.wr-reason.on')].map(x=>x.textContent);
+  _wr.text=$('#wr-text').value.trim();
+  openModal('<div class="panel-title">'+t('wr_title')+' · '+t('wr_step3')+'</div>'+
+    top3.map((s,i)=>'<div class="kv"><span class="k">ПРИОРИТЕТ №'+(i+1)+'</span><span class="v acc">'+esc(s)+'</span></div>').join('')+
+    (top3.length?'':'<div class="subline">все цели закрыты — ставь новые</div>')+
+    '<div id="wr-ai" style="margin-top:10px"></div>'+
+    '<div class="modal-actions"><button class="btn" onclick="wrStep2()">←</button>'+
+    '<button class="btn" onclick="aiWeekCoach()">⚡ AI-анализ</button>'+ // AI-F5
+    '<button class="btn btn-primary" onclick="wrSave()">'+t('wr_save')+'</button></div>');
+}
+function wrSave(){
+  state.status.weekReviews=state.status.weekReviews||[];
+  state.status.weekReviews.unshift({week:startOfWeekISO(todayISO()),done:_wr.done,total:_wr.total,pct:_wr.pct,reasons:_wr.reasons,text:_wr.text,top3:[],ts:Date.now()});
+  // top3 сохраняем без html-обрезки формул
+  state.status.weekReviews[0].top3=state.goals.filter(g=>(g.lastPercent||0)<100&&g.deadline)
+    .sort((a,b)=>a.deadline<b.deadline?-1:1).slice(0,3).map(g=>g.title.slice(0,60));
+  if(state.status.weekReviews.length>12)state.status.weekReviews=state.status.weekReviews.slice(0,12);
+  closeModal(); emitChange(); toast('📋 '+t('wr_log')+' · сохранено');
+}
+function reviewLogDrawerHTML(){ // NEW 2: «История решений» на Статусе
+  const revs=state.status.weekReviews||[];
+  return '<details class="st-block"><summary>'+t('wr_log')+' · '+revs.length+'</summary><div class="st-body">'+
+    '<button class="btn btn-primary" style="width:100%;margin-bottom:8px" onclick="wrOpen()">📋 '+t('wr_open')+'</button>'+
+    ((revs.slice(0,4).map(r=>'<div class="kv"><span class="k">'+esc(r.week)+'</span><span class="v acc">'+r.done+'/'+r.total+' · '+r.pct+'%</span></div>'+
+      (r.reasons&&r.reasons.length?'<div class="subline">причины: '+esc(r.reasons.join(', '))+'</div>':'')+
+      (r.text?'<div class="subline">«'+esc(r.text.slice(0,80))+'»</div>':'')).join(''))||'<div class="subline">'+t('wr_none')+'</div>')+
+  '</div></details>';
+}
+function checkDeadlineNotifs(){ // NEW 7: уведомления за 3 дня и за 1 день
+  const td=todayISO();
+  state.status._dlNotif=state.status._dlNotif||{};
+  if(state.status._dlNotif[td])return;
+  state.status._dlNotif[td]=1; saveState();
+  state.goals.forEach(g=>{
+    if(!g.deadline||(g.lastPercent||0)>=100)return;
+    const d=daysBetween(td,g.deadline);
+    if(d===3||d===1){
+      const body=g.title+' · '+d+'д · '+Math.round(g.lastPercent||0)+'%';
+      sysNotify('deadline',{title:g.title.slice(0,40),days:d,pct:Math.round(g.lastPercent||0)}); // AI-F1: CRITICAL WARNING
+      if(window.Notification&&Notification.permission==='granted'){ try{ new Notification('NEXUS · дедлайн',{body}); }catch(e){} }
+      toast('⏳ '+esc(body),{amber:true,ms:9000});
+    }
+  });
+}
+let goalMapView=false,_mapFrom=null; // NEW 5: карта зависимостей
+function goalsMapHTML(){
+  const cats=state.categories;
+  const colW=180,rowH=78,W=Math.max(560,cats.length*colW+40);
+  const rows=Math.max(1,...cats.map(c=>state.goals.filter(g=>g.cat===c.id).length));
+  const H=rows*rowH+80;
+  const pos={};
+  cats.forEach((c,ci)=>{ state.goals.filter(g=>g.cat===c.id).sort(byPrioDate).forEach((g,ri)=>{ pos[g.id]={x:30+ci*colW+70,y:52+ri*rowH+16}; }); });
+  let edges='';
+  for(const g of state.goals)for(const d of (g.deps||[])){
+    const a=pos[d],b=pos[g.id]; if(!a||!b)continue;
+    const dep=state.goals.find(x=>x.id===d);
+    const ok=dep&&(dep.lastPercent||0)>=100;
+    edges+='<line x1="'+a.x+'" y1="'+a.y+'" x2="'+b.x+'" y2="'+b.y+'" stroke="'+(ok?'rgba(0,255,127,.55)':'rgba(160,107,255,.45)')+'" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arw)"/>';
+  }
+  let nodes='';
+  for(const g of state.goals){
+    const p=pos[g.id]; if(!p)continue;
+    const done=(g.lastPercent||0)>=100;
+    const blocked=!done&&(g.deps||[]).some(d=>{const dd=state.goals.find(x=>x.id===d);return dd&&(dd.lastPercent||0)<100;});
+    const cat=state.categories.find(c=>c.id===g.cat)||{};
+    const col=done?'#00ff7f':blocked?'#5a6472':(g.color||cat.color||'#7fa38c');
+    const title=esc(g.title.length>26?g.title.slice(0,25)+'…':g.title);
+    nodes+='<g transform="translate('+(p.x-70)+','+(p.y-16)+')" style="cursor:pointer" onclick="mapNodeClick(\''+g.id+'\')">'+
+      '<rect width="140" height="32" rx="7" fill="'+col+'22" stroke="'+col+'" stroke-width="'+(_mapFrom===g.id?2.5:1.2)+'"'+(done?' filter="url(#gl)"':'')+'/>'+
+      '<text x="8" y="20" font-size="10.5" fill="'+(done?'#00ff7f':blocked?'#8b95a5':'#e8e2d0')+'">'+(blocked?'🔒 ':'')+(done?'✓ ':'')+title+'</text></g>';
+  }
+  return '<div class="toolbar"><button class="btn on" onclick="goalMapView=false;renderView()">☰ '+t('map_list')+'</button>'+
+    '<span class="subline">клик по узлу → «'+t('map_link')+'» → клик по другому узлу = стрелка «разблокирует»</span></div>'+
+    '<div class="panel" style="overflow:auto"><svg viewBox="0 0 '+W+' '+H+'" style="width:100%;min-width:'+W+'px;height:'+H+'px">'+
+    '<defs><marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="rgba(160,107,255,.7)"/></marker>'+
+    '<filter id="gl"><feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00ff7f" flood-opacity=".9"/></filter></defs>'+
+    edges+nodes+'</svg></div>';
+}
+function mapNodeClick(id){ // NEW 5: выбор узла / создание связи
+  if(_mapFrom&&_mapFrom!==id){
+    const g=state.goals.find(x=>x.id===id);
+    if(g){ g.deps=g.deps||[]; if(!g.deps.includes(_mapFrom))g.deps.push(_mapFrom); }
+    _mapFrom=null; emitChange(); toast('🔗 связь создана');
+    return;
+  }
+  const g=state.goals.find(x=>x.id===id); if(!g)return;
+  const done=(g.lastPercent||0)>=100;
+  const blocked=!done&&(g.deps||[]).some(d=>{const dd=state.goals.find(x=>x.id===d);return dd&&(dd.lastPercent||0)<100;});
+  openModal('<div class="panel-title">🗺 '+esc(g.title.slice(0,46))+'</div>'+
+    '<div class="subline" style="margin-bottom:8px">'+(done?'✓ завершена — узел светится':blocked?'🔒 заблокирована зависимостью':'активна')+' · '+Math.round(g.lastPercent||0)+'%</div>'+
+    ((g.deps||[]).length?'<div class="subline">зависит от: '+g.deps.map(d=>esc((state.goals.find(x=>x.id===d)||{}).title?.slice(0,30)||d)).join(' · ')+'</div>':'')+
+    '<div class="modal-actions"><button class="btn" onclick="closeModal();_mapFrom=\''+g.id+'\';renderView()">🔗 '+t('map_link')+'</button>'+
+    ((g.deps||[]).length?'<button class="btn" onclick="closeModal();mapClearDeps(\''+g.id+'\')">✕ '+t('map_unlink')+'</button>':'')+
+    '<button class="btn" onclick="closeModal();goalMapView=false;expandedGoal=\''+g.id+'\';renderView()">☰ '+t('map_open')+'</button></div>');
+}
+function mapClearDeps(id){ const g=state.goals.find(x=>x.id===id); if(g){g.deps=[];emitChange();} }
+function monthBossCheck(){ // NEW 9: конец/начало месяца — кинематографичный итог
+  const now=new Date(), ym=now.getFullYear()+'-'+pad2(now.getMonth()+1);
+  const dim=daysInMonth(now.getFullYear(),now.getMonth()+1);
+  const isEnd=now.getDate()>=dim-1, isStart=now.getDate()<=2;
+  if(!isEnd&&!isStart)return;
+  const key=ym+(isEnd?'E':'S');
+  if(state.status._bossShown===key)return;
+  state.status._bossShown=key; saveState();
+  const prev=new Date(now.getFullYear(),now.getMonth()-1,1);
+  const ymUse=isStart?prev.getFullYear()+'-'+pad2(prev.getMonth()+1):ym;
+  monthBossShow(ymUse);
+}
+function monthBossShow(ym){
+  const goalsPct=state.goals.length?Math.round(state.goals.reduce((a,g)=>a+(g.lastPercent||0),0)/state.goals.length):0;
+  const xpM=state.xpLog.filter(x=>(x.date||'').startsWith(ym)&&x.amount>0).reduce((a,x)=>a+x.amount,0);
+  const sk={}; (state.rpg.skillLog||[]).forEach(e=>{ if((e.date||'').startsWith(ym))sk[e.skill]=(sk[e.skill]||0)+e.amt; });
+  const bestSk=Object.entries(sk).sort((a,b)=>b[1]-a[1])[0];
+  const win=goalsPct>=50;
+  const skName=bestSk?bestSk[0]:'-';
+  openModal('<div class="panel-title" style="text-align:center;font-size:17px;letter-spacing:.14em">'+(win?'🏆 БОСС ПОВЕРЖЕН':'💀 БОСС ВЫЖИЛ')+' · '+ym+'</div>'+
+    '<div style="margin:10px 0">'+
+    '<div class="kv"><span class="k">'+t('boss_goals')+'</span><span class="v acc">'+goalsPct+'%</span></div>'+
+    '<div class="kv"><span class="k">'+t('boss_xp')+'</span><span class="v acc">+'+xpM+'</span></div>'+
+    '<div class="kv"><span class="k">'+t('boss_skill')+'</span><span class="v acc">'+(bestSk?esc(bestSk[0])+' +'+bestSk[1]:'—')+'</span></div>'+
+    '<div class="kv"><span class="k">'+t('boss_disc')+'</span><span class="v acc">'+state.rpg.discipline+'/100</span></div></div>'+
+    '<div class="subline">'+t('boss_next').replace('{p}',Math.max(40,100-Math.round(goalsPct/2)))+'</div>'+
+    '<div class="modal-actions"><button class="btn" onclick="bossPng(\''+ym+'\','+goalsPct+','+xpM+',\''+esc(skName.replace(/["']/g,''))+'\','+state.rpg.discipline+','+(win?1:0)+')">🖼 PNG</button>'+
+    '<button class="btn btn-primary" onclick="bossAccept('+Math.max(40,100-Math.round(goalsPct/2))+')">'+t('close')+'</button></div>');
+}
+function bossAccept(hp){ state.rpg.bossStartHp=hp; closeModal(); emitChange(); toast('☠ следующий босс: HP '+hp); }
+function bossPng(ym,pct,xp,sk,disc,win){ // NEW 9: PNG-карточка итога через canvas
+  const c=document.createElement('canvas'); c.width=800; c.height=500;
+  const x=c.getContext('2d');
+  const g=x.createLinearGradient(0,0,800,500); g.addColorStop(0,'#0d0c1a'); g.addColorStop(1,'#060911');
+  x.fillStyle=g; x.fillRect(0,0,800,500);
+  x.strokeStyle='#a06bff'; x.lineWidth=3; x.strokeRect(14,14,772,472);
+  x.textAlign='center';
+  x.fillStyle=win?'#00ff7f':'#ff3860'; x.font='bold 40px Georgia'; x.fillText(win?'БОСС ПОВЕРЖЕН':'БОСС ВЫЖИЛ',400,110);
+  x.fillStyle='#8b95a5'; x.font='20px Segoe UI'; x.fillText('NEXUS · '+ym,400,150);
+  x.textAlign='left'; x.fillStyle='#e8e2d0'; x.font='24px Segoe UI';
+  x.fillText('Цели завершено: '+pct+'%',120,230);
+  x.fillText('XP за месяц: +'+xp,120,280);
+  x.fillText('Лучший навык: '+(sk==='-'?'—':sk),120,330);
+  x.fillText('Дисциплина: '+disc+'/100',120,380);
+  x.textAlign='center'; x.fillStyle='#00ff7f'; x.font='16px Segoe UI';
+  x.fillText('Слабость не прощается. Охота продолжается.',400,445);
+  const a=document.createElement('a');
+  a.download='nexus-boss-'+ym+'.png'; a.href=c.toDataURL('image/png'); a.click();
+  toast('🖼 PNG-карточка сохранена');
+}
+
+/* ============================================================
+   SECTION 19 — NEXUS AI · Gemini 2.0 Flash Lite (2026-11-01)
+   Ключ в localStorage (state.settings.ai.key), на облако не выгружается.
+   Без ключа все функции работают в rule-based фолбэке.
+   Финансы и личные заметки в API НЕ уходят (пейлоад их не содержит).
+   ============================================================ */
+function aiCfg(){ state.settings.ai=state.settings.ai||{key:'',persona:'system',freq:'norm',briefTime:'09:00',lang:'ru',tasks:true,sysNotif:true,chat:true}; return state.settings.ai; }
+function aiState(){ state.ai=state.ai||{chat:[],tokens:0,month:''}; const ym=(d=>d.getFullYear()+'-'+pad2(d.getMonth()+1))(new Date()); if(state.ai.month!==ym){state.ai.month=ym;state.ai.tokens=0;} return state.ai; }
+function aiReady(){ return !!(state.settings.ai&&state.settings.ai.key); }
+const AI_MODEL='gemini-2.0-flash-lite';
+function aiTokensAdd(chars){ aiState(); state.ai.tokens+=Math.ceil(chars/4); }
+function aiCacheGet(k){ try{ const c=JSON.parse(localStorage.getItem(KEY+'-aicache')||'{}'); const v=c[k]; if(v&&Date.now()-v.t<3600e3)return v.txt; if(v){delete c[k];localStorage.setItem(KEY+'-aicache',JSON.stringify(c));} }catch(e){} return null; }
+function aiCacheSet(k,txt){ try{ const c=JSON.parse(localStorage.getItem(KEY+'-aicache')||'{}'); c[k]={t:Date.now(),txt:txt.slice(0,4000)}; const ks=Object.keys(c); if(ks.length>40)delete c[ks[0]]; localStorage.setItem(KEY+'-aicache',JSON.stringify(c)); }catch(e){} }
+async function aiCall(prompt,{maxTokens=500,temp=0.8,cacheKey=null,system=null}={}){ // бэкофф 429/503, кэш 1ч
+  if(cacheKey){ const c=aiCacheGet(cacheKey); if(c)return {ok:true,text:c,cached:true}; }
+  if(!aiReady())return {ok:false,text:''};
+  const body={contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:maxTokens,temperature:temp}};
+  if(system)body.systemInstruction={parts:[{text:system}]};
+  let lastErr=null;
+  for(let att=0;att<3;att++){
+    try{
+      const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+AI_MODEL+':generateContent?key='+encodeURIComponent(state.settings.ai.key),
+        {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      if(r.status===429||r.status===503){ await new Promise(s=>setTimeout(s,1200*Math.pow(2,att))); continue; }
+      if(!r.ok)throw new Error('Gemini '+r.status);
+      const j=await r.json();
+      const parts=(j.candidates&&j.candidates[0]&&j.candidates[0].content&&j.candidates[0].content.parts)||[];
+      const txt=parts.map(p=>p.text||'').join('').trim();
+      aiTokensAdd(prompt.length+txt.length);
+      if(cacheKey)aiCacheSet(cacheKey,txt);
+      return {ok:true,text:txt};
+    }catch(e){ lastErr=e; await new Promise(s=>setTimeout(s,900*Math.pow(2,att))); }
+  }
+  return {ok:false,text:'',error:lastErr&&lastErr.message};
+}
+async function aiTest(){ // кнопка «Проверить»
+  if(!aiReady()){ toast('Сначала вставь ключ Gemini',{amber:true}); return; }
+  toast('NEXUS AI: проверка…');
+  const r=await aiCall('Ответь одним словом: активен',{maxTokens:20,temp:0});
+  toast(r.ok?'✔ NEXUS AI на связи ('+AI_MODEL+')':'✕ NEXUS AI: '+(r.error||'нет ответа'),{amber:!r.ok,ms:6000});
+}
+function buildPayload(){ // контекст-пейлоад ~2000 токенов, без финансов и заметок
+  const td=todayISO(), now=new Date();
+  const bossStart=state.rpg.bossStartHp||100;
+  const bossAvg=state.goals.length?Math.round(state.goals.reduce((a,g)=>a+(g.lastPercent||0),0)/state.goals.length):0;
+  const done30=state.tasks.filter(x=>x.done&&x.doneAt&&x.doneAt>=addDays(td,-30)).length;
+  return JSON.stringify({
+    today:{date:td,day:t('wd')[now.getDay()],week:isoWeek(now)},
+    hunter:{name:state.status.name||'Hunter',level:levelFromXP(totalXP()).level,xp:totalXP(),discipline:state.rpg.discipline,streak:globalStreak(),record:longestStreak()},
+    energy:(state.status.daily[td]||{}).e||null,
+    goals:state.goals.filter(g=>(g.lastPercent||0)<100).slice(0,12).map(g=>({t:g.title.slice(0,50),cat:g.cat,p:g.priority,dl:g.deadline||'',pct:Math.round(g.lastPercent||0)})),
+    todayTasks:state.tasks.filter(x=>x.date===td).slice(0,15).map(x=>({t:x.title.slice(0,40),done:x.done,tm:x.time||'',p:x.priority})),
+    openTasks:state.tasks.filter(x=>!x.done).slice(0,15).map(x=>({t:x.title.slice(0,36),d:x.date,tm:x.time||'',p:x.priority})),
+    skills:state.skills.map(s=>({n:s.name,l:s.level})),
+    sleep:{avg7:avgSleep(7),target:state.settings.sleepTarget},
+    quests:{today:state.rpg.quests[td]?state.rpg.quests[td].filter(q=>questProgress(q,td)>=q.target).length+'/'+state.rpg.quests[td].length:null},
+    warrior:(function(){ const w=state.warrior190||{}; const rec=(w.weeklyChecklists||{})[w19WeekKey()]||{score:0};
+      const t=w19Today(); const ot=(w.overtraining||{}).log||{};
+      return {plan:'ВОИН-190',currentWeek:w19Week(),currentPhase:w19Phase().name,todayWorkout:t?t.t:'',
+        lastTestResults:Object.values(w.testResults||{}).slice(-1)[0]||{},
+        weeklyChecklist:{completed:rec.score||0,total:14},
+        morningRitual:{streak:w19RitualStreak(),todayDone:(((w.morningRitual||{}).log||{})[td]||{n:0}).n>=6},
+        pillars:(w.pillars||{}).log?w.pillars.log[td]||{}:{},
+        overtraining_flags:ot[td]||{},throatStatus:ot[td]&&ot[td].throat?'stop':'ok'}; })(),
+    boss:{hp:Math.max(0,bossStart-bossAvg),monthEnd:state.settings.campaignEnd||''},
+    review:{lastWeekReview:(state.status.weekReviews||[])[0]||null,completion30d:done30},
+  }).slice(0,8000);
+}
+function aiPersona(){ return {system:'Ты — СИСТЕМА из тёмного RPG-мира. Обращайся на «ты», императив, короткие рубленые фразы.',commander:'Ты — командир отряда охотников. Диктуешь приказы, чётко и по-военному.',mentor:'Ты — наставник. Строг, но объясняет причины и учит.',brutal:'Ты — беспощадный критик. Прямо называешь слабости, требуешь больше.'}[(state.settings.ai||{}).persona]||'Ты — СИСТЕМА из тёмного RPG-мира.'; }
+function aiSettingsHTML(){ // настройки NEXUS AI (ключ только локально)
+  const a=aiCfg();
+  return '<div class="c4 panel"><div class="panel-title">◆ NEXUS AI <span class="mini-tag'+(aiReady()?' main':'')+'">'+(aiReady()?'on':'off')+'</span></div>'+
+    '<div class="frow"><label class="f">Gemini API key</label><input class="f" type="password" id="ai-key" value="'+esc(a.key)+'" placeholder="AIza…" onchange="aiCfg().key=this.value.trim();saveState();renderNav();renderView()"></div>'+
+    '<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap"><button class="btn" onclick="aiTest()">Проверить</button>'+
+    '<span class="subline">'+AI_MODEL+' · токенов/мес: ~'+aiState().tokens.toLocaleString('ru-RU')+'</span></div>'+
+    '<div class="frow"><label class="f">'+t('ai_persona')+'</label><select class="f" onchange="aiCfg().persona=this.value;saveState()">'+['system','commander','mentor','brutal'].map(p=>'<option value="'+p+'"'+(a.persona===p?' selected':'')+'>'+p+'</option>').join('')+'</select></div>'+
+    '<div class="frow"><label class="f">'+t('ai_freq')+'</label><select class="f" onchange="aiCfg().freq=this.value;saveState()">'+[['min','Минимум'],['norm','Норма'],['aggr','Агрессив']].map(x=>'<option value="'+x[0]+'"'+(a.freq===x[0]?' selected':'')+'>'+x[1]+'</option>').join('')+'</select></div>'+
+    '<div class="frow"><label class="f">'+t('ai_brieftime')+'</label><input class="f" type="time" value="'+(a.briefTime||'09:00')+'" onchange="aiCfg().briefTime=this.value;saveState()"></div>'+
+    '<div class="kv"><span class="k">'+t('ai_tasks_t')+'</span><span class="v"><input type="checkbox" class="sw" '+(a.tasks!==false?'checked':'')+' onchange="aiCfg().tasks=this.checked;saveState()"></span></div>'+
+    '<div class="kv"><span class="k">'+t('ai_sys_t')+'</span><span class="v"><input type="checkbox" class="sw" '+(a.sysNotif!==false?'checked':'')+' onchange="aiCfg().sysNotif=this.checked;saveState()"></span></div>'+
+    '<div class="kv"><span class="k">'+t('ai_chat_t')+'</span><span class="v"><input type="checkbox" class="sw" '+(a.chat!==false?'checked':'')+' onchange="aiCfg().chat=this.checked;saveState();var b=document.getElementById(\'ai-bubble\');if(b)b.style.display=this.checked?\'\':\'none\'"></span></div>'+
+    '<button class="btn" style="margin-top:6px" onclick="aiChatReset()">'+t('ai_chat_reset')+'</button>'+
+    '<div class="subline" style="margin-top:6px">'+t('ai_privacy')+'</div></div>';
+}
+
+/* ---- AI-F1: системные уведомления Solo Leveling ---- */
+let _sysQ=[],_sysBusy=false;
+function sysNotify(event,ctx){
+  if(state.settings.ai&&!state.settings.ai.sysNotif)return;
+  const f=(state.settings.ai||{}).freq||'norm';
+  const critical=['deadline','boss','levelup','monthend'];
+  if(!critical.includes(event)&&f==='min')return; // Минимум: только критичные
+  _sysQ.push({event,ctx:ctx||{}});
+  sysPump();
+}
+async function sysPump(){
+  if(_sysBusy||!_sysQ.length)return; _sysBusy=true;
+  const {event,ctx}=_sysQ.shift();
+  let text=ctx.fallback||sysFallback(event,ctx);
+  if(aiReady()){
+    const r=await aiCall('Generate a Solo Leveling style system notification in Russian for this event: '+event+'. Context: '+buildPayload()+'. Max 3 lines. Sharp, dramatic, motivating. No emojis.',{maxTokens:200,temp:0.9,system:aiPersona()});
+    if(r.ok&&r.text)text=r.text;
+  }
+  sysShow(text);
+  state.status.sysLog=state.status.sysLog||[];
+  state.status.sysLog.unshift({at:new Date().toISOString().slice(5,16).replace('T',' '),event,text:text.slice(0,300)});
+  if(state.status.sysLog.length>20)state.status.sysLog=state.status.sysLog.slice(0,20);
+  saveState();
+  setTimeout(()=>{ _sysBusy=false; sysPump(); },1000); // очередь с зазором 1с
+}
+function sysShow(text){
+  sysBeep();
+  const el=document.createElement('div'); el.className='sys-alert';
+  el.innerHTML='<div class="sys-tag">【СИСТЕМА】</div><div class="sys-txt">'+esc(text)+'</div>';
+  document.body.appendChild(el);
+  setTimeout(()=>{ el.classList.add('out'); setTimeout(()=>el.remove(),450); },6000);
+}
+function sysBeep(){ try{ const c=new (window.AudioContext||window.webkitAudioContext)(); const o=c.createOscillator(),g=c.createGain(); o.frequency.value=440; o.type='sine'; o.connect(g); g.connect(c.destination); g.gain.setValueAtTime(.1,c.currentTime); g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.08); o.start(); o.stop(c.currentTime+.08); }catch(e){} }
+function sysFallback(ev,ctx){
+  switch(ev){
+    case 'briefing': return 'Охотник. Новый день — новая охота. Задач на сегодня: '+(ctx.tasks||0)+'. Квесты ждут. Приказ: не сбавлять темп.';
+    case 'task': return 'Задача устранена: '+(ctx.title||'')+'. +'+(ctx.xp||0)+' XP. Следующий приоритет уже ждёт.';
+    case 'triple': return 'ТРЁХЗАДАЧНЫЙ УДАР. Три цели пали за один день. Система фиксирует рост. Не останавливайся.';
+    case 'streak': return 'Серия выполнений: '+(ctx.days||0)+' дней. Ранг растёт. Дисциплина — твоё оружие.';
+    case 'deadline': return 'ВНИМАНИЕ. До дедлайна цели «'+(ctx.title||'')+'» — '+(ctx.days||0)+' дн. Прогресс: '+(ctx.pct||0)+'%. Вероятность провала: КРИТИЧЕСКАЯ.';
+    case 'boss': return 'ФАЗА БОССА: HP '+(ctx.hp||0)+'%. Босс усиливается. Ударь по целям немедленно.';
+    case 'levelup': return 'УРОВЕНЬ ПОВЫШЕН: LV '+(ctx.level||0)+'. Новый путь разблокирован. Продолжай охоту.';
+    case 'debrief': return 'Итог дня: '+(ctx.done||0)+' задач выполнено. Недостаточно. Завтра — минимум две. Система наблюдает.';
+    case 'energy_low': return 'Охотник истощён. Тяжёлые задания стоит перенести. Восстановление — тоже тактика.';
+    case 'energy_peak': return 'Пиковое состояние обнаружено. Рекомендуется атака на ПРИОРИТЕТ №1 немедленно.';
+    case 'w19start': return 'ПЛАН ВОИН-190 АКТИВИРОВАН. 20 недель до финального босса. Сухожилия куются медленно — и потому не ломаются. Начни с утреннего ритуала.';
+    case 'w19gym': return 'Сессия подтверждена. Физические параметры обновлены. Охотник становится сильнее. Следующий тест — по расписанию батареи.';
+    case 'w19miss': return 'Пропуск зафиксирован. Босс ВОИН-190 восстанавливает HP. Сила сухожилий не прощает простоя. Вернись в зал.';
+    case 'w19throat': return '⚠ МЕДИЦИНСКАЯ ТРЕВОГА. Симптомы тонзиллита. Все тренировки — СТОП. Врач — немедленно. Восстановление: 3 дня лёгкие → нормальный режим.';
+    case 'w19test': return 'ПРОГРЕСС ЗАФИКСИРОВАН. '+(ctx.label||'Показатель')+': '+(ctx.prev||'—')+' → '+(ctx.val||'—')+'. Путь воина продолжается. Не останавливайся.';
+    case 'w19deload': return 'Тело подаёт сигналы. Неделя разгрузки: объём −40%, интенсивность −20%. Это не слабость. Это тактика.';
+    case 'w19perfect': return 'ИДЕАЛЬНАЯ НЕДЕЛЯ ВОИНА. 14/14. Босс теряет 7 HP. Железная дисциплина — твой главный скилл.';
+    case 'w19pillars': return 'ВСЕ 7 СТОЛПОВ ЗАКРЫТЫ. Фундамент дня построен. Так работает машина, а не надежда.';
+    default: return 'СИСТЕМА активна. Продолжай охоту.';
+  }
+}
+function aiDailyTick(){ // 60с: дебриф 21:00 + пустые блоки + воскресный паттерн
+  checkFocusBlocks();
+  const now=new Date(), td=todayISO();
+  if(now.getHours()>=21){
+    state.status._sysDebrief=state.status._sysDebrief||{};
+    if(!state.status._sysDebrief[td]){
+      const done=state.tasks.filter(x=>x.date===td&&x.done).length;
+      if(done<2){ state.status._sysDebrief[td]=1; saveState(); sysNotify('debrief',{done}); }
+    }
+  }
+  if(now.getDay()===0&&now.getHours()>=20){
+    const wk=startOfWeekISO(td);
+    if(state.status._patWeek!==wk){ state.status._patWeek=wk; saveState(); detectPatterns(); }
+  }
+}
+
+/* ---- AI-F2: ПРИКАЗ НА ДЕНЬ ---- */
+function aiBriefFallback(){
+  const td=todayISO();
+  const top=state.tasks.filter(x=>!x.done&&(x.date<=td)).sort(byPrioDate).slice(0,3);
+  const dl=state.goals.filter(g=>g.deadline&&(g.lastPercent||0)<100).sort((a,b)=>a.deadline<b.deadline?-1:1)[0];
+  const bossStart=state.rpg.bossStartHp||100;
+  const bossAvg=state.goals.length?Math.round(state.goals.reduce((a,g)=>a+(g.lastPercent||0),0)/state.goals.length):0;
+  return 'ОЦЕНКА ОБСТАНОВКИ:\nБосс: HP '+(bossStart-bossAvg)+'%. Серия: '+globalStreak()+' дн. Дисциплина: '+state.rpg.discipline+'/100.\n\n'+
+    top.map((x,i)=>'ПРИОРИТЕТ №'+(i+1)+': '+x.title.slice(0,50)+(x.time?' ('+x.time+')':'')).join('\n')+
+    (dl?'\n\nПРЕДУПРЕЖДЕНИЕ: «'+dl.title.slice(0,44)+'» — до дедлайна '+daysBetween(td,dl.deadline)+' дн, прогресс '+Math.round(dl.lastPercent||0)+'%.':'')+
+    '\n\nЦЕЛЬ ДНЯ: закрыть минимум '+(top.length?'первый приоритет':'одну задачу')+' и не потерять серию.\n\nВыполни приказ. Охота начинается.';
+}
+async function aiBriefing(regen){
+  const td=todayISO();
+  openModal('<div class="panel-title">【ПРИКАЗ · '+fmtDate(td)+' · ОХОТНИК '+esc((state.status.name||'Hunter')).toUpperCase()+'】</div>'+
+    '<div id="ai-brief" class="ai-loading">НЕКСУС ОБРАБАТЫВАЕТ…</div>'+
+    '<div class="modal-actions" id="ai-brief-act"></div>');
+  let text=null,usedAI=false;
+  if(aiReady()){
+    const r=await aiCall('Сгенерируй боевой приказ на день в формате:\nОЦЕНКА ОБСТАНОВКИ: (2-3 предложения)\nПРИОРИТЕТ №1/№2/№3: (задача — почему)\nПРЕДУПРЕЖДЕНИЕ: (дедлайн/риск)\nЦЕЛЬ ДНЯ: (одно предложение)\nВыполни приказ. Охота начинается.\nКонтекст охотника: '+buildPayload(),{maxTokens:700,temp:0.7,system:aiPersona(),cacheKey:regen?null:'brief:'+td});
+    if(r.ok&&r.text){ text=r.text; usedAI=true; }
+  }
+  if(!text)text=aiBriefFallback();
+  const b=document.getElementById('ai-brief');
+  if(!b)return; // модал закрыли, пока грузилось
+  b.className='ai-txt'+(usedAI?'':' dim');
+  b.textContent=text;
+  document.getElementById('ai-brief-act').innerHTML='<button class="btn" onclick="aiBriefing(true)">↻ Перегенерировать</button><button class="btn btn-primary" onclick="closeModal()">'+t('close')+'</button>';
+}
+
+/* ---- AI-F3: ОПТИМИЗАЦИЯ ДНЯ ---- */
+function lessonGaps(iso){ // свободные слоты ≥30 мин между уроками
+  const busy=lessonsForDate(iso).filter(l=>l.status!=='cancel').map(l=>[minsOf(l.start),minsOf(l.end)]).sort((a,b)=>a[0]-b[0]);
+  const gaps=[]; let cur=8*60;
+  for(const [s,e] of busy){ if(s-cur>=30)gaps.push([cur,s]); cur=Math.max(cur,e); }
+  if(22*60-cur>=30)gaps.push([cur,22*60]);
+  return gaps;
+}
+async function aiOptimize(){
+  const iso=cal.d||todayISO();
+  const gaps=lessonGaps(iso).map(([s,e])=>[pad2(Math.floor(s/60))+':'+pad2(s%60),pad2(Math.floor(e/60))+':'+pad2(e%60)]);
+  const unsched=state.tasks.filter(x=>!x.done&&x.date===iso&&!x.time).sort(byPrioDate).slice(0,8);
+  openModal('<div class="panel-title">⚡ '+t('ai_opt_title')+' · '+fmtShort(iso)+'</div><div id="ai-opt" class="ai-loading">НЕКСУС ОБРАБАТЫВАЕТ…</div><div class="modal-actions" id="ai-opt-act"></div>');
+  let plan=null,usedAI=false;
+  // правило: заполняем слоты задачами по приоритету (по 30–60 мин)
+  plan=[];
+  let gi=0;
+  for(const tk of unsched){
+    if(gi>=gaps.length)break;
+    plan.push({title:tk.title.slice(0,44),start:gaps[gi][0],end:gaps[gi][1],id:tk.id});
+    gi++;
+  }
+  if(aiReady()&&gaps.length){
+    const r=await aiCall('Составь план на день: распредели задачи по свободным слотам. Слоты: '+JSON.stringify(gaps)+'. Открытые задачи: '+JSON.stringify(unsched.map(x=>({t:x.title.slice(0,40),p:x.priority})))+'. Ответ ТОЛЬКО JSON-массив: [{"t":"название","start":"HH:MM"}] — максимум '+gaps.length+' записей.',{maxTokens:500,temp:0.3,system:aiPersona()});
+    if(r.ok&&r.text){
+      try{
+        const m=r.text.match(/\[[\s\S]*\]/);
+        const arr=JSON.parse(m[0]);
+        if(Array.isArray(arr)&&arr.length){ plan=arr.filter(x=>x&&x.t&&x.start).slice(0,gaps.length).map(x=>({title:String(x.t).slice(0,44),start:x.start,end:'',id:null})); usedAI=true; }
+      }catch(e){}
+    }
+  }
+  const box=document.getElementById('ai-opt'); if(!box)return;
+  box.className='';
+  box.innerHTML=(plan.length?plan.map((p,i)=>'<label class="kv" style="cursor:pointer"><span class="k"><input type="checkbox" class="ai-opt-cb" data-id="'+(p.id||'')+'" data-title="'+esc(p.title)+'" data-start="'+p.start+'" checked> '+p.start+(p.end?'–'+p.end:'')+' → '+esc(p.title)+'</span></label>').join(''):'<div class="subline">Нет свободных слотов или задач для планирования.</div>')+
+    (usedAI?'':'<div class="subline dim">rule-based план (ключ AI не задан или ошибка API)</div>');
+  document.getElementById('ai-opt-act').innerHTML=(plan.length?'<button class="btn btn-primary" onclick="aiOptApply(\''+iso+'\')">Применить расписание</button>':'')+'<button class="btn" onclick="closeModal()">'+t('close')+'</button>';
+}
+function aiOptApply(iso){
+  let n=0;
+  document.querySelectorAll('.ai-opt-cb:checked').forEach(cb=>{
+    if(cb.dataset.id){
+      const tk=state.tasks.find(x=>x.id===cb.dataset.id);
+      if(tk){ tk.time=cb.dataset.start; tk.updatedAt=Date.now(); n++; }
+    }
+  });
+  closeModal(); emitChange();
+  toast('⚡ Назначено: '+n+' · ⏰ слоты');
+}
+
+/* ---- AI-F4: РАЗБОР ПРОВАЛА ---- */
+async function aiAutopsy(gid){
+  const g=state.goals.find(x=>x.id===gid); if(!g)return;
+  const tks=state.tasks.filter(x=>x.goalId===g.id);
+  openModal('<div class="panel-title">🔍 '+t('ai_aut_title')+' · '+esc(g.title.slice(0,40))+'</div><div id="ai-aut" class="ai-loading">НЕКСУС ОБРАБАТЫВАЕТ…</div><div class="modal-actions"><button class="btn" onclick="closeModal()">'+t('close')+'</button></div>');
+  const ctx=JSON.stringify({goal:{t:g.title,pct:Math.round(g.lastPercent||0),dl:g.deadline,target:g.target,unit:g.unit,created:g.createdAt},tasks:tks.map(x=>({t:x.title.slice(0,36),done:x.done,d:x.date})),discipline:state.rpg.discipline});
+  let text=null;
+  if(aiReady()){
+    const r=await aiCall('Разбери провал цели (post-mortem) в формате:\nПРИЧИНЫ ПРОВАЛА: (3 пункта, конкретно)\nЧТО СРАБОТАЛО: (частичный прогресс)\nПЛАН РЕАБИЛИТАЦИИ: (новый дедлайн, разбивка, слот в расписании)\nВЕРДИКТ: ПРОВАл / ЧАСТИЧНАЯ ПОБЕДА / ТАКТИЧЕСКОЕ ОТСТУПЛЕНИЕ\nДанные: '+ctx,{maxTokens:600,temp:0.5,system:aiPersona()});
+    if(r.ok&&r.text)text=r.text;
+  }
+  if(!text){
+    const pct=Math.round(g.lastPercent||0);
+    const noTasks=tks.length===0;
+    text='ПРИЧИНЫ ПРОВАЛА:\n1. '+(noTasks?'Цель не разбита на задачи — задач нет вообще':'Задачи распределены неравномерно ('+tks.filter(x=>x.done).length+'/'+tks.length+' закрыто)')+'\n2. Конкурирует с более приоритетными целями (P'+g.priority+')\n3. '+(g.deadline?'Дедлайн '+g.deadline+' агрессивен при темпе '+globalStreak()+' дн серии':'Дедлайн не задан — нет давления')+'\n\nЧТО СРАБОТАЛО: прогресс '+pct+'%'+(tks.some(x=>x.done)?', часть задач закрыта':', база заложена')+'.\n\nПЛАН РЕАБИЛИТАЦИИ:\n- Новый дедлайн: '+(g.deadline?addDays(g.deadline,7):addDays(todayISO(),14))+'\n- Разбить на 3 подзадачи по 30–60 мин\n- Слот в расписании: ближайшее окно после уроков\n\nВЕРДИКТ: '+(pct<25?'ПРОВАЛ':pct<70?'ЧАСТИЧНАЯ ПОБЕДА':'ТАКТИЧЕСКОЕ ОТСТУПЛЕНИЕ');
+  }
+  const box=document.getElementById('ai-aut'); if(!box)return;
+  box.className='ai-txt'; box.textContent=text;
+  g.history=g.history||[];
+  g.history.push({date:todayISO(),text:'РАЗБОР ПРОВАЛА (AI): '+text.replace(/\n+/g,' | ').slice(0,180)});
+  saveState();
+}
+
+/* ---- AI-F6: ГЕНЕРАТОР ЗАДАЧ ---- */
+async function aiGenTasks(gid){
+  const g=state.goals.find(x=>x.id===gid); if(!g)return;
+  openModal('<div class="panel-title">🤖 '+t('ai_gen_title')+' · '+esc(g.title.slice(0,40))+'</div><div id="ai-gen" class="ai-loading">НЕКСУС ОБРАБАТЫВАЕТ…</div><div class="modal-actions"><button class="btn" onclick="closeModal()">'+t('close')+'</button></div>');
+  const days=Math.max(1,g.deadline?daysBetween(todayISO(),g.deadline):7);
+  let tasks=null;
+  if(aiReady()&&(state.settings.ai||{}).tasks!==false){
+    const r=await aiCall('Сгенерируй 6 конкретных подзадач для цели. Формат строки: «Задача (NN мин) | Лёгкая|Средняя|Сложная». Учитывай уровень навыков: '+JSON.stringify(state.skills.map(s=>({n:s.name,l:s.level})))+'. Цель: '+g.title+'. Прогресс: '+Math.round(g.lastPercent||0)+'%. Ответ — только строки списка.',{maxTokens:600,temp:0.7,system:aiPersona()});
+    if(r.ok&&r.text){
+      tasks=r.text.split('\n').map(l=>l.replace(/^[\s\d]*[.)\]]\s*/,'').trim()).filter(l=>l.length>6).slice(0,8).map(l=>{
+        const mm=l.match(/\((\d+)\s*мин\)/); const parts=l.split('|').map(s=>s.trim());
+        return {t:(mm?l.slice(0,mm.index).trim():parts[0]).replace(/\((\d+)\s*мин\)/,'').trim().slice(0,80),min:mm?+mm[1]:30,diff:parts[1]||'Средняя'};
+      });
+    }
+  }
+  if(!tasks||!tasks.length){
+    tasks=[1,2,3,4,5].map(i=>({t:'Шаг '+i+' по цели «'+g.title.slice(0,30)+'»: изучить/попробовать/закрепить',min:30,diff:i<=2?'Лёгкая':i<=4?'Средняя':'Сложная'}));
+  }
+  const box=document.getElementById('ai-gen'); if(!box)return;
+  box.className='';
+  box.innerHTML=tasks.map((tk,i)=>{
+    const day=addDays(todayISO(),Math.min(days-1,Math.round(i*Math.max(1,(days-1))/Math.max(1,tasks.length-1||1))));
+    return '<label class="kv" style="cursor:pointer"><span class="k"><input type="checkbox" class="ai-gen-cb" data-t="'+esc(tk.t)+'" data-min="'+tk.min+'" data-day="'+day+'" checked> '+esc(tk.t)+'</span><span class="v"><span class="mini-tag">'+tk.diff+'</span> <span class="mini-tag main">'+tk.min+' мин</span> <span class="subline">'+fmtShort(day)+'</span></span></label>';
+  }).join('')+(aiReady()?'':'<div class="subline dim">шаблонные шаги (ключ AI не задан)</div>');
+  document.getElementById('ai-gen').insertAdjacentHTML('afterend','<div class="modal-actions" id="ai-gen-act"><button class="btn btn-primary" onclick="aiGenApply(\''+g.id+'\')">Добавить выбранные ('+tasks.length+')</button><button class="btn" onclick="closeModal()">'+t('close')+'</button></div>');
+}
+function aiGenApply(gid){
+  let n=0;
+  document.querySelectorAll('.ai-gen-cb:checked').forEach(cb=>{
+    state.tasks.push({id:uid(),title:cb.dataset.t,goalId:gid,date:cb.dataset.day,priority:3,value:null,time:null,done:false,doneAt:null,createdAt:todayISO(),updatedAt:Date.now()});
+    n++;
+  });
+  closeModal(); emitChange(); toast('🤖 Добавлено задач: '+n);
+}
+
+/* ---- AI-F5: AI-разбор недели (шаг 3 визарда) ---- */
+async function aiWeekCoach(){
+  const box=document.getElementById('wr-ai'); if(!box)return;
+  box.innerHTML='<div class="ai-loading">НЕКСУС АНАЛИЗИРУЕТ НЕДЕЛЮ…</div>';
+  let text=null;
+  if(aiReady()){
+    const r=await aiCall('Проанализируй неделю охотника. Формат:\nПАТТЕРН НЕДЕЛИ: ...\nГЛАВНАЯ ПОБЕДА: ...\nГЛАВНЫЙ РИСК: ...\nРЕКОМЕНДАЦИИ: 1..3\nФОКУС-НАВЫК НЕДЕЛИ: ...\nМОТИВАЦИОННЫЙ ПРИКАЗ: ...\nДанные: '+buildPayload()+'. Размышления охотника: '+($('#wr-text')?$('#wr-text').value:'')+'. Причины: '+(_wr.reasons||[]).join(', '),{maxTokens:700,temp:0.7,system:aiPersona()});
+    if(r.ok&&r.text)text=r.text;
+  }
+  if(!text){
+    const ws=startOfWeekISO(todayISO());
+    const tks=state.tasks.filter(x=>x.date>=ws&&x.date<=we2());
+    const done=tks.filter(x=>x.done).length;
+    text='ПАТТЕРН НЕДЕЛИ: закрыто '+done+' из '+tks.length+' задач — темп '+(tks.length&&done/tks.length>=0.6?'стабильный':'проседает')+'.\nГЛАВНАЯ ПОБЕДА: серия '+globalStreak()+' дн не сломана.\nГЛАВНЫЙ РИСК: '+(state.rpg.discipline<60?'низкая дисциплина ('+state.rpg.discipline+'/100)':'ближайшие дедлайны целей')+'.\nРЕКОМЕНДАЦИИ:\n1. Назначь время (⏰) хотя бы двум задачам на завтра\n2. Закрой первый приоритет до 13:00\n3. Вечером — разбор незакрытого\nФОКУС-НАВЫК НЕДЕЛИ: '+(state.skills[0]?state.skills[0].name:'основной')+'.\nМОТИВАЦИОННЫЙ ПРИКАЗ: Слабость не прощается. Веди охоту.';
+  }
+  box.className='ai-txt'; box.textContent=text;
+}
+function we2(){ return endOfWeekISO(todayISO()); }
+
+/* ---- AI-F10: ЧАТ НЕКСУС ---- */
+function aiChatToggle(){
+  const p=document.getElementById('ai-chat');
+  if(p){ p.remove(); return; }
+  aiState();
+  const msgs=(state.ai.chat||[]).slice(-20).map(m=>'<div class="ai-msg '+(m.who==='ai'?'ai':'me')+'">'+esc(m.t)+'</div>').join('');
+  const el=document.createElement('div'); el.id='ai-chat';
+  el.innerHTML='<div class="ai-chat-head">ЧЁРНЫЙ ЯЩИК · НЕКСУС <button class="mini-btn" onclick="aiChatToggle()">✕</button></div>'+
+    '<div class="ai-chat-body" id="ai-chat-body">'+(msgs||'<div class="subline" style="padding:10px">'+(aiReady()?'Спроси о целях, задачах, плане.':'Вставь ключ Gemini в Настройках — NEXUS AI спит без него.')+'</div>')+'</div>'+
+    '<div class="ai-chat-in"><input id="ai-chat-input" placeholder="Приказ, вопрос…" onkeydown="if(event.key===\'Enter\')aiChatSend()"><button class="mini-btn" onclick="aiChatSend()">➤</button></div>';
+  document.body.appendChild(el);
+  const b=document.getElementById('ai-chat-body'); if(b)b.scrollTop=b.scrollHeight;
+  const i=document.getElementById('ai-chat-input'); if(i)i.focus();
+}
+async function aiChatSend(){
+  const inp=document.getElementById('ai-chat-input'); if(!inp)return;
+  const q=inp.value.trim(); if(!q)return;
+  aiState();
+  state.ai.chat=state.ai.chat||[];
+  state.ai.chat.push({who:'me',t:q.slice(0,300)});
+  inp.value='';
+  const body=document.getElementById('ai-chat-body');
+  const thinking='<div class="ai-msg ai" id="ai-think">…</div>';
+  if(body)body.insertAdjacentHTML('beforeend','<div class="ai-msg me">'+esc(q)+'</div>'+thinking), body.scrollTop=body.scrollHeight;
+  let a='…';
+  if(aiReady()){
+    const hist=(state.ai.chat||[]).slice(-8).map(m=>(m.who==='ai'?'NEXUS: ':'Охотник: ')+m.t).join('\n');
+    const r=await aiCall('История диалога:\n'+hist+'\n\nНовый вопрос охотника: '+q+'\n\nОтветь по-русски, конкретно, с опорой на данные.',{maxTokens:600,temp:0.6,system:aiPersona()+'\nПолные данные жизни охотника: '+buildPayload()});
+    if(r.ok&&r.text)a=r.text; else a='Связь с ядром потеряна ('+(r.error||'ошибка')+'). Проверь ключ/сеть.';
+  } else a='Ключ Gemini не задан. Настройки → NEXUS AI → ключ. Без ядра я могу только напоминать: задача дня не закрыта.';
+  const th=document.getElementById('ai-think');
+  if(th)th.textContent=a;
+  state.ai.chat.push({who:'ai',t:a.slice(0,600)});
+  if(state.ai.chat.length>50)state.ai.chat=state.ai.chat.slice(-50);
+  saveState();
+  if(body){ body.scrollTop=body.scrollHeight; }
+}
+function aiChatReset(){ state.ai.chat=[]; saveState(); const b=document.getElementById('ai-chat-body'); if(b)b.innerHTML='<div class="subline" style="padding:10px">История чата очищена.</div>'; }
+
+/* ---- AI-F8: СОВЕТНИК НАВЫКОВ / AI-F9: СТРАТЕГ БОССА / AI-F11: ПАТТЕРНЫ ---- */
+async function aiSkillAdvice(sid){
+  const s=state.skills.find(x=>x.id===sid); if(!s)return;
+  openModal('<div class="panel-title">🧠 '+t('ai_sk_title')+' · '+s.icon+' '+esc(s.name)+'</div><div id="ai-sk" class="ai-loading">НЕКСУС ОБРАБАТЫВАЕТ…</div><div class="modal-actions"><button class="btn" onclick="closeModal()">'+t('close')+'</button></div>');
+  const pr=(state.rpg.practice||{})[sid]||[];
+  const last=pr.length?pr[pr.length-1].date:null;
+  const lpd=last?daysBetween(last,todayISO()):null;
+  const gl=state.goals.filter(g=>(g.skills||[]).includes(sid)&&(g.lastPercent||0)<100);
+  let text=null;
+  if(aiReady()){
+    const r=await aiCall('Дай совет по прокачке навыка. Формат: последняя практика / связанные цели и их дедлайны / слабое место / рекомендация (N сессий по 30 мин, конкретные дни) / что откроет следующий уровень. Данные: '+JSON.stringify({skill:{n:s.name,l:s.level,xp:s.xp},lastPracticeDaysAgo:lpd,practiceCount:pr.length,linkedGoals:gl.map(g=>({t:g.title.slice(0,40),dl:g.deadline,pct:Math.round(g.lastPercent||0)}))}),{maxTokens:500,temp:0.6,system:aiPersona()});
+    if(r.ok&&r.text)text=r.text;
+  }
+  if(!text)text='Последняя практика: '+(last?(lpd===0?'сегодня':lpd+' дн назад'):'ещё не было')+(pr.length?' · '+pr.length+' записей':'')+'.\nСвязанные цели: '+(gl.length?gl.map(g=>g.title.slice(0,30)+' ('+Math.round(g.lastPercent||0)+'%'+(g.deadline?', до '+g.deadline:'')+')').join('; '):'—')+'.\nСлабое место: '+(gl.length&&lpd!==null&&lpd>3?'практика простаивает '+lpd+' дн при живых дедлайнах':'поддержание темпа')+'.\nРекомендация: '+(lpd===null||lpd>3?'3 сессии по 30 мин на этой неделе (ВТ/ЧТ/СБ — свободные слоты)':'1 сессия 30 мин для удержания темпа')+'.\nСледующий уровень: '+(s.xp)+'/'+xpForSkillLevel(s.level)+' XP до LV '+(s.level+1)+'.';
+  const box=document.getElementById('ai-sk'); if(!box)return;
+  box.className='ai-txt'; box.textContent=text;
+}
+async function aiBossStrategy(){
+  const td=todayISO();
+  const bossStart=state.rpg.bossStartHp||100;
+  const bossAvg=state.goals.length?Math.round(state.goals.reduce((a,g)=>a+(g.lastPercent||0),0)/state.goals.length):0;
+  const hp=Math.max(0,bossStart-bossAvg);
+  openModal('<div class="panel-title">⚔ '+t('ai_boss_title')+' · HP '+hp+'%</div><div id="ai-boss" class="ai-loading">НЕКСУС ОБРАБАТЫВАЕТ…</div><div class="modal-actions"><button class="btn" onclick="closeModal()">'+t('close')+'</button></div>');
+  const done14=state.tasks.filter(x=>x.done&&x.doneAt&&x.doneAt>=addDays(td,-14)).length;
+  const vel=(done14/14).toFixed(1);
+  const crit=state.goals.filter(g=>(g.lastPercent||0)<100).sort((a,b)=>(b.xp||0)-(a.xp||0)).slice(0,3);
+  let text=null;
+  if(aiReady()){
+    const r=await aiCall('Ты — боевой стратег. Босс HP '+hp+'%. Данные: '+buildPayload()+'. Формат: АНАЛИЗ УГРОЗЫ (темп, прогноз) / КРИТИЧЕСКИЙ ПУТЬ (3 цели с максимальным уроном) / ПЛАН АТАКИ НА 7 ДНЕЙ (по дням) / ВЕРОЯТНОСТЬ ПОБЕДЫ: X%.',{maxTokens:700,temp:0.5,system:aiPersona()});
+    if(r.ok&&r.text)text=r.text;
+  }
+  if(!text){
+    const daysLeft=daysBetween(td,state.settings.campaignEnd||addDays(td,29));
+    const prob=Math.max(5,Math.min(95,Math.round(100-hp-Math.max(0,10-vel*10)+ (vel>0.5?15:0))));
+    text='АНАЛИЗ УГРОЗЫ:\nОсталось '+daysLeft+' дн. Темп: ~'+vel+' задачи/день (за 14 дней: '+done14+'). Прогноз: ~'+Math.round(vel*daysLeft)+' задач до конца месяца.\n\nКРИТИЧЕСКИЙ ПУТЬ (макс. урон):\n'+crit.map((g,i)=>(i+1)+'. '+g.title.slice(0,44)+' — '+Math.round(g.lastPercent||0)+'%'+(g.deadline?' · до '+g.deadline:'')).join('\n')+'\n\nПЛАН АТАКИ НА 7 ДНЕЙ:\n'+[0,1,2].map(i=>'День '+(i+1)+': 1 задача по «'+(crit[i]?crit[i].title.slice(0,30):'приоритету')+'» + квесты').concat(['Дни 4–7: удержание темпа, разбор незакрытого']).join('\n')+'\n\nВЕРОЯТНОСТЬ ПОБЕДЫ: ~'+prob+'%';
+  }
+  const box=document.getElementById('ai-boss'); if(!box)return;
+  box.className='ai-txt'; box.textContent=text;
+}
+function detectPatterns(){ // AI-F11: rule-based детектор паттернов
+  const td=todayISO();
+  const out=[];
+  const wd=weekdayStats();
+  const best=[...Object.entries(wd)].filter(([,v])=>v.total>=3).sort((a,b)=>b[1].done/b[1].total-a[1].done/a[1].total)[0];
+  const worst=[...Object.entries(wd)].filter(([,v])=>v.total>=3).sort((a,b)=>a[1].done/a[1].total-b[1].done/b[1].total)[0];
+  if(best)out.push({t:'green',txt:'Сильный паттерн: «'+t('wd')[best[0]]+'» — лучший день ('+Math.round(best[1].done/best[1].total*100)+'% выполнения). Планируй важное на него.'});
+  if(worst&&worst[0]!==best[0])out.push({t:'red',txt:'Деструктивный паттерн: «'+t('wd')[worst[0]]+'» проваливается ('+Math.round(worst[1].done/worst[1].total*100)+'%). Либо разгрузи, либо назначь лёгкие задачи.'});
+  const sl=state.lifeBalance.sleep;
+  const good=sl.filter(e=>sleepHours(e)>=(state.settings.sleepTarget||8)).length;
+  if(sl.length>=5)out.push({t:'violet',txt:'Сон ≥'+(state.settings.sleepTarget||8)+'ч был '+good+' раз из '+sl.length+' записей. Сон — главный усилитель выполнения.'});
+  const emptyWd=Object.entries(wd).filter(([,v])=>v.total<3).map(([k])=>t('wd')[k]);
+  if(emptyWd.length)out.push({t:'amber',txt:'Возможность: почти пустые дни — '+emptyWd.join(', ')+'. Добавь по 1 блоку практики.'});
+  state.status.patterns={date:td,items:out.slice(0,4)};
+  saveState();
+  if(out.length)sysShow('ДЕТЕКТОР ПАТТЕРНОВ: найдено закономерностей — '+out.length+'. Отчёт на странице Аналитики.');
+}
+async function detectPatternsAI(){
+  detectPatterns();
+  const box=document.getElementById('ai-pat'); if(!box)return;
+  box.innerHTML='<div class="ai-loading">НЕКСУС ИЩЕТ ПАТТЕРНЫ…</div>';
+  let text=null;
+  if(aiReady()){
+    const r=await aiCall('Найди 2-4 поведенческих паттерна за 30 дней (время выполнения, сон, пустые дни, брошенные цели). Формат: 🔴 деструктивный / 🟡 времени / 🟢 сильный / ⚡ возможность — по одному предложению. Данные: '+buildPayload(),{maxTokens:500,temp:0.7,system:aiPersona()});
+    if(r.ok&&r.text)text=r.text;
+  }
+  const p=state.status.patterns||{items:[]};
+  box.className=''; box.innerHTML=(text?'<div class="ai-txt" style="margin-bottom:8px">'+esc(text)+'</div>':'')+
+    p.items.map(i=>'<div class="ai-insight '+i.t+'">'+esc(i.txt)+'</div>').join('');
+}
+
+/* ============================================================
+   SECTION 20 — ВОИН-190 · 20 недель (2026-11-01 → 2027-03-29)
+   6 вкладок · XP в общий пул · цели/квесты/расписание/AI/босс-бар
+   ============================================================ */
+const W19_START='2026-11-01', W19_END='2027-03-29';
+const W19_PHASES=[[1,'Фундамент','Строй основание'],[5,'Сила/сухожилия','Сталь в связках'],[10,'Мощность','Взрыв и тень'],[14,'Воин','Воин собирается'],[20,'Разгрузка+тесты','Проверь себя']];
+const W19_XP={ritual:10,gym:40,hand:40,battle:50,sword:30,mob:20};
+const W19_NAME={ritual:'утренний ритуал',gym:'зал',hand:'рукопашка',battle:'бой-лагерь',sword:'меч-субури',mob:'мобильность'};
+const W19_SK={ritual:['sk-fit'],gym:['sk-fit','sk-combat'],hand:['sk-combat'],battle:['sk-combat','sk-fit'],sword:['sk-combat'],mob:['sk-fit']};
+function w19(){
+  const w=state.warrior190=state.warrior190||{};
+  w.startDate=w.startDate||W19_START;
+  w.weeklyChecklists=w.weeklyChecklists||{};
+  w.testResults=w.testResults||{w1:{pullups:10,pushups:25,plank:150,jump:210,weight:87,fat:15,height:190}};
+  w.workoutLog=w.workoutLog||[];
+  w.morningRitual=w.morningRitual||{log:{}};
+  w.nutrition=w.nutrition||{log:{}};
+  w.bodyMetrics=w.bodyMetrics||{log:{}};
+  w.pillars=w.pillars||{log:{}};
+  w.overtraining=w.overtraining||{log:{}};
+  return w;
+}
+function w19Week(d){ const diff=Math.max(0,Math.floor(daysBetween(W19_START,d||todayISO())/7)); return Math.min(20,diff+1); }
+function w19Phase(week){
+  week=week||w19Week();
+  if(week>=20)return{num:5,name:'Разгрузка+тесты',slogan:'Проверь себя'};
+  if(week>=14)return{num:4,name:'Воин',slogan:'Воин собирается'};
+  if(week>=10)return{num:3,name:'Мощность',slogan:'Взрыв и тень'};
+  if(week>=5)return{num:2,name:'Сила/сухожилия',slogan:'Сталь в связках'};
+  return{num:1,name:'Фундамент',slogan:'Строй основание'};
+}
+function w19IsDeload(week){ return [5,10,15,20].includes(week||w19Week()); }
+function w19Award(k){
+  const td=todayISO();
+  if(state.xpLog.some(x=>x.w19===k&&x.day===td))return false;
+  addXP(W19_XP[k],'ВОИН-190: '+W19_NAME[k],{w19:k,day:td});
+  addSkillXP(W19_SK[k]||[],k==='ritual'?5:10,'w19:'+k);
+  return true;
+}
+function w19ThroatStop(){ const o=(w19().overtraining.log||{})[todayISO()]; return !!(o&&o.throat); }
+function w19Init(){ // один раз: цели в «Физподготовку» + сверка расписания (умная, без дублей)
+  const w=w19();
+  if(!w._resync){ w._resync=1; w19Resync(true); } // сверка — даже если цели уже созданы ранее
+  if(w._init)return;
+  w._init=1;
+  const mk=(id,title,target,unit,deadline,prio,xp,desc)=>({id,cat:'phys',title,type:'cumulative',target,unit,period:null,deadline,priority:prio,xp,skills:['sk-fit','sk-combat'],formula:'done / target * 100',desc,updatedAt:Date.now()});
+  const goals=[
+    mk('w19-plan','Завершить план ВОИН-190 · 20 недель',20,'нед',W19_END,4,400,'Прогресс = закрытые недели чек-листа (14/14, ≥10/14, <7).'),
+    mk('w19-pull','Достичь 15-17 подтягиваний',17,'повт',W19_END,4,300,'Старт: 10. Тесты нед 1/5/9/13/17/20.'),
+    mk('w19-push','Достичь 45-50 отжиманий',50,'повт',W19_END,4,300,'Старт: 25.'),
+    mk('w19-ritual','Утренний ритуал 100 дней подряд',100,'дн',W19_END,3,250,'7 упражнений по утрам, ≥6/7 = день зачтён.'),
+    {id:'w19-hema',cat:'phys',title:'Вернуться в клуб HEMA/бухурта',type:'one',target:1,unit:'раз',period:null,deadline:'2027-02-01',priority:3,xp:200,skills:['sk-combat'],formula:'done >= 1 ? 100 : 0',desc:'С фазы 4 (~нед 14).',updatedAt:Date.now()},
+    {id:'w19-kipup',cat:'phys',title:'Освоить kip-up',type:'one',target:1,unit:'раз',period:null,deadline:W19_END,priority:2,xp:150,skills:['sk-fit'],formula:'done >= 1 ? 100 : 0',desc:'Финальный трюк к неделе 20.',updatedAt:Date.now()},
+  ];
+  let gN=0;
+  goals.forEach(g=>{ if(!state.goals.some(x=>x.id===g.id)){ state.goals.push({...g,createdAt:todayISO(),history:[{date:todayISO(),text:'created via ВОИН-190'}]}); gN++; } });
+  const blocks=[]; // расписание: см. w19Resync — эквиваленты не дублируются
+  if(!w._resync){ w._resync=1; w19Resync(true); }
+  saveState();
+  toast('⚔ ВОИН-190 активирован: +'+gN+' целей · расписание сверено',{ms:7000});
+}
+function w19Today(){ // тренировка дня по дню недели
+  const wk=w19Week(), iso=wk>=5?' + Изометрия 8 мин':'', sw=wk>=14?' + Меч 10 мин':'';
+  return {
+    1:{k:'hand',t:'Рукопашка 16:00 + Кор/шея 15 мин'},
+    2:{k:'gym',t:'ЗАЛ: Низ + Взрыв (50 мин)'+iso,plan:'tue'},
+    3:{k:'mob',t:'Активный отдых: прогулка 30-40 мин + мобильность 15 мин'},
+    4:{k:'gym',t:'ЗАЛ: Верх + Хват (50 мин)'+iso+sw,plan:'thu'},
+    5:{k:'battle',t:'БОЙ-ЛАГЕРЬ дома (60-75 мин)',plan:'battle'},
+    6:{k:'sword',t:'Мобильность 40 мин + Меч-субури 15-20 мин + Скакалка 10 мин'},
+    0:{k:'rest',t:'Полный отдых + прогулка + готовка еды + взвешивание'},
+  }[fromISO(todayISO()).getDay()];
+}
+/* ---- недельный чек-лист (14 пунктов) + награды + урон боссу ---- */
+const W19_CHECK=[
+  ['w1','Пн: Рукопашка 16:00 + кор/шея','hand'],
+  ['w2','Вт: Зал (низ+взрыв)'+ ' [+ изометрия с нед 5]',null],
+  ['w3','Ср: Прогулка 30-40 + мобильность 15',null],
+  ['w4','Чт: Зал (верх+хват) [+ меч 10 мин с нед 14]',null],
+  ['w5','Пт: Бой-лагерь 60-75 мин','battle'],
+  ['w6','Сб: Мобильность + меч + скакалка','sword'],
+  ['w7','Вс: Отдых + готовка + взвешивание',null],
+  ['w8','Утренний ритуал ≥6/7 дней','ritual'],
+  ['w9','Сон 8+ ч ≥6 ночей',null],
+  ['w10','Белок ≥140 г ≥5 дней',null],
+  ['w11','Креатин 5 г ежедневно',null],
+  ['w12','2-3 контрастных душа',null],
+  ['w13','Без экрана за 30 мин до сна ≥5 ночей',null],
+  ['w14','Запись тренировок (подходы/повт/RPE) — все',null],
+];
+function w19WeekKey(d){ return startOfWeekISO(d||todayISO()); }
+function w19Resync(silent){ // умная подстановка: эквивалентные блоки распознаются по ключевым словам и не дублируются
+  const tpl=state.schedule.template;
+  const has=re=>tpl.some(l=>re.test(l.subject||''));
+  const wanted=[
+    {re:/рукопашка/i,day:1,s:'16:00',e:'17:30',subj:'Рукопашка (ВОИН-190)'},
+    {re:/низ[^]*взрыв|зал[^]*низ/i,day:2,s:'18:00',e:'18:50',subj:'ЗАЛ: Низ+Взрыв (ВОИН-190)'},
+    {re:/прогулка[^]*мобильн/i,day:3,s:'16:00',e:'16:45',subj:'Прогулка+Мобильность (ВОИН-190)'},
+    {re:/верх[^]*тяг|зал[^]*верх/i,day:4,s:'18:00',e:'18:50',subj:'ЗАЛ: Верх+Хват (ВОИН-190)'},
+    {re:/бой-лагерь/i,day:5,s:'19:00',e:'20:15',subj:'Бой-лагерь (ВОИН-190)'},
+    {re:/мобильн/i,day:6,s:'10:00',e:'11:00',subj:'Мобильность+Меч+Скакалка (ВОИН-190)'},
+  ];
+  let have=0,add=0,skip=0;
+  wanted.forEach(w=>{
+    if(has(w.re)){ have++; return; } // эквивалент уже стоит (старый план/ранее добавленный)
+    const overlap=tpl.some(l=>l.day===w.day&&!(minsOf(l.end)<=minsOf(w.s)||minsOf(l.start)>=minsOf(w.e)));
+    if(overlap){ skip++; return; }
+    tpl.push({id:uid(),day:w.day,start:w.s,end:w.e,subject:w.subj,room:'',teacher:'',color:'#ffb300'}); add++;
+  });
+  let hint='';
+  const sat=tpl.filter(l=>l.day===6&&/мобильн/i.test(l.subject||''));
+  if(sat.length){ const satMin=Math.max(...sat.map(l=>minsOf(l.end)-minsOf(l.start)));
+    if(satMin<55)hint=' · СБ: мобильность '+satMin+' мин — план хочет 60 (меч 15-20 мин): расширь блок или добавь меч отдельно'; }
+  saveState(); if(add||!silent)emitChange();
+  if(!silent||add)toast('⏰ Расписание: уже стоят '+have+' · добавлено '+add+(skip?' · занято '+skip:'')+hint,{ms:9000});
+}
+function w19Checklist(){ const w=w19(), k=w19WeekKey(); const rec=w.weeklyChecklists[k]=w.weeklyChecklists[k]||{items:{},score:0}; return rec; }
+function w19Toggle(k,xpKind){
+  const rec=w19Checklist();
+  rec.items[k]=!rec.items[k];
+  rec.score=Object.keys(rec.items).filter(x=>rec.items[x]).length;
+  if(xpKind&&rec.items[k])w19Award(xpKind); // рукопашка/бой-лагерь/меч/ритуал через чек-лист
+  if(rec.score===14&&!rec.a200){ rec.a200=1; addXP(200,'⚔ ИДЕАЛЬНАЯ НЕДЕЛЯ ВОИНА · 14/14',{w19:'perfect',day:todayISO()}); sysNotify('w19perfect',{}); }
+  else if(rec.score>=10&&!rec.a100){ rec.a100=1; addXP(100,'✓ Хорошая неделя ВОИН-190 · ≥10/14',{w19:'goodweek',day:todayISO()}); }
+  saveState(); renderView();
+}
+function w19Settle(){ // закрытые недели → урон боссу; <7/14 → разбор провала от NEXUS AI
+  const w=w19(), thisWk=w19WeekKey();
+  Object.keys(w.weeklyChecklists).forEach(k=>{
+    const rec=w.weeklyChecklists[k];
+    if(rec.dmgSettled||k>=thisWk)return;
+    rec.dmgSettled=1;
+    rec.dmg=rec.score>=14?7:rec.score>=10?5:rec.score>0?2:0;
+    if(rec.score<7&&rec.score!=null)sysNotify('w19miss',{score:rec.score});
+  });
+  saveState();
+}
+function w19Boss(){ const w=w19(); let dmg=0; Object.values(w.weeklyChecklists).forEach(r=>{ dmg+=r.dmg||0; }); return Math.max(0,100-dmg); }
+function w19WeeksDone(){ let n=0; Object.values(w19().weeklyChecklists).forEach(r=>{ if(r.dmgSettled&&r.score>=10)n++; }); return n; }
+/* ---- утренний ритуал (7 пунктов, ≥6 = зачтён) ---- */
+const W19_RITUAL=['Подъёмы свода стопы 20×каждой','Вакуум 3×10 с','Кошка-корова ×10','Вращения плеч ×10, «сфинкс» 30 с','Осанка у стены 60 с','Шея: изометрия рукой 4×10 с','Стакан воды + план дня в NEXUS'];
+function w19Ritual(){ const w=w19(); const rec=w.morningRitual.log[todayISO()]=w.morningRitual.log[todayISO()]||{n:0,items:{}}; return rec; }
+function w19RitualToggle(i){
+  const rec=w19Ritual();
+  rec.items[i]=!rec.items[i];
+  rec.n=Object.keys(rec.items).filter(x=>rec.items[x]).length;
+  if(rec.n>=6&&!rec.awarded){ rec.awarded=1; w19Award('ritual'); }
+  saveState(); renderView();
+}
+function w19RitualStreak(){
+  const log=w19().morningRitual.log; let s=0, d=todayISO();
+  const ok=x=>log[x]&&log[x].n>=6;
+  if(!ok(d)&&!ok(addDays(d,-1)))return 0;
+  if(!ok(d))d=addDays(d,-1);
+  while(ok(d)){ s++; d=addDays(d,-1); }
+  return s;
+}
+/* ---- 7 столпов ---- */
+function w19Pillars(){
+  const td=todayISO(), w=w19(), p=w.pillars.log[td]=w.pillars.log[td]||{creatine:false,d3:false,shower:false};
+  const sleepE=state.lifeBalance.sleep.find(x=>x.date===td)||state.lifeBalance.sleep.find(x=>x.date===addDays(td,-1));
+  const protein=(w.nutrition.log[td]||{}).protein||0;
+  const gymToday=w.workoutLog.some(x=>x.date===td&&(x.type==='tue'||x.type==='thu'));
+  const swordToday=w.workoutLog.some(x=>x.date===td&&(x.type==='battle'||x.type==='sat'))||!!(w19Checklist().items.w6);
+  return [
+    ['💤','Сон 8+ ч',!!(sleepE&&sleepHours(sleepE)>=(state.settings.sleepTarget||8))],
+    ['🥩','Белок 160 г',protein>=140],
+    ['🧂','Креатин 5 г',!!p.creatine],
+    ['☀️','D3',!!p.d3],
+    ['🏋️','Зал/тренировка',gymToday||!!(w19Checklist().items.w1||w19Checklist().items.w2||w19Checklist().items.w4||w19Checklist().items.w5)],
+    ['⚔️','Меч/бой',swordToday],
+    ['🚿','Контрастный душ',!!p.shower],
+  ];
+}
+function w19PillarToggle(k){ const w=w19(); const p=w.pillars.log[todayISO()]=w.pillars.log[todayISO()]||{creatine:false,d3:false,shower:false}; p[k]=!p[k];
+  if(w19Pillars().every(x=>x[2])&&!p.all7){ p.all7=1; sysNotify('w19pillars',{}); }
+  saveState(); renderView();
+}
+/* ---- тесты и вехи ---- */
+const W19_TESTS=[['pullups','Подтягивания, ×'],['pushups','Отжимания, ×'],['towel','Вис полотенце, с'],['plank','Планка, с'],['jump','Прыжок в длину, см'],['cooper','Купер 12 мин, м'],['sitrich','Сид-н-рич, см'],['jabs','20 с джебов, ×'],['weight','Вес, кг'],['fat','Жир, %'],['height','Рост, см']];
+const W19_TEST_WEEKS=[1,5,9,13,17,20];
+function w19TestSave(week,key,val){
+  const w=w19(); const rec=w.testResults['w'+week]=w.testResults['w'+week]||{};
+  const prev=rec[key]; const v=parseFloat(val);
+  if(isNaN(v)){ delete rec[key]; } else rec[key]=v;
+  if(!isNaN(v)&&prev!=null&&v!==prev){
+    const label=(W19_TESTS.find(x=>x[0]===key)||[])[1]||key;
+    if(v>prev)sysNotify('w19test',{label,prev,val:v});
+    else toast('📉 '+label+': '+prev+' → '+v+' — разбери, что мешало',{amber:true});
+    // сила стоит 2 теста подряд
+    const hist=W19_TEST_WEEKS.map(x=>(w.testResults['w'+x]||{})[key]).filter(x=>x!=null);
+    if(hist.length>=3&&hist[hist.length-1]===hist[hist.length-2]&&hist[hist.length-2]===hist[hist.length-3]&&['pullups','pushups','plank'].includes(key))
+      toast('⚠ Сила не растёт 2 цикла. Смени диапазон: 8-12 → 5-8 с большим весом',{amber:true,ms:9000});
+  }
+  saveState();
+}
+function w19NextTestDays(){
+  const td=todayISO(), wk=w19Week();
+  const nx=W19_TEST_WEEKS.find(x=>x>wk);
+  if(!nx)return null;
+  return {week:nx,days:daysBetween(td,addDays(W19_START,(nx-1)*7))};
+}
+const W19_BODY=[['weight','Вес'],['fat','Жир, %'],['heightM','Рост утром'],['chest','Грудь'],['waist','Талия'],['biceps','Бицепс'],['thigh','Бедро']];
+const W19_BODY_WEEKS=[4,8,12,16,20];
+/* ---- программы тренировок ---- */
+const W19_ISO=[{n:'Вис на согнутых руках 90°',s:'3×макс (цель 30 с)'},{n:'Отжимание с паузой 5 с внизу',s:'3×5'},{n:'Изо-выход в стойку у стены',s:'3×15 с'},{n:'Полотенце скручивание/сжатие',s:'2×15 + 3×20 с'}];
+const W19_SWORD=[{n:'Субури вертикальные',s:'3×20'},{n:'Субури диагональные',s:'3×20'},{n:'Переходы 5 стоек',s:'5×30 с'}];
+const W19_PLANS={
+  tue:{title:'ЗАЛ: Низ + Взрыв',key:'gym',items:[
+    {n:'Скакалка',s:'3×2 мин',rest:60,rpe:4,v1:'Фаза 1: без скакалки — имитация прыжков'},
+    {n:'Кубковый присед с гирей 16 кг',s:'4×8-12',rest:120,rpe:7,v1:'Фаза 1: присед без веса 3×15',v3:'Фаза 3: гиря 24 кг / рюкзак+гиря; пауза внизу'},
+    {n:'Румынская тяга гири',s:'3×10',rest:120,rpe:7,v1:'Фаза 1: гантели 2×2 кг',v3:'Фаза 3: гиря 24 кг, 1.5 повтора'},
+    {n:'Прыжки на коробку/ступеньку',s:'4×5',rest:120,rpe:6,v1:'Фаза 1: выпрыгивания на месте',v3:'Фаза 3: прыжок на 50 см; с разбега'},
+    {n:'ATG-сплит-присед',s:'3×8/нога',rest:90,rpe:6},
+    {n:'Икры + большеберцовая',s:'3×15+15',rest:60,rpe:6},
+    {n:'Hollow-hold',s:'3×20-40 с',rest:60,rpe:6},
+  ]},
+  thu:{title:'ЗАЛ: Верх + Тяга + Хват',key:'gym',items:[
+    {n:'Скакалка',s:'2×2 мин',rest:60,rpe:4},
+    {n:'Подтягивания',s:'4×6-8',rest:150,rpe:7,v1:'Фаза 1: негативы 5×5 с + австралийские',v3:'Фаза 3: с рюкзаком 5 кг; L-sit-подтягивания'},
+    {n:'Брусья / отжимания с паузой',s:'4×8-12',rest:120,rpe:7,v1:'Фаза 1: с колен / руки на столе',v3:'Фаза 3: пауза 2 с внизу; с рюкзаком'},
+    {n:'Тяга гири к поясу в наклоне',s:'3×10',rest:120,rpe:7},
+    {n:'Жим гантелей/гири стоя',s:'3×8',rest:120,rpe:7,v1:'Фаза 1: гантели 2×2 кг'},
+    {n:'Шея изометрия 4 направления',s:'4×10 с',rest:30,rpe:6,ban:'!!! БЕЗ мостов головой — абсолютный запрет'},
+    {n:'Хват: вис на полотенце + эспандер',s:'3×макс + 3×15',rest:90,rpe:7,v1:'Фаза 1: вис на перекладине',v3:'Фаза 3: полотенце + вес 5 кг'},
+  ]},
+};
+function w19Items(type){
+  const ph=w19Phase().num;
+  if(type==='tue'||type==='thu'){
+    let items=W19_PLANS[type].items.map(it=>({...it,note:ph===1?it.v1:(ph>=3?it.v3:'')}));
+    if(w19Week()>=5)items=items.concat(W19_ISO.map(it=>({...it,note:'с нед 5'})));
+    if(type==='thu'&&w19Week()>=14)items=items.concat(W19_SWORD.map(it=>({...it,note:'с нед 14'})));
+    return items;
+  }
+  return [];
+}
+const W19_BATTLE=[['РАЗМИНКА · скакалка + суставная',600],['БОРЬБА · sprawl/shrimp/техвставания',900],['РАУНДЫ ТЕНИ · 4×3 мин муай-тай+бокс',720],['ВЗРЫВ · бёрпи/прыжки/медбол (2 нед → переноски)',480],['КОР · планка-прогрессия, скручивания',480],['ЗАМИНКА · растяжка, мобильность',600]];
+/* ---- интерактивный режим тренировки ---- */
+let _wt=null;
+function w19Start(kind,arg){
+  if(w19ThroatStop()){ toast('🔴 ТРЕНИРОВКИ ЗАПРЕЩЕНЫ: флаг горла. Сначала врач.',{amber:true,ms:9000}); return; }
+  w19();
+  if(kind==='gym')_wt={kind:'gym',type:arg,idx:0,entries:[],rest:0,rt:null};
+  else if(kind==='battle')_wt={kind:'battle',idx:0,left:W19_BATTLE[0][1],run:false,timer:null};
+  w19TRender();
+}
+function w19TClose(){
+  if(_wt&&_wt.rt)clearInterval(_wt.rt);
+  if(_wt&&_wt.timer)clearInterval(_wt.timer);
+  const el=document.getElementById('wt-root'); if(el)el.remove();
+  _wt=null;
+}
+function w19Rest(sec){
+  if(_wt.rt)clearInterval(_wt.rt);
+  _wt.rest=sec;
+  _wt.rt=setInterval(()=>{
+    _wt.rest--;
+    const el=document.getElementById('wt-rest');
+    if(el)el.textContent='⏱ '+_wt.rest+' с';
+    if(_wt.rest<=0){ clearInterval(_wt.rt); _wt.rt=null; pomoBeep(); if(el)el.textContent='⏱ отдых окончен'; }
+  },1000);
+}
+function w19TNext(){
+  const items=w19Items(_wt.type);
+  const el=document.getElementById('wt-card');
+  if(el){ // собрать текущую карточку
+    const g=id=>document.getElementById(id);
+    const e={n:items[_wt.idx].n,sets:g('wt-sets')?g('wt-sets').value:'',reps:g('wt-reps')?g('wt-reps').value:'',weight:g('wt-w')?g('wt-w').value:'',rpe:g('wt-rpe')?parseFloat(g('wt-rpe').value):null,done:!!(g('wt-done')&&g('wt-done').checked)};
+    if(e.rpe!=null&&e.rpe>8)toast('⚠ RPE '+e.rpe+' — слишком тяжело. Максимум 8.',{amber:true});
+    if(e.rpe===10){ toast('⛔ Работа до отказа запрещена. RPE максимум 8.',{amber:true,ms:7000}); return; }
+    _wt.entries[_wt.idx]=e;
+  }
+  if(_wt.idx<items.length-1){ _wt.idx++; w19TRender(); }
+  else w19TFinish();
+}
+function w19TFinish(){
+  const plan=W19_PLANS[_wt.type];
+  const entries=_wt.entries.filter(Boolean);
+  w19().workoutLog.push({date:todayISO(),type:_wt.type,exercises:entries,notes:''});
+  const allTop=entries.length>=3&&entries.every(e=>e.done);
+  w19Award('gym'); // зал Вт/Чт
+  if(allTop&&entries.some(e=>e.rpe!=null&&e.rpe<=7))toast('📈 ДВОЙНАЯ ПРОГРЕССИЯ: +2.5 кг или усложни вариант на следующей тренировке',{ms:9000});
+  sysNotify('w19gym',{});
+  w19TClose(); emitChange();
+  toast('⚔ '+plan.title+' — записана. '+entries.filter(e=>e.done).length+'/'+entries.length+' упражнений');
+}
+function w19BTick(){
+  _wt.left--;
+  const el=document.getElementById('wt-clock');
+  if(el)el.textContent=pad2(Math.floor(_wt.left/60))+':'+pad2(_wt.left%60);
+  if(_wt.left<=0){
+    pomoBeep();
+    if(_wt.idx<W19_BATTLE.length-1){ _wt.idx++; _wt.left=W19_BATTLE[_wt.idx][1]; w19TRender(); }
+    else { w19().workoutLog.push({date:todayISO(),type:'battle',exercises:W19_BATTLE.map(b=>({n:b[0],done:true}))}); w19Award('battle'); sysNotify('w19gym',{}); w19TClose(); emitChange(); toast('⚔ Бой-лагерь завершён — все 6 блоков'); }
+  }
+}
+function w19TRender(){
+  let root=document.getElementById('wt-root');
+  if(!root){ root=document.createElement('div'); root.id='wt-root'; document.body.appendChild(root); }
+  const ph=w19Phase();
+  if(_wt.kind==='gym'){
+    const items=w19Items(_wt.type), it=items[_wt.idx];
+    root.innerHTML='<div class="focus-root"><div class="focus-card">'+
+      '<div style="display:flex;align-items:center;gap:10px"><span class="mini-tag">'+(_wt.idx+1)+'/'+items.length+'</span><span class="mini-tag main">RPE '+it.rpe+'</span>'+
+      '<span class="subline" style="margin-left:auto">'+W19_PLANS[_wt.type].title+' · <button class="mini-btn" onclick="w19TClose()">✕</button></span></div>'+
+      '<div class="fc-title" style="font-size:18px">'+esc(it.n)+'</div>'+
+      '<div class="subline">'+esc(it.s)+' · отдых '+it.rest+' с'+(it.note?' · <span class="amber">'+esc(it.note)+'</span>':'')+(it.ban?' · <span class="err">'+esc(it.ban)+'</span>':'')+'</div>'+
+      '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:12px">'+
+        '<input class="f" id="wt-sets" placeholder="подходы" style="width:80px" value="'+((_wt.entries[_wt.idx]||{}).sets||'')+'">'+
+        '<input class="f" id="wt-reps" placeholder="повторы" style="width:80px" value="'+((_wt.entries[_wt.idx]||{}).reps||'')+'">'+
+        '<input class="f" id="wt-w" placeholder="вес" style="width:70px" value="'+((_wt.entries[_wt.idx]||{}).weight||'')+'">'+
+        '<input class="f" id="wt-rpe" placeholder="RPE" type="number" min="1" max="10" style="width:64px" value="'+((_wt.entries[_wt.idx]||{}).rpe||'')+'">'+
+        '<label class="f" style="display:flex;align-items:center;gap:5px;cursor:pointer"><input type="checkbox" id="wt-done" '+(((_wt.entries[_wt.idx]||{}).done)?'checked':'')+'> ✓</label></div>'+
+      '<div style="display:flex;align-items:center;gap:8px;margin-top:12px"><span class="subline" id="wt-rest"></span>'+
+        '<button class="mini-btn" onclick="w19Rest('+it.rest+')">⏱ отдых '+it.rest+' с</button></div>'+
+      '<div class="focus-nav"><button class="btn" onclick="w19TBack()">←</button>'+
+        '<button class="btn btn-primary" style="flex:1" onclick="w19TNext()">'+(_wt.idx<items.length-1?'Далее →':'Завершить ✓')+'</button></div>'+
+    '</div></div>';
+    const f=document.getElementById('wt-sets'); if(f)f.focus();
+    return;
+  }
+  // бой-лагерь: блочный таймер
+  const [name,sec]=W19_BATTLE[_wt.idx];
+  root.innerHTML='<div class="focus-root"><div class="focus-card" style="text-align:center">'+
+    '<div style="display:flex;align-items:center;gap:10px"><span class="mini-tag">Блок '+(_wt.idx+1)+'/6</span>'+
+    '<span class="subline" style="margin-left:auto">БОЙ-ЛАГЕРЬ · <button class="mini-btn" onclick="w19TClose()">✕</button></span></div>'+
+    '<div class="bignum glow" id="wt-clock" style="font-size:52px;margin:16px 0">'+pad2(Math.floor(_wt.left/60))+':'+pad2(_wt.left%60)+'</div>'+
+    '<div class="fc-title">'+esc(name)+'</div>'+
+    '<div class="focus-nav" style="justify-content:center">'+
+      '<button class="btn '+( _wt.run?'':'btn-primary')+'" onclick="w19BRun()">'+(_wt.run?'⏸ пауза':'▶ старт')+'</button>'+
+      '<button class="btn" onclick="w19BSkip()">⏭ следующий блок</button></div>'+
+    '<div class="subline" style="margin-top:10px">звук на переходах · раунды тени: с фазы 3 — уклоны под «удар»</div>'+
+  '</div></div>';
+}
+function w19TBack(){ if(_wt.kind!=='gym')return; const items=w19Items(_wt.type); if(_wt.idx>0){ w19TNext._noop=1; const el=document.getElementById('wt-card'); if(el){} _wt.idx--; w19TRender(); } }
+function w19BRun(){
+  if(_wt.timer){ clearInterval(_wt.timer); _wt.timer=null; _wt.run=false; }
+  else { _wt.run=true; _wt.timer=setInterval(w19BTick,1000); }
+  w19TRender();
+}
+function w19BSkip(){
+  if(_wt.idx<W19_BATTLE.length-1){ _wt.idx++; _wt.left=W19_BATTLE[_wt.idx][1]; w19TRender(); }
+  else { w19().workoutLog.push({date:todayISO(),type:'battle',exercises:W19_BATTLE.map(b=>({n:b[0],done:true}))}); w19Award('battle'); w19TClose(); emitChange(); toast('⚔ Бой-лагерь завершён'); }
+}
+/* ---- питание ---- */
+const W19_FOOD=[['protein','Белок ≥140 г (цель 160 г)'],['calc','Кальций: безлактозная молочка/кунжут/миндаль'],['creatine','Креатин моногидрат 5 г'],['d3','D3 1000-2000 МЕ (окт-март)'],['water','Вода 2.5 л+'],['omega','Омега-3 / жирная рыба (2×/нед)'],['meals','4 приёма пищи + белок в каждом'],['noscreen','Без экрана 30 мин до сна']];
+function w19Nutr(){ const w=w19(); const rec=w.nutrition.log[todayISO()]=w.nutrition.log[todayISO()]||{protein:0,items:{}}; return rec; }
+function w19NutrToggle(k){ const r=w19Nutr(); r.items[k]=!r.items[k];
+  if(W19_FOOD.every(f=>r.items[f[0]])&&!r.allFood){ r.allFood=1; }
+  saveState(); renderView(); }
+function w19ProteinAdd(g){ const r=w19Nutr(); r.protein=Math.max(0,(r.protein||0)+g); saveState(); renderView(); }
+/* ---- перетрен / красные флаги ---- */
+const W19_OT=[['pulse','Пульс утром выше нормы?'],['tired','Сонливость днём?'],['strength','Сила упала на тренировке?'],['irrit','Раздражительность?'],['throat','Боль/першение в горле? ← ТОНЗИЛЛИТ ПРИОРИТЕТ']];
+function w19OTToggle(k){ const w=w19(); const o=w.overtraining.log[todayISO()]=w.overtraining.log[todayISO()]||{}; o[k]=!o[k];
+  const flags=['pulse','tired','strength','irrit'].filter(x=>o[x]).length;
+  if(k==='throat'&&o.throat){ sysNotify('w19throat',{}); toast('🔴 СТОП ТРЕНИРОВКИ. Врач. Тонзиллит + нагрузка = ревматические осложнения.',{amber:true,ms:12000}); }
+  else if(flags>=2&&!o.warned){ o.warned=1; sysNotify('w19deload',{}); toast('⚠ РАЗГРУЗИСЬ: объём −40% на неделю',{amber:true,ms:9000}); }
+  saveState(); renderView();
+}
+/* ---- журнал: форма сессии ---- */
+function w19JournalModal(){
+  openModal('<div class="panel-title">📋 Журнал тренировки · '+fmtShort(todayISO())+'</div><form id="wj-form" novalidate>'+
+    '<div class="frow3"><div class="frow"><label class="f">Тип</label><select class="f" id="wj-type"><option value="tue">Вт зал</option><option value="thu">Чт зал</option><option value="battle">Пт бой-лагерь</option><option value="hand">Пн рукопашка</option><option value="sat">Сб мобильность/меч</option></select></div>'+
+    '<div class="frow"><label class="f">Вес тела утром, кг</label><input class="f" type="number" step="0.1" id="wj-w" value="'+((w19().bodyMetrics.log[todayISO()]||{}).weight||'')+'"></div>'+
+    '<div class="frow"><label class="f">Самочувствие 1-5</label><input class="f" type="number" min="1" max="5" id="wj-feel" value="4"></div></div>'+
+    '<div class="frow"><label class="f">Подходы/повторы/вес — кратко (упр: 4×8 16кг; …)</label><textarea class="f" id="wj-ex" rows="3" placeholder="Присед: 4×8-12 16кг RPE7; Тяга: 3×10…"></textarea></div>'+
+    '<div class="frow"><label class="f">Заметки</label><input class="f" id="wj-notes" maxlength="200" placeholder="как шлось, что поправить"></div>'+
+    '<div class="frow2"><div class="frow"><label class="f">Прогрессия: добавить вес/сложность?</label><select class="f" id="wj-prog"><option value="no">Нет</option><option value="soon">Скоро</option><option value="yes">Да</option></select></div>'+
+    '<div class="frow"><label class="f">Видео техники (1×/нед)</label><select class="f" id="wj-video"><option value="">—</option><option value="1">Снял</option></select></div></div>'+
+    '<div class="modal-actions"><button type="button" class="btn" onclick="closeModal()">'+t('cancel')+'</button>'+
+    '<button type="submit" class="btn btn-primary">'+t('save')+'</button></div></form>');
+  $('#wj-form').onsubmit=e=>{
+    e.preventDefault();
+    const notes=$('#wj-notes').value;
+    if(/1\s*пм|1ПМ|максимал/i.test(notes+' '+$('#wj-ex').value)){ toast('⛔ 1ПМ/максимумы запрещены планом ВОИН-190!',{amber:true,ms:9000}); return; }
+    const w=w19();
+    w.workoutLog.push({date:todayISO(),type:$('#wj-type').value,exercises:[{n:$('#wj-ex').value.slice(0,200),done:true}],notes:notes.slice(0,200),prog:$('#wj-prog').value,video:!!$('#wj-video').value,feel:parseInt($('#wj-feel').value,10)||null});
+    const bm=w.bodyMetrics.log[todayISO()]=w.bodyMetrics.log[todayISO()]||{};
+    if($('#wj-w').value)bm.weight=parseFloat($('#wj-w').value);
+    const td=todayISO();
+    const fatHist=Object.keys(w.bodyMetrics.log).sort().filter(d=>w.bodyMetrics.log[d].fat!=null).map(d=>({d,v:w.bodyMetrics.log[d].fat}));
+    if(fatHist.length>=2){ const a=fatHist[fatHist.length-2],b=fatHist[fatHist.length-1];
+      if(daysBetween(a.d,b.d)<=7&&a.v-b.v>0.7)toast('⚠ Потеря веса слишком быстрая! +200-300 ккал. Сохрани мышцы и рост!',{amber:true,ms:10000}); }
+    if(!state.xpLog.some(x=>x.w19==='wlog'&&x.day===td)){ addXP(15,'ВОИН-190: запись в журнал',{w19:'wlog',day:td}); }
+    closeModal(); emitChange(); toast('📋 Сессия записана · +15 XP');
+  };
+}
+function w19RpeBars(){ // средний RPE по неделям (из интерактивных сессий)
+  const byWeek={};
+  w19().workoutLog.forEach(e=>{ (e.exercises||[]).forEach(x=>{ if(x.rpe){ const k=startOfWeekISO(e.date); byWeek[k]=byWeek[k]||[]; byWeek[k].push(x.rpe); } }); });
+  const keys=Object.keys(byWeek).sort().slice(-10);
+  return keys.map(k=>{ const avg=byWeek[k].reduce((a,b)=>a+b,0)/byWeek[k].length;
+    return '<div class="kv"><span class="k">'+k+'</span><span class="v '+(avg>8?'err':avg>7?'amber':'acc')+'">RPE '+avg.toFixed(1)+'</span></div>'; }).join('')||'<div class="subline">пока нет RPE из интерактивных тренировок</div>';
+}
+/* ---- РЕНДЕР МОДУЛЯ: 6 вкладок ---- */
+let wTab='cmd';
+function renderWarrior(){
+  w19(); w19Settle();
+  const week=w19Week(), deload=w19IsDeload(week);
+  const tabs=[['cmd','ЦЕНТР'],['week','НЕДЕЛЯ'],['plans','ТРЕНИРОВКИ'],['tests','ТЕСТЫ'],['food','ПИТАНИЕ'],['log','ЖУРНАЛ']];
+  const tabBar='<div class="toolbar">'+tabs.map(t=>'<button class="btn'+(wTab===t[0]?' on':'')+'" onclick="wTab=\''+t[0]+'\';renderView()">'+t[1]+'</button>').join('')+'</div>';
+  const body={cmd:w19TabCmd,week:w19TabWeek,plans:w19TabPlans,tests:w19TabTests,food:w19TabFood,log:w19TabLog}[wTab]();
+  return tabBar+(deload?'<div class="w19-banner">⚠ РАЗГРУЗОЧНАЯ НЕДЕЛЯ '+week+' · объём −40% · интенсивность −20%</div>':'')+
+    (w19ThroatStop()?'<div class="w19-banner err">🔴 ТРЕНИРОВКИ ЗАПРЕЩЕНЫ: флаг тонзиллита. Врач. До снятия флага чек-листы тренировок заблокированы.</div>':'')+body;
+}
+function w19TabCmd(){
+  const week=w19Week(), ph=w19Phase(), today=w19Today();
+  const pct=Math.round((week-1)/20*100);
+  const nt=w19NextTestDays();
+  const rit=w19Ritual(), rStreak=w19RitualStreak();
+  const rec=w19Checklist();
+  const canStart=today.plan&&!w19ThroatStop();
+  return '<div class="grid">'+
+    '<div class="c6 panel"><div class="panel-title">СТАТУС ПЛАНА</div>'+
+      '<div class="bignum glow" style="font-size:26px">НЕДЕЛЯ '+week+' / 20</div>'+
+      '<div class="bar" style="width:100%;margin:8px 0"><i style="width:'+pct+'%"></i></div>'+
+      '<div class="kv"><span class="k">Фаза</span><span class="v acc">'+ph.num+' · '+esc(ph.name)+' — '+esc(ph.slogan)+'</span></div>'+
+      '<div class="kv"><span class="k">Старт → Финиш</span><span class="v">'+W19_START+' → '+W19_END+'</span></div>'+
+      '<div class="kv"><span class="k">До разгрузочной недели</span><span class="v">'+(w19IsDeload(week)?'— это она':''+(5-week%5||5)+' нед')+'</span></div>'+
+      '<div class="kv"><span class="k">Следующий тест</span><span class="v acc">'+(nt?'нед '+nt.week+' · через '+nt.days+' дн':'финальные — нед 20')+'</span></div>'+
+    '</div>'+
+    '<div class="c6 panel"><div class="panel-title">ТРЕНИРОВКА СЕГОДНЯ · '+t('wd')[fromISO(todayISO()).getDay()]+'</div>'+
+      '<div style="font-size:15px;margin:6px 0" class="glow-soft">'+esc(today.t)+'</div>'+
+      (canStart?'<button class="btn btn-primary" style="width:100%;margin-top:10px" onclick="w19Start(\'gym\',\''+today.plan+'\')">▶ НАЧАТЬ ТРЕНИРОВКУ</button>':
+        today.k==='rest'?'<div class="subline">день отдыха — восстановление часть плана</div>':
+        '<div class="subline amber">интерактивный режим: отмечай в чек-листе недели</div>')+
+      '<div class="subline" style="margin-top:8px">стрик ритуала: 🔥 '+rStreak+' дн · чек-лист недели: '+rec.score+'/14</div>'+
+    '</div>'+
+    '<div class="c6 panel"><div class="panel-title">УТРЕННИЙ РИТУАЛ · 7 МИН · '+rit.n+'/7</div>'+
+      W19_RITUAL.map((r,i)=>'<label class="kv" style="cursor:pointer"><span class="k"><input type="checkbox" '+(rit.items[i]?'checked':'')+' onchange="w19RitualToggle('+i+')"> '+(i+1)+'. '+esc(r)+'</span></label>').join('')+
+      '<div class="subline" style="margin-top:6px">≥6/7 → +10 XP (Физподготовка) · 🔥 '+rStreak+' дней подряд</div>'+
+    '</div>'+
+    '<div class="c6 panel"><div class="panel-title">7 СТОЛПОВ · СЕГОДНЯ</div>'+
+      w19Pillars().map(p=>'<div class="kv" style="cursor:pointer" onclick="w19PillarClick(\''+p[1]+'\')"><span class="k">'+p[0]+' '+esc(p[1])+'</span><span class="v '+(p[2]?'acc':'err')+'">'+(p[2]?'✓':'✗')+'</span></div>').join('')+
+      '<div class="subline" style="margin-top:6px">креатин/D3/душ — тап по строке; сон и белок подтягиваются из модулей</div>'+
+    '</div>'+
+    w19OvertrainPanel()+
+  '</div>';
+}
+function w19PillarClick(label){
+  const map={'Креатин 5 г':'creatine','D3':'d3','Контрастный душ':'shower'};
+  if(map[label])w19PillarToggle(map[label]);
+}
+function w19OvertrainPanel(){
+  const o=(w19().overtraining.log||{})[todayISO()]||{};
+  const flags=['pulse','tired','strength','irrit'].filter(x=>o[x]).length;
+  return '<div class="c12 panel"><div class="panel-title">ПРИЗНАКИ ПЕРЕТРЕНИРОВАННОСТИ · утренний чек</div>'+
+    '<div style="display:flex;flex-wrap:wrap;gap:6px">'+
+    W19_OT.map(q=>'<button class="mini-btn'+(o[q[0]]?' over':'')+'" onclick="w19OTToggle(\''+q[0]+'\')">'+(o[q[0]]?'🔴':'⚪')+' '+esc(q[1])+'</button>').join('')+'</div>'+
+    '<div class="subline" style="margin-top:8px">'+(o.throat?'🔴 СТОП ТРЕНИРОВОК — врач, тонзиллит-приоритет':flags>=2?'⚠ ≥2 флага: разгрузись (объём −40% на неделю)':'чисто — продолжай по плану')+'</div></div>';
+}
+function w19TabWeek(){
+  const rec=w19Checklist(), deload=w19IsDeload(w19Week());
+  const state=rec.score>=14?'<span class="acc">⚔ ИДЕАЛЬНАЯ НЕДЕЛЯ ВОИНА · +200 XP</span>':rec.score>=10?'<span class="acc">✓ ХОРОШАЯ НЕДЕЛЯ · +100 XP</span>':rec.score<7?'<span class="err">⚠ СЛАБАЯ НЕДЕЛЯ · в вс NEXUS AI пришлёт разбор провала</span>':'в процессе';
+  return '<div class="grid"><div class="c12 panel"><div class="panel-title">ЧЕК-ЛИСТ НЕДЕЛИ · '+w19WeekKey()+' · '+(deload?'РАЗГРУЗКА':'полный объём')+' <button class="mini-btn" onclick="w19Resync()" title="подставить свободные слоты в расписание">⏰ расписание</button></div>'+
+    W19_CHECK.map(x=>'<label class="kv" style="cursor:pointer"><span class="k"><input type="checkbox" '+(rec.items[x[0]]?'checked':'')+' onchange="w19Toggle(\''+x[0]+'\','+(x[1]?'\''+x[1]+'\'':'null')+')"> '+esc(x[1])+'</span></label>').join('')+
+    '<div style="display:flex;align-items:center;gap:10px;margin-top:10px"><span class="goal-bar" style="width:220px"><i style="width:'+Math.round(rec.score/14*100)+'%"></i></span>'+
+    '<span class="subline">Выполнено: '+rec.score+'/14 · '+Math.round(rec.score/14*100)+'% · '+state+'</span></div>'+
+    '<div class="subline" style="margin-top:6px">XP: зал +40 · бой-лагерь +50 · рукопашка +40 · меч +30 · мобильность ≥30 мин +20 · ритуал +10 · идеальная неделя +200</div>'+
+  '</div></div>';
+}
+function w19TabPlans(){
+  const week=w19Week(), ph=w19Phase().num;
+  const list=(type)=>{
+    const items=w19Items(type);
+    return '<div class="c12 panel"><div class="panel-title">'+W19_PLANS[type].title+' <button class="mini-btn" onclick="w19Start(\'gym\',\''+type+'\')">▶ НАЧАТЬ</button></div>'+
+      items.map(it=>'<div class="kv"><span class="k">'+esc(it.n)+'<span class="subline">'+esc(it.s)+' · RPE '+it.rpe+(it.note?' · <span class="amber">'+esc(it.note)+'</span>':'')+(it.ban?' · <span class="err">'+esc(it.ban)+'</span>':'')+'</span></span></div>').join('')+'</div>';
+  };
+  const battle='<div class="c12 panel"><div class="panel-title">ПТ · БОЙ-ЛАГЕРЬ (75 мин) <button class="mini-btn" onclick="w19Start(\'battle\')">▶ НАЧАТЬ</button></div>'+
+    W19_BATTLE.map((b,i)=>'<div class="kv"><span class="k">Блок '+(i+1)+': '+esc(b[0])+'</span><span class="v acc">'+Math.round(b[1]/60)+' мин</span></div>').join('')+
+    '<div class="subline" style="margin-top:6px">таймер на каждый блок, звук на переходах · каждые 2 недели вместо «Взрыва» — фермер-переноска 2×20 кг, 4×40 м</div></div>';
+  const sat='<div class="c12 panel"><div class="panel-title">СБ · МОБИЛЬНОСТЬ + МЕЧ + СКАКАЛКА (60 мин)</div>'+
+    '<div class="kv"><span class="k">Мобильность 40 мин (flow)</span><span class="v subline">складка · шпагат-мера · плечи с резинкой · мостик на ПЛЕЧАХ · shrimp-flow · kip-up · бёдра · поясница</span></div>'+
+    '<div class="kv"><span class="k">Меч-субури 15-20 мин</span><span class="v subline">вертикаль 3×20 · диагональ 3×20 · восьмёрки 3×20 · тычки 3×15 · 5 стоек по 30 с · pell 20 рубок · футворк 3×1 мин</span></div>'+
+    '<div class="kv"><span class="k">Скакалка 10 мин</span><span class="v subline">'+(ph===1?'Фаза 1: одиночные 3×2 мин':ph>=3?'Фаза 3: двойные 3×30 с':'двойные прыжки, бегущие шаги')+'</span></div>'+
+    '<div class="subline" style="margin-top:6px">цели к нед 20: ладони к полу · шпагат «сколько есть» — отмечай в ТЕСТАХ (сид-н-рич)</div></div>';
+  return '<div class="grid">'+list('tue')+list('thu')+battle+sat+'</div>';
+}
+function w19TabTests(){
+  const w=w19();
+  const head='<tr><th>Тест</th>'+W19_TEST_WEEKS.map(x=>'<th>Нед '+x+(x===20?' (цель)':'')+'</th>').join('')+'</tr>';
+  const rows=W19_TESTS.map(([key,label])=>{
+    const cells=W19_TEST_WEEKS.map(week=>{
+      const v=(w.testResults['w'+week]||{})[key];
+      const prevWeek=W19_TEST_WEEKS.filter(x=>x<week).pop();
+      const prev=prevWeek!=null?(w.testResults['w'+prevWeek]||{})[key]:null;
+      const delta=v!=null&&prev!=null&&prevWeek!=null?(v>prev?' <span class="acc">+'+(v-prev)+'</span>':v<prev?' <span class="err">'+(v-prev)+'</span>':''):'';
+      return '<td><input class="f" style="width:64px;padding:3px 5px;font-size:11px" value="'+(v==null?'':v)+'" onchange="w19TestSave('+week+',\''+key+'\',this.value)">'+delta+'</td>';
+    }).join('');
+    return '<tr><td class="subline">'+label+'</td>'+cells+'</tr>';
+  }).join('');
+  const bhead='<tr><th>Замер</th>'+W19_BODY_WEEKS.map(x=>'<th>Нед '+x+'</th>').join('')+'</tr>';
+  const brows=W19_BODY.map(([key,label])=>{
+    const cells=W19_BODY_WEEKS.map(week=>{ const v=(w.bodyMetrics['w'+week]||{})[key];
+      return '<td><input class="f" style="width:64px;padding:3px 5px;font-size:11px" value="'+(v==null?'':v)+'" onchange="w19BodySave('+week+',\''+key+'\',this.value)"></td>'; }).join('');
+    return '<tr><td class="subline">'+label+'</td>'+cells+'</tr>';
+  }).join('');
+  const nt=w19NextTestDays();
+  return '<div class="grid">'+
+    '<div class="c12 panel"><div class="panel-title">БАТАРЕЯ ТЕСТОВ · нед 1/5/9/13/17/20 · следующий: '+(nt?'нед '+nt.week+' (через '+nt.days+' дн)':'нед 20')+'</div>'+
+      '<div style="overflow-x:auto"><table class="w19-table">'+head+rows+'</table></div>'+
+      '<div class="subline" style="margin-top:6px">дельта против предыдущего замера · рост есть → системное уведомление · сила стоит 2 цикла → смена диапазона</div></div>'+
+    '<div class="c12 panel"><div class="panel-title">ФИЗИЧЕСКИЕ ВЕХИ · нед 4/8/12/16/20</div>'+
+      '<div style="overflow-x:auto"><table class="w19-table">'+bhead+brows+'</table></div>'+
+      '<div class="subline" style="margin-top:6px">рост — утром до еды · потеря жира >0.7 кг/нед → +200-300 ккал (проверка в Журнале)</div></div>'+
+  '</div>';
+}
+function w19BodySave(week,key,val){ const w=w19(); const rec=w.bodyMetrics['w'+week]=w.bodyMetrics['w'+week]||{}; const v=parseFloat(val); if(isNaN(v))delete rec[key]; else rec[key]=v; saveState(); }
+function w19TabFood(){
+  const r=w19Nutr();
+  const isTrainingDay=[2,4,5].includes(fromISO(todayISO()).getDay())||[1,6].includes(fromISO(todayISO()).getDay());
+  return '<div class="grid">'+
+    '<div class="c6 panel"><div class="panel-title">ДНЕВНЫЕ ЦЕЛИ</div>'+
+      '<div class="kv"><span class="k">Ккал (сегодня '+(isTrainingDay?'тренировка':'отдых')+')</span><span class="v acc">'+(isTrainingDay?'2700-2900':'2400-2600')+'</span></div>'+
+      '<div class="kv"><span class="k">Белок / Углеводы / Жиры</span><span class="v acc">150-170 / 300-380 / 70-90 г</span></div>'+
+      '<div class="kv"><span class="k">Вода</span><span class="v acc">2.5-3 л (+500 мл/ч тренировки)</span></div>'+
+      '<div class="kv"><span class="k">Кальций</span><span class="v err">1300 мг/день — ВАЖНО для роста</span></div>'+
+      '<div class="subline" style="margin-top:8px">БЕЗЛАКТОЗНЫЙ ПРОТОКОЛ: twaróg bez laktozy · йогурт bez laktozy · skyr · твёрдый сыр (пармезан — ок) · WPI изолят. Обычная молочка = ⚠ ЛАКТОЗА</div>'+
+    '</div>'+
+    '<div class="c6 panel"><div class="panel-title">СЧЁТЧИК БЕЛКА · '+r.protein+'/160 г</div>'+
+      '<div class="bar" style="width:100%;margin:8px 0"><i style="width:'+Math.min(100,Math.round(r.protein/160*100))+'%"></i></div>'+
+      '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">'+
+        '<button class="mini-btn" onclick="w19ProteinAdd(25)">+25 курица</button><button class="mini-btn" onclick="w19ProteinAdd(12)">+12 яйца</button>'+
+        '<button class="mini-btn" onclick="w19ProteinAdd(18)">+18 творог</button><button class="mini-btn" onclick="w19ProteinAdd(20)">+20 рыба</button>'+
+        '<button class="mini-btn" onclick="w19ProteinAdd(-1*('+r.protein+'||0))">↺ сброс</button></div>'+
+      W19_FOOD.map(f=>'<label class="kv" style="cursor:pointer"><span class="k"><input type="checkbox" '+(r.items[f[0]]?'checked':'')+' onchange="w19NutrToggle(\''+f[0]+'\')"> '+esc(f[1])+'</span></label>').join('')+
+    '</div>'+
+    '<div class="c6 panel"><div class="panel-title">ДОБАВКИ · только рабочее</div>'+
+      '<div class="kv"><span class="k">Креатин моногидрат 3-5 г</span><span class="v acc">ТОЛЬКО это</span></div>'+
+      '<div class="kv"><span class="k">D3 1000-2000 МЕ</span><span class="v acc">окт-март</span></div>'+
+      '<div class="kv"><span class="k">Изолят WPI</span><span class="v subline">если не добираешь белок</span></div>'+
+      '<div class="kv"><span class="k">Кофеин 50-100 мг</span><span class="v subline">перед бой-лагерем, НЕ после 16:00</span></div></div>'+
+    '<div class="c6 panel"><div class="panel-title">СТОП-ЛИСТ ДОБАВОК</div>'+
+      ['BCAA — бесполезны при достаточном белке','Жиросжигатели — опасны в 16 лет','Тестобустеры — мошенничество','Предтренировочные — вред для ЦНС подростка','Энергетики — убивают рост']
+        .map(x=>'<div class="kv"><span class="k err">✗ '+esc(x)+'</span></div>').join('')+'</div>'+
+  '</div>';
+}
+function w19TabLog(){
+  const w=w19();
+  const last=w.workoutLog.slice(-8).reverse().map(e=>'<div class="kv"><span class="k">'+e.date+' · '+({tue:'Вт зал',thu:'Чт зал',battle:'бой-лагерь',hand:'рукопашка',sat:'Сб'})[e.type]+'</span><span class="v subline">'+esc((e.exercises||[]).filter(x=>x.done).length+' упр'+(e.feel?' · самочувствие '+e.feel+'/5':'')+(e.notes?' · '+esc(e.notes.slice(0,40)):''))+'</span></div>').join('');
+  return '<div class="grid">'+
+    '<div class="c6 panel"><div class="panel-title">НОВАЯ СЕССИЯ <button class="mini-btn" onclick="w19JournalModal()">+ записать</button></div>'+
+      '<div class="subline">дата/тип/вес/самочувствие · подходы-повторы-RPE · заметки · прогрессия · видео техники 1×/нед · запись = +15 XP</div>'+
+      '<div class="subline" style="margin-top:6px"><span class="err">⛔ красные флаги:</span> 1ПМ/максимумы — запрещены · RPE 10 — запрещено · RPE >8 — предупреждение · «мост на голове» — запрещён (только плечи)</div>'+
+      '<div class="panel-title" style="margin-top:12px;font-size:11px">СРЕДНИЙ RPE ПО НЕДЕЛЯМ</div>'+w19RpeBars()+'</div>'+
+    '<div class="c6 panel"><div class="panel-title">ПОСЛЕДНИЕ СЕССИИ · '+w.workoutLog.length+'</div>'+(last||'<div class="subline">журнал пуст — первая тренировка ждёт</div>')+'</div>'+
+  '</div>';
+}
+function w19BossBarHTML(){ // финальный босс на Статусе
+  const hp=w19Boss(), weeks=w19WeeksDone(), cur=w19Week();
+  return '<div class="wk-sec" style="margin-top:10px">⚔ ВОИН-190 ФИНАЛЬНЫЙ БОСС · 20 НЕДЕЛЬ</div>'+
+    '<div class="bossbar" style="margin-bottom:6px"><i style="width:'+hp+'%"></i><span class="boss-hp-label">'+hp+'% HP</span></div>'+
+    '<div class="subline">'+weeks+'/20 недель закрыто (текущая: '+cur+') · идеальная неделя −7 HP · обычная −5 · слабая −2 · повержен = 20 недель + финальные тесты</div>';
+}
+function w19DashCard(){ // мини-карточка на дашборде
+  const week=w19Week(), ph=w19Phase(), today=w19Today(), rec=w19Checklist(), nt=w19NextTestDays();
+  return '<div class="c3 panel"><div class="panel-title">⚔ ВОИН-190 · НЕДЕЛЯ '+week+'/20</div>'+
+    '<div class="subline">ФАЗА '+ph.num+': '+esc(ph.name)+' · '+esc(ph.slogan)+'</div>'+
+    '<div class="kv" style="margin-top:6px"><span class="k">Сегодня</span><span class="v acc">'+esc(today.t.slice(0,30))+'</span></div>'+
+    '<div class="kv"><span class="k">Чек-лист недели</span><span class="v">'+rec.score+'/14</span></div>'+
+    '<div class="kv"><span class="k">Ритуал</span><span class="v">🔥 '+w19RitualStreak()+' дн</span></div>'+
+    '<div class="kv"><span class="k">След. тест</span><span class="v">'+(nt?'через '+nt.days+' дн':'нед 20')+'</span></div>'+
+    (today.plan?'<button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="w19Start(\'gym\',\''+today.plan+'\')">▶ НАЧАТЬ</button>':'')+
+    '<button class="btn" style="width:100%;margin-top:6px" onclick="go(\'warrior\')">⚔ открыть модуль</button></div>';
 }
 
 /* ============================================================
@@ -4360,7 +5995,7 @@ function renderTrain(){
    SECTION 19 — screen registry + init
    ============================================================ */
 const SCREENS={
-  dashboard:renderDashboard, settings:renderSettings, train:renderTrain,
+  dashboard:renderDashboard, settings:renderSettings, train:renderTrain, warrior:renderWarrior,
   schedule:renderSchedule, goals:renderGoals,
   unfinished:renderUnfinished, analytics:renderAnalytics, finance:renderFinance, life:renderLife, rpg:renderRPG,
   calendar:()=>({year:renderCalYear,month:renderCalMonth,week:renderCalWeek,day:renderCalDay})[cal.mode](),
@@ -4378,7 +6013,8 @@ function renderView(){
 state=loadState();
 state.goals.forEach(g=>goalPercent(g)); // initial progress pass (percent + completion awards)
 ensureRecurring(); // generate due recurring transactions
-processPenalties(); // settle yesterday's missed daily quests
+  processPenalties(); // settle yesterday's missed daily quests
+  w19Init(); // SECTION 20: активация ВОИН-190 (цели + расписание, один раз)
 checkAch(); // unlock any achievements satisfied by existing data
 rotateBackups(); // rolling daily snapshot (3 kept)
 if(state.settings.fintrack.autoSync&&finUrl())finPull(true); // silent initial pull from FinTrack bridge
@@ -4395,6 +6031,14 @@ if(IS_POPOUT){ // separate status window: app shell hidden, drawer = window body
   renderNav(); renderTopbar(); renderView();
   netPull(); setInterval(netPull,30000); // phone/LAN sync: pull server state, push on edits
   setInterval(cloudPull,60000); // ☁ GitHub cloud sync: cloudPull сам проверяет auto/cgReady, перезагрузка после включения не нужна
+  setInterval(aiDailyTick,60000); // NEW 10 + AI-F1 дебриф 21:00 + AI-F11 воскресные паттерны
+  (function aiBoot(){ // AI-F1 утренний брифинг + AI-F2 авто-приказ до 12:00
+    const h=new Date().getHours(), td=todayISO();
+    if(h<10)sysNotify('briefing',{tasks:taskCounts().today});
+    if(h<12){ state.status._briefShown=state.status._briefShown||{};
+      if(!state.status._briefShown[td]){ state.status._briefShown[td]=1; saveState(); setTimeout(aiBriefing,1800); } }
+  })();
+  if(state.settings.ai&&state.settings.ai.chat===false){ var _b=document.getElementById('ai-bubble'); if(_b)_b.style.display='none'; }
   setInterval(renderTopbar,60000); // live clock/date
   setTimeout(routeHash,650); // PWA shortcuts (#dashboard/#quick-add/#status/#today) — после возможного чек-ина
 }
@@ -4524,7 +6168,7 @@ async function netPull(){
     var j=await r.json(); var srv=j&&j.data;
     if(!srv||!srv.schemaVersion){ netPush(); return false; } // первый запуск: заливаем локальное состояние на сервер
     var merged=mergeState(state,srv);
-    var sig=function(s){ return JSON.stringify([s.tasks,s.goals,s.xpLog,(s.finance||{}).transactions,(s.finance||{}).workLog,s.skills,s.categories,s._savedAt]); };
+    var sig=function(s){ return JSON.stringify([s.tasks,s.goals,s.xpLog,(s.finance||{}).transactions,(s.finance||{}).workLog,s.skills,s.categories,s.warrior190,s._savedAt]); };
     if(sig(state)!==sig(merged)){
       state=migrate(merged); _tIdx=null; state.goals.forEach(function(g){delete g._c;});
       saveState(); applySettings(); renderNav(); renderTopbar(); renderView();
