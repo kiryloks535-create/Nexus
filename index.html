@@ -4905,7 +4905,7 @@ function bossPng(ym,pct,xp,sk,disc,win){ // NEW 9: PNG-карточка итог
 function aiCfg(){ state.settings.ai=state.settings.ai||{key:'',persona:'system',freq:'norm',briefTime:'09:00',lang:'ru',tasks:true,sysNotif:true,chat:true}; return state.settings.ai; }
 function aiState(){ state.ai=state.ai||{chat:[],tokens:0,month:''}; const ym=(d=>d.getFullYear()+'-'+pad2(d.getMonth()+1))(new Date()); if(state.ai.month!==ym){state.ai.month=ym;state.ai.tokens=0;} return state.ai; }
 function aiReady(){ return !!(state.settings.ai&&state.settings.ai.key); }
-const AI_MODEL='gemini-flash-lite-latest';
+const AI_MODEL='gemini-3.5-flash-lite';
 function aiTokensAdd(chars){ aiState(); state.ai.tokens+=Math.ceil(chars/4); }
 function aiCacheGet(k){ try{ const c=JSON.parse(localStorage.getItem(KEY+'-aicache')||'{}'); const v=c[k]; if(v&&Date.now()-v.t<3600e3)return v.txt; if(v){delete c[k];localStorage.setItem(KEY+'-aicache',JSON.stringify(c));} }catch(e){} return null; }
 function aiCacheSet(k,txt){ try{ const c=JSON.parse(localStorage.getItem(KEY+'-aicache')||'{}'); c[k]={t:Date.now(),txt:txt.slice(0,4000)}; const ks=Object.keys(c); if(ks.length>40)delete c[ks[0]]; localStorage.setItem(KEY+'-aicache',JSON.stringify(c)); }catch(e){} }
