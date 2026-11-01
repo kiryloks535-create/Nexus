@@ -1950,6 +1950,7 @@ function taskChip(tk,opts={}){
     '<div style="flex:1;min-width:0"><div class="tt'+(overdue?' amber':'')+'">'+esc(tk.title)+'</div>'+
     '<div class="g">'+(g?'<span class="gdot" style="width:7px;height:7px;display:inline-block;margin-right:4px;vertical-align:1px;background:'+esc(g.color||(state.categories.find(c=>c.id===g.cat)||{}).color||'#7fa38c')+'"></span>'+esc(g.title.slice(0,26))+' · ':'')+'P'+tk.priority+(tk.time?' <span class="mini-tag main">⏰ '+tk.time+(tk.date?' · '+fmtShort(tk.date):'')+'</span>':'')+(tk.value!=null?' · '+esc(String(tk.value)):'')+(overdue?' · '+Math.abs(daysBetween(todayISO(),tk.date))+t('uf_overdue'):'')+'</div></div>'+
     (opts.pomo!==false&&!tk.done?'<button class="mini-btn" title="'+t('pomo_title')+'" onclick="event.stopPropagation();pomoStart(\''+tk.id+'\')">▶</button>':'')+
+    '<button class="mini-btn" title="Изменить" onclick="event.stopPropagation();editTask(\''+tk.id+'\')">✎</button>'+
     (tk.pomos?'<span class="mini-tag" title="помодоро">🍅'+tk.pomos+'</span>':'')+
     (opts.del?'<span class="x" onclick="delTask(\''+tk.id+'\')">✕</span>':'')+
   '</div>';
@@ -4448,6 +4449,37 @@ function quickAdd(presetDate,presetGoal){
   };
 }
 let _qaRecent=[];
+function editTask(id){ // редактирование существующей задачи: название/цель/дата/время/приоритет/значение
+  const tk=state.tasks.find(x=>x.id===id); if(!tk)return;
+  const opts=state.goals.map(g=>{ const pct=Math.round(goalPercent(g).pct); return '<option value="'+g.id+'"'+(tk.goalId===g.id?' selected':'')+'>'+esc(g.title.slice(0,42))+' · '+pct+'%</option>'; }).join('');
+  openModal('<div class="panel-title">✎ '+t('qa_title')+'</div><form id="et-form" novalidate>'+
+    '<div class="frow"><label class="f">'+t('qa_name')+'</label><input class="f" id="et-name" maxlength="120" value="'+esc(tk.title)+'" autocomplete="off" oninput="qaClearErr()"><div class="ferr" id="qa-name-err">'+t('qa_err')+'</div></div>'+
+    '<div class="frow"><label class="f">'+t('qa_goal')+'</label><select class="f" id="et-goal" onchange="qaPrioSyncEt()"><option value="">'+t('qa_none')+'</option>'+opts+'</select></div>'+
+    '<div class="frow2"><div class="frow"><label class="f">'+t('qa_date')+'</label><input class="f" type="date" id="et-date" value="'+(tk.date||todayISO())+'"></div>'+
+    '<div class="frow"><label class="f">Время (HH:MM)</label><input class="f" type="time" id="et-time" value="'+(tk.time||'')+'"></div></div>'+
+    '<div class="frow2"><div class="frow"><label class="f">'+t('qa_prio')+'</label><select class="f" id="et-prio">'+
+      [5,4,3,2,1].map(p=>'<option value="'+p+'"'+(p===(tk.priority||3)?' selected':'')+'>P'+p+'</option>').join('')+'</select></div>'+
+    '<div class="frow"><label class="f">'+t('qa_value')+'</label><input class="f" type="number" step="any" id="et-value" value="'+(tk.value!=null?esc(String(tk.value)):'')+'"></div></div>'+
+    '<div class="modal-actions"><button type="button" class="btn" onclick="closeModal()">'+t('cancel')+'</button>'+
+    '<button type="submit" class="btn btn-primary">'+t('save')+'</button></div></form>');
+  $('#et-form').onsubmit=e=>{
+    e.preventDefault();
+    const nameEl=$('#et-name'), title=nameEl.value.trim();
+    if(!title){ nameEl.classList.add('err'); const er=$('#qa-name-err'); if(er)er.style.display='block'; nameEl.focus(); return; }
+    const gid=$('#et-goal').value;
+    const g=gid?state.goals.find(g=>g.id===gid):null;
+    tk.title=title; tk.goalId=gid||null; tk.date=$('#et-date').value||todayISO();
+    tk.time=$('#et-time').value||null;
+    tk.priority=g?g.priority:parseInt($('#et-prio').value,10);
+    const val=$('#et-value').value; tk.value=val===''?null:parseFloat(val);
+    tk.updatedAt=Date.now();
+    closeModal(); emitChange(); toast('✎ '+t('save')+': '+title.slice(0,40));
+  };
+}
+function qaPrioSyncEt(){
+  const g=$('#et-goal').value?state.goals.find(g=>g.id===$('#et-goal').value):null;
+  if(g)$('#et-prio').value=g.priority;
+}
 function qaPick(i){ // подставить существующую задачу: название + цель (если была) + приоритет
   const r=_qaRecent[i]; if(!r)return;
   $('#qa-name').value=r.title;
