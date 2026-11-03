@@ -232,6 +232,7 @@
 
   function start() {
     if (!started) init();
+    if (new URLSearchParams(location.search).has('nolabel')) layer.style.display = 'none';
     active = true;
     if (!rafId) rafId = requestAnimationFrame(tick);
   }
