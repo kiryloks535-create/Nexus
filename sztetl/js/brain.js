@@ -180,14 +180,20 @@
 
   /* ---------- pętla ---------- */
   const easeIO = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  /* ?rot=<deg> — kąt stały (render klatek GIF-a dla PPTX) */
+  const ROT = (() => {
+    const v = parseFloat(new URLSearchParams(location.search).get('rot'));
+    return Number.isFinite(v) ? v * Math.PI / 180 : null;
+  })();
 
   function tick(now) {
     if (!active) { rafId = 0; return; }
     rafId = requestAnimationFrame(tick);
 
     const t = REDUCED ? 0 : now * 0.001;
-    group.rotation.y = t * 0.07;
-    dust.rotation.y = -t * 0.03;
+    group.rotation.y = ROT !== null ? ROT : t * 0.07;
+    if (ROT !== null) dust.rotation.y = 0;
+    else dust.rotation.y = -t * 0.03;
     core.scale.setScalar(1.05 + Math.sin(t * 1.6) * 0.12);
     linesMat.opacity = 0.18 + Math.sin(t * 0.8) * 0.06;
 
