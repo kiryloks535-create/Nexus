@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ślady sztetla. Żydzi w Dąbrowie Białostockiej</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="deck">
+
+  <!-- ═══ 1 · TYTUŁ OFICJALNY ═══ -->
+  <section class="slide s1" data-theme="official">
+    <div class="slide-inner">
+      <div class="crest rv" style="--d:.1">D</div>
+      <div class="kicker rv" style="--d:.3">Konkurs historyczny · ZST im. gen. Władysława Andersa w Białymstoku</div>
+      <h1 class="display rv" style="--d:.5">Ślady sztetla.<br><em style="font-style:italic; font-weight:700">Żydzi w Dąbrowie Białostockiej</em></h1>
+      <div class="rule rv" style="--d:.7"></div>
+      <p class="meta rv" style="--d:.9">
+        <b>Autor:</b> [imię, klasa] &nbsp;·&nbsp; <b>Nauczyciel:</b> [nazwisko]<br>
+        <span class="muted">Praca indywidualna · listopad 2026</span>
+      </p>
+      <button id="btn-start" class="rv" style="--d:1.2">Rozpocznij</button>
+    </div>
+  </section>
+
+  <!-- ═══ 2 · ZANIM ZNIKNĘŁO ═══ -->
+  <section class="slide s2" data-theme="night" data-cine>
+    <svg class="map-bg s2-map-in" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="1200" height="700" fill="#171310"/>
+      <g stroke="#4a3f28" fill="none" opacity=".7">
+        <path d="M-50,180 C250,120 420,260 640,210 S1050,140 1260,220" stroke-width="2"/>
+        <path d="M-50,420 C300,380 520,520 780,450 S1120,400 1260,470" stroke-width="1.4"/>
+        <path d="M180,-40 C220,200 160,420 240,760" stroke-width="1.2"/>
+        <path d="M880,-40 C840,240 920,480 860,760" stroke-width="1.6"/>
+      </g>
+      <g fill="#4a3f28" opacity=".55">
+        <circle cx="640" cy="210" r="7"/><circle cx="240" cy="380" r="5"/>
+        <circle cx="900" cy="300" r="5"/><circle cx="440" cy="500" r="4"/>
+      </g>
+      <g font-family="Georgia, serif" font-style="italic" fill="#6b5c38" opacity=".8" font-size="22">
+        <text x="660" y="200">Dąbrowa</text>
+        <text x="270" y="368">Sokółka</text>
+        <text x="920" y="292">Janów</text>
+      </g>
+    </svg>
+    <div class="grain"></div><div class="vignette"></div>
+    <div class="slide-inner">
+      <p class="whisper rv" style="--d:.8">Zanim zniknęło…</p>
+      <div class="words">
+        <span class="rv" style="--d:2.8">Rynek</span>
+        <span class="rv" style="--d:3.7">Synagoga</span>
+        <span class="rv" style="--d:4.6">Mykwa</span>
+        <span class="rv" style="--d:5.5">Kirkut</span>
+      </div>
+      <p class="here rv" style="--d:6.6">Ta historia wydarzyła się tu — w Dąbrowie.</p>
+    </div>
+  </section>
+
+  <!-- ═══ 3 · LICZBY ═══ -->
+  <section class="slide s3" data-theme="night" data-cine>
+    <div class="grain"></div><div class="vignette"></div>
+    <div class="slide-inner">
+      <div class="nums">
+        <div class="num"><i>90%</i><u>mieszkańców miasta</u></div>
+        <div class="num"><i>1218</i><u>sąsiadów</u></div>
+        <div class="num"><i>1</i><u>ocalały</u></div>
+      </div>
+      <p class="punch">To nie liczby. To sąsiedzi.</p>
+    </div>
+    <p class="src">Źródła: sztetl.org.pl · jewishgen.org</p>
+  </section>
+
+  <!-- ═══ 4 · TO NIE LEGENDA ═══ -->
+  <section class="slide s4" data-theme="night" data-cine>
+    <div class="grain"></div><div class="vignette"></div>
+    <div class="slide-inner">
+      <h2 class="rv" style="--d:.4">To nie legenda.<br><em>To nasze miasto.</em></h2>
+    </div>
+  </section>
+
+  <!-- ═══ 5 · MENU-MÓZG ═══ -->
+  <section class="slide s5" data-theme="night">
+    <div id="brain-canvas" aria-hidden="true"></div>
+    <div class="grain"></div><div class="vignette"></div>
+    <div class="slide-inner brain-hud">
+      <p class="kicker">Dąbrowa Białostocka · mapa pamięci</p>
+      <h2 class="title">Wybierz wątek</h2>
+      <p class="hint-brain">Kliknij światło — przeleć do rozdziału</p>
+    </div>
+    <div id="brain-labels"></div>
+  </section>
+
+  <!-- ═══ 6–30 · STUBY ═══ -->
+  <!-- ═══ 6 · MAPA PODLASIA ═══ -->
+  <section class="slide s6" data-theme="paper">
+    <div class="slide-inner map-slide">
+      <div class="map-head">
+        <p class="kicker rv" style="--d:.1">Rozdział · gdzie jesteśmy</p>
+        <h2 class="title rv" style="--d:.2">Dąbrowa — dawna Dubrowa</h2>
+        <p class="lead muted rv" style="--d:.3">Miasteczko na Podlasiu, północno-wschodnie rubieże Polski.
+          <b class="go-hint">Kliknij pulsujący punkt, aby przybliżyć mapę.</b></p>
+      </div>
+      <div class="map-wrap rv" style="--d:.45">
+        <svg id="map-podlasie" class="map" viewBox="0 0 1000 640" aria-label="Mapa województwa podlaskiego">
+          <g id="world6">
+            <path class="mland" d="M120,180 C200,90 380,60 520,90 C660,120 780,80 880,140 C950,190 960,300 920,380 C880,460 760,520 620,540 C480,560 320,540 220,470 C130,410 70,300 120,180 Z"/>
+            <path class="mriver" d="M200,430 C330,385 430,305 565,282 C690,262 770,215 850,182"/>
+            <path class="mriver" d="M300,145 C385,205 470,242 562,252"/>
+            <g class="mtown"><circle cx="700" cy="242" r="5"/><text x="716" y="238">Białystok</text></g>
+            <g class="mtown"><circle cx="736" cy="196" r="3.4"/><text x="752" y="192">Sokółka</text></g>
+            <g class="mtown"><circle cx="642" cy="128" r="3.4"/><text x="658" y="124">Janów</text></g>
+            <g class="mtown"><circle cx="252" cy="432" r="4"/><text x="268" y="428">Łomża</text></g>
+            <g class="mtown"><circle cx="548" cy="112" r="4"/><text x="500" y="108">Suwałki</text></g>
+            <g class="mtown"><circle cx="520" cy="496" r="4"/><text x="536" y="492">Biała Podlaska</text></g>
+            <g id="pin-dabrowa" class="pin big" role="button" tabindex="0" aria-label="Dąbrowa Białostocka — przybliż">
+              <circle class="halo" cx="762" cy="152" r="26"/>
+              <circle class="dot" cx="762" cy="152" r="6"/>
+              <text x="782" y="146">Dąbrowa Białostocka</text>
+            </g>
+          </g>
+          <g class="compass" transform="translate(906,568)">
+            <circle r="26"/><path d="M0,-19 L5,7 L0,2 L-5,7 Z"/><text y="-32">N</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <p class="src">Mapa poglądowa · Źródło: sztetl.org.pl</p>
+  </section>
+
+  <!-- ═══ 7 · MAPA MIASTECZKA ═══ -->
+  <section class="slide s7" data-theme="paper">
+    <div class="slide-inner map-slide">
+      <div class="map-head">
+        <p class="kicker rv" style="--d:.1">Miejsca, które były sercem sztetla</p>
+        <h2 class="title rv" style="--d:.2">Mapa miasteczka</h2>
+        <p class="lead muted rv" style="--d:.3"><b class="go-hint">Kliknij znacznik, aby odwiedzić miejsce.</b></p>
+      </div>
+      <div class="map-wrap rv" style="--d:.45">
+        <svg class="map" viewBox="0 0 1000 620" aria-label="Plan miasteczka z miejscami żydowskimi">
+          <rect class="mbg" x="0" y="0" width="1000" height="620"/>
+          <path class="mriver" d="M842,10 C800,160 826,330 764,610"/>
+          <path class="mroad" d="M60,84 C300,220 560,340 964,516"/>
+          <g class="mstreet"><path d="M300,300 L380,300 M500,300 L620,300 M440,180 L440,280 M440,380 L440,430"/><text x="452" y="170">ul. Szkolna</text><text x="120" y="330">ul. Kamieńska</text><text x="452" y="426">ul. 3 Maja</text></g>
+          <rect class="mrating" x="382" y="282" width="118" height="96"/>
+          <text class="mlabel" x="441" y="404">Rynek · pl. Kościuszki</text>
+          <g class="mbldg"><rect x="612" y="300" width="46" height="30"/><path d="M608,300 L635,282 L662,300"/><text x="668" y="318">Synagoga · 1874</text></g>
+          <g class="mbldg"><rect x="544" y="168" width="34" height="24"/><text x="588" y="180">Mykwa</text></g>
+          <g class="mkirkut">
+            <rect x="796" y="66" width="88" height="58" rx="6"/>
+            <path d="M812,84 l10,-6 M834,96 l10,-6 M820,108 l10,-6 M848,80 l10,-6"/>
+            <text x="812" y="52">Kirkut · ul. Jana Pawła II</text>
+          </g>
+          <path class="mgetto" d="M330,452 L640,440 L668,560 L316,572 Z"/>
+          <text class="mlabel" x="320" y="438">getto (IX 1941 – XI 1942)</text>
+          <g class="mbldg dark"><rect x="402" y="488" width="40" height="26"/><text x="402" y="538">kino — dawna bóżnica?</text></g>
+          <g class="mbldg dark"><rect x="596" y="506" width="44" height="26"/><text x="596" y="552">młyn</text></g>
+          <g class="mk-arrow"><path d="M150,236 L64,236" /><path d="M78,228 L62,236 L78,244"/><text x="160" y="241">Kiełbasin · obóz przejściowy · 28 km</text></g>
+          <g class="pin" data-go="12" role="button" tabindex="0" aria-label="Rynek"><circle class="halo" cx="441" cy="330" r="17"/><circle class="dot" cx="441" cy="330" r="4.6"/></g>
+          <g class="pin" data-go="14" role="button" tabindex="0" aria-label="Synagoga"><circle class="halo" cx="640" cy="345" r="17"/><circle class="dot" cx="640" cy="345" r="4.6"/></g>
+          <g class="pin" data-go="15" role="button" tabindex="0" aria-label="Mykwa"><circle class="halo" cx="561" cy="180" r="17"/><circle class="dot" cx="561" cy="180" r="4.6"/></g>
+          <g class="pin" data-go="17" role="button" tabindex="0" aria-label="Kirkut"><circle class="halo" cx="840" cy="95" r="17"/><circle class="dot" cx="840" cy="95" r="4.6"/></g>
+          <g class="pin" data-go="22" role="button" tabindex="0" aria-label="Getto"><circle class="halo" cx="485" cy="499" r="17"/><circle class="dot" cx="485" cy="499" r="4.6"/></g>
+          <g class="pin" data-go="23" role="button" tabindex="0" aria-label="Kiełbasin"><circle class="halo" cx="150" cy="236" r="17"/><circle class="dot" cx="150" cy="236" r="4.6"/></g>
+        </svg>
+      </div>
+    </div>
+    <p class="src">Plan poglądowy · Źródła: sztetl.org.pl · Wikipedia · portal miasta</p>
+  </section>
+  <!-- ═══ 8 · PIERWSZE WZMIANKI ═══ -->
+  <section class="slide s8" data-theme="paper">
+    <div class="slide-inner two-col">
+      <div>
+        <p class="kicker rv" style="--d:.1">Rozdział · Geneza</p>
+        <h2 class="title rv" style="--d:.2">Pierwsze wzmianki</h2>
+        <p class="lead rv ink" style="--d:.6">Pierwsze wzmianki o Żydach w Dąbrowie pochodzą z <b>początku XVIII&nbsp;wieku</b>.</p>
+        <p class="lead rv ink" style="--d:1.3">Już wtedy działała <b>gmina wyznaniowa</b>, podległa gminie w&nbsp;Grodnie.</p>
+      </div>
+      <div class="century rv" style="--d:.4"><span>XVIII</span><small>wiek</small></div>
+    </div>
+    <p class="src">Źródło: sztetl.org.pl</p>
+  </section>
+
+  <!-- ═══ 9 · PRAWA MIEJSKIE — LENTA ═══ -->
+  <section class="slide s9" data-theme="paper">
+    <div class="slide-inner">
+      <p class="kicker rv" style="--d:.1">Rozdział · Geneza</p>
+      <h2 class="title rv" style="--d:.2">Dubrowa — prawa miejskie</h2>
+      <div class="timeline">
+        <div class="tline rv" style="--d:.4"></div>
+        <div class="stamp rv" style="--d:.5"><b>1558</b><span>Ziemia nadana bojarowi Kuźmie Horczakowiczowi przez króla Zygmunta I</span></div>
+        <div class="stamp rv" style="--d:1.0"><b>1712</b><span>Dubrowa otrzymuje prawa miejskie</span></div>
+        <div class="stamp rv" style="--d:1.5"><b>1892</b><span>Prawa miejskie utracone</span></div>
+        <div class="stamp rv" style="--d:2.0"><b>1919</b><span>13 października — prawa odzyskane</span></div>
+      </div>
+    </div>
+    <p class="src">Źródło: Wikipedia</p>
+  </section>
+
+  <!-- ═══ 10 · DLACZEGO TUTAJ ═══ -->
+  <section class="slide s10" data-theme="paper">
+    <div class="slide-inner two-col">
+      <div>
+        <p class="kicker rv" style="--d:.1">Rozdział · Geneza</p>
+        <h2 class="title rv" style="--d:.2">Dlaczego tutaj?</h2>
+        <p class="lead rv" style="--d:.35">Żydzi na Podlasiu stanowili większy odsetek ludności niż gdziekolwiek indziej w&nbsp;kraju.</p>
+        <p class="lead rv" style="--d:.55">To oni w&nbsp;dużej mierze napędzali rozwój miasteczek — przede wszystkim <b>handlem</b>.</p>
+      </div>
+      <div class="illus rv" style="--d:.5">
+        <svg viewBox="0 0 400 300" aria-hidden="true">
+          <path class="route" d="M40,240 C120,200 150,120 230,110 C290,102 330,70 370,40"/>
+          <circle cx="40" cy="240" r="6"/><circle cx="230" cy="110" r="6"/><circle cx="370" cy="40" r="6"/>
+          <circle cx="40" cy="240" r="14" class="glow"/><circle cx="230" cy="110" r="14" class="glow"/><circle cx="370" cy="40" r="14" class="glow"/>
+          <text x="58" y="262">Grodno</text><text x="248" y="132">Dąbrowa</text><text x="330" y="30">Białystok</text>
+          <text x="150" y="278" class="routelabel">szlaki handlowe Podlasia</text>
+        </svg>
+        <small class="illus-note">ilustracja poglądowa</small>
+      </div>
+    </div>
+    <p class="src">Źródło: sztetl.org.pl</p>
+  </section>
+
+  <!-- ═══ 11 · 1806 ═══ -->
+  <section class="slide s11" data-theme="paper">
+    <div class="slide-inner">
+      <p class="kicker rv" style="--d:.1">Rozdział · Geneza</p>
+      <h2 class="title rv" style="--d:.2">Rok 1806</h2>
+      <p class="lead rv" style="--d:.35">W 1806 r. Żydzi stanowili już <b>ponad połowę</b> mieszkańców Dąbrowy.</p>
+      <div class="houses rv" style="--d:.55" aria-hidden="true"></div>
+      <p class="bigstat"><b id="cnt-1806">0%</b><span>mieszkańców — żydowska Dąbrowa</span></p>
+    </div>
+    <p class="src">Źródło: sztetl.org.pl</p>
+  </section>
+
+  <!-- ═══ 12 · RYNEK ═══ -->
+  <section class="slide s12" data-theme="paper">
+    <div class="slide-inner two-col">
+      <div>
+        <p class="kicker rv" style="--d:.1">Rozdział · Sztetl</p>
+        <h2 class="title rv" style="--d:.2">Rynek — serce miasteczka</h2>
+        <p class="lead rv" style="--d:.35">Domy żydowskie dominowały przy placu Kościuszki oraz ulicach Szkolnej, Kamieńskiej i&nbsp;3&nbsp;Maja.</p>
+        <div class="streets">
+          <span class="chip rv" style="--d:.7">pl. Kościuszki</span>
+          <span class="chip rv" style="--d:1.2">ul. Szkolna</span>
+          <span class="chip rv" style="--d:1.7">ul. Kamieńska</span>
+          <span class="chip rv" style="--d:2.2">ul. 3 Maja</span>
+        </div>
+      </div>
+      <div class="illus rv" style="--d:.5">
+        <svg viewBox="0 0 400 300" aria-hidden="true">
+          <rect x="60" y="120" width="280" height="110" class="square"/>
+          <rect x="40" y="60" width="50" height="56"/><path d="M36,60 L65,42 L94,60"/>
+          <rect x="310" y="60" width="50" height="56"/><path d="M306,60 L335,42 L364,60"/>
+          <rect x="40" y="234" width="50" height="50"/><path d="M36,234 L65,216 L94,234"/>
+          <rect x="310" y="234" width="50" height="50"/><path d="M306,234 L335,216 L364,234"/>
+          <text x="200" y="182" text-anchor="middle" class="sqtext">RYNEK</text>
+        </svg>
+        <small class="illus-note">ilustracja poglądowa</small>
+      </div>
+    </div>
+    <p class="src">Źródło: sztetl.org.pl</p>
+  </section>
+
+  <!-- ═══ 13 · HANDEL I ŻYCIE ═══ -->
+  <section class="slide s13" data-theme="paper">
+    <div class="slide-inner">
+      <p class="kicker rv" style="--d:.1">Rozdział · Sztetl</p>
+      <h2 class="title rv" style="--d:.2">Handel i życie</h2>
+      <p class="lead rv" style="--d:.35">Na rynku kwitło życie gospodarcze, religijne i&nbsp;kulturalne. Rozwój miasteczka napędzał <b>handel</b>.</p>
+      <div class="trio">
+        <div class="tcard rv" style="--d:.7">
+          <svg viewBox="0 0 64 64"><path d="M14,24 L50,24 L46,52 L18,52 Z"/><path d="M24,24 C24,12 40,12 40,24"/></svg>
+          <b>Gospodarcze</b><span>targi, kupcy, rzemiosło</span>
+        </div>
+        <div class="tcard rv" style="--d:1.1">
+          <svg viewBox="0 0 64 64"><path d="M32,6 L37,24 L56,24 L41,35 L47,54 L32,42 L17,54 L23,35 L8,24 L27,24 Z"/></svg>
+          <b>Religijne</b><span>bóżnice, domy modlitwy</span>
+        </div>
+        <div class="tcard rv" style="--d:1.5">
+          <svg viewBox="0 0 64 64"><path d="M10,14 L30,14 L32,18 L54,14 L54,50 L32,54 L30,50 L10,50 Z"/><path d="M30,14 L30,50 M32,18 L32,54"/></svg>
+          <b>Kulturalne</b><span>szkoły, prasa, chedery</span>
+        </div>
+      </div>
+    </div>
+    <p class="src">Źródło: sztetl.org.pl</p>
+  </section>
+
+  <!-- ═══ 14 · SYNAGOGA ═══ -->
+  <section class="slide s14" data-theme="paper">
+    <div class="slide-inner two-col">
+      <div>
+        <p class="kicker rv" style="--d:.1">Rozdział · Sztetl</p>
+        <h2 class="title rv" style="--d:.2">Synagoga z 1874 roku</h2>
+        <p class="lead rv" style="--d:.35">W 1874 r. <b>nad rzeką</b> wzniesiono murowaną synagogę. W&nbsp;miasteczku stały dwie murowane bóżnice oraz kilka domów modlitwy.</p>
+        <p class="lead rv warn" style="--d:.6">Zniszczona w czasie II wojny światowej.</p>
+        <p class="engraved rv" style="--d:.9">1874</p>
+      </div>
+      <div class="illus rv" style="--d:.5">
+        <svg viewBox="0 0 400 300" aria-hidden="true">
+          <rect x="120" y="120" width="160" height="120"/>
+          <path d="M120,120 L200,74 L280,120"/>
+          <rect x="152" y="150" width="24" height="42" rx="12"/><rect x="224" y="150" width="24" height="42" rx="12"/>
+          <rect x="188" y="150" width="24" height="36" rx="12"/>
+          <circle cx="200" cy="106" r="12"/>
+          <path d="M188,106 h24 M200,94 v24"/>
+          <path class="water" d="M60,252 C120,244 160,260 220,252 S320,244 350,252"/>
+          <path class="water w2" d="M80,266 C140,259 180,272 240,266 S320,259 344,266"/>
+          <text x="200" y="286" text-anchor="middle" class="rivernote">nad rzeką</text>
+        </svg>
+        <small class="illus-note">ilustracja poglądowa</small>
+      </div>
+    </div>
+    <p class="src">Źródło: sztetl.org.pl</p>
+  </section>
+
+  <!-- ═══ 15 · MYKWA ═══ -->
+  <section class="slide s15" data-theme="paper">
+    <div class="slide-inner two-col">
+      <div>
+        <p class="kicker rv" style="--d:.1">Rozdział · Sztetl</p>
+        <h2 class="title rv" style="--d:.2">Mykwa</h2>
+        <p class="lead rv" style="--d:.35">Na północ od rynku, nad rzeką, znajdowała się <b>łaźnia rytualna</b> — mykwa.</p>
+      </div>
+      <div class="illus rv" style="--d:.5">
+        <svg viewBox="0 0 400 300" aria-hidden="true">
+          <g class="bldg">
+            <rect x="140" y="110" width="120" height="90"/>
+            <path d="M140,110 L200,70 L260,110"/>
+            <rect x="170" y="140" width="22" height="34" rx="11"/>
+            <rect x="206" y="140" width="22" height="34" rx="11"/>
+          </g>
+          <g class="reflection" transform="translate(0,424) scale(1,-1)" opacity=".25">
+            <rect x="140" y="110" width="120" height="90"/>
+            <path d="M140,110 L200,70 L260,110"/>
+          </g>
+          <path class="water" d="M60,242 C130,234 180,250 250,242 S330,234 356,242"/>
+          <path class="water w2" d="M84,258 C150,250 190,264 260,258 S330,250 348,258"/>
+        </svg>
+        <small class="illus-note">ilustracja poglądowa</small>
+      </div>
+    </div>
+    <p class="src">Źródło: sztetl.org.pl</p>
+  </section>
+
+  <!-- ═══ 16 · LICZBY MÓWIĄ ═══ -->
+  <section class="slide s16" data-theme="paper">
+    <div class="slide-inner">
+      <p class="kicker rv" style="--d:.1">Rozdział · Sztetl</p>
+      <h2 class="title rv" style="--d:.2">Liczby mówią</h2>
+      <div class="bars">
+        <div class="bar rv" style="--d:.5"><i style="--h:64%"></i><b>1847</b><span>966 Żydów</span></div>
+        <div class="bar rv" style="--d:.9"><i style="--h:75%"></i><b>1897</b><span>1499 · 75%</span></div>
+        <div class="bar rv" style="--d:1.3"><i style="--h:78.2%"></i><b>1904</b><span>78,2%</span></div>
+        <div class="bar rv" style="--d:1.7"><i style="--h:90%"></i><b>1921</b><span>1218 · 90% miasta</span></div>
+      </div>
+      <p class="footnote rv" style="--d:2.1">Dla 1847 r. podana jest liczba mieszkańców, nie odsetek — słupek w skali liczby.</p>
+    </div>
+    <p class="src">Źródła: dabrowabial.pl · sztetl.org.pl · jewishgen.org</p>
+  </section>
+
+  <!-- ═══ 17 · KIRKUT ═══ -->
+  <section class="slide s17" data-theme="paper">
+    <div class="slide-inner two-col">
+      <div>
+        <p class="kicker rv" style="--d:.1">Rozdział · Kirkut</p>
+        <h2 class="title rv" style="--d:.2">Kirkut</h2>
+        <p class="lead rv" style="--d:.35">Cmentarz żydowski przy dzisiejszej <b>ul. Jana Pawła II</b> powstał na przełomie XVIII i&nbsp;XIX&nbsp;wieku.</p>
+        <p class="bigstat rv" style="--d:.6"><b id="cnt-macew">0</b><span>zachowanych macew — około</span></p>
+      </div>
+      <div class="illus rv" style="--d:.5">
+        <svg viewBox="0 0 400 300" aria-hidden="true">
+          <g class="macewy">
+            <path d="M40,250 v-60 a14,14 0 0 1 28,0 v60"/>
+            <path d="M100,250 v-78 a16,16 0 0 1 32,0 v78"/>
+            <path d="M170,250 v-52 a13,13 0 0 1 26,0 v52"/>
+            <path d="M234,250 v-70 a15,15 0 0 1 30,0 v70"/>
+            <path d="M300,250 v-58 a14,14 0 0 1 28,0 v58"/>
+            <path d="M356,250 v-40 a11,11 0 0 1 22,0 v40"/>
+          </g>
+          <g class="mglyphs">
+            <path d="M114,190 l12,7 l-12,7 l-12,-7 Z"/>
+            <path d="M249,198 v16 m-8,-8 h16"/>
+            <path d="M54,212 v14 m-7,-7 h14"/>
+          </g>
+          <path class="ground" d="M20,250 L380,250"/>
+        </svg>
+        <small class="illus-note">sylwety macew — poglądowe</small>
+      </div>
+    </div>
+    <p class="src">Źródła: sztetl.org.pl · Wikipedia</p>
+  </section>
+
+  <!-- ═══ 18 · MACEWA — SYMBOLIKA ═══ -->
+  <section class="slide s18" data-theme="paper">
+    <div class="slide-inner">
+      <p class="kicker rv" style="--d:.1">Rozdział · Kirkut</p>
+      <h2 class="title rv" style="--d:.2">Macewa — kamień mówi</h2>
+      <p class="lead rv" style="--d:.3">Każdy symbol na macewie opowiada o&nbsp;zmarłym. <b class="go-hint">Kliknij kamień.</b></p>
+      <div class="mstones">
+        <button class="mstone rv" style="--d:.5" data-txt="Dłonie złożone w błogosławieństwie — znak kapłanów (kohanim), potomków Aarona." aria-label="Błogosławieństwo kapłańskie">
+          <svg viewBox="0 0 120 150"><path d="M18,140 v-96 a42,42 0 0 1 84,0 v96 Z"/><path d="M46,122 v-26 a7,11 0 0 1 14,0 v26 M64,122 v-26 a7,11 0 0 1 14,0 v26" fill="none"/></svg>
+          <b>Błogosławieństwo kapłańskie</b>
+        </button>
+        <button class="mstone rv" style="--d:.8" data-txt="Lew — symbol plemienia Judy; często na macewach mężczyzn o imieniu Jehuda/Arie." aria-label="Lew">
+          <svg viewBox="0 0 120 150"><path d="M18,140 v-96 a42,42 0 0 1 84,0 v96 Z"/><path d="M36,112 c1,-13 13,-20 27,-20 c7,0 11,-3 13,-7 a10,10 0 1 0 -2,-11 M38,112 v10 M52,112 v10 M66,110 v12 M79,108 v14 M34,98 c-5,-3 -6,-9 -1,-13" fill="none"/></svg>
+          <b>Lew</b>
+        </button>
+        <button class="mstone rv" style="--d:1.1" data-txt="Gwiazda Dawida (magen David) — znak tożsamości; bywa też elementem imienia Dawid." aria-label="Gwiazda Dawida">
+          <svg viewBox="0 0 120 150"><path d="M18,140 v-96 a42,42 0 0 1 84,0 v96 Z"/><path d="M60,66 L74,90 L46,90 Z M60,114 L46,90 L74,90 Z" fill="none"/></svg>
+          <b>Gwiazda Dawida</b>
+        </button>
+      </div>
+      <p id="m-info" class="minfo rv" style="--d:1.4" aria-live="polite">Wybierz symbol, aby odczytać jego znaczenie.</p>
+    </div>
+    <p class="src">Symbolika: źródło do potwierdzenia (POLIN / sztetl) — blok F</p>
+  </section>
+  <!-- ═══ 19 · WRZESIEŃ 1939 ═══ -->
+  <section class="slide s19" data-theme="night" data-cine>
+    <div class="grain"></div><div class="vignette"></div>
+    <div class="slide-inner">
+      <p class="warfate kicker rv" style="--d:.3">Wrzesień 1939</p>
+      <h2 class="wartitle rv" style="--d:.8">We wrześniu 1939 r. Niemcy okupowali miasto niecałe dwa tygodnie, po czym ustąpili Armii Czerwonej.</h2>
+    </div>
+  </section>
+
+  <!-- ═══ 20 · CZERWIEC 1941 ═══ -->
+  <section class="slide s20" data-theme="night" data-cine>
+    <div class="smoke" aria-hidden="true"></div>
+    <div class="grain"></div><div class="vignette"></div>
+    <div class="slide-inner">
+      <p class="warfate kicker rv" style="--d:.3">Czerwiec 1941</p>
+      <h2 class="wartitle rv" style="--d:.8">Niemcy wrócili. Oskarżyli Żydów o zabójstwo niemieckiego oficera i podpalili miasto.</h2>
+      <h2 class="wartitle rv" style="--d:1.8">Wielu zginęło w pożarze, część uciekła do Nowego Dworu, Sokółki i Suchowoli.</h2>
+      <h2 class="wartitle rv muted rv-dim" style="--d:2.8">Po tygodniu wróciło 300–600 osób.</h2>
+    </div>
+  </section>
+
+  <!-- ═══ 21 · LIPIEC 1941 ═══ -->
+  <section class="slide s21" data-theme="night" data-cine>
+    <div class="grain"></div><div class="vignette"></div>
+    <div class="slide-inner">
+      <p class="war27 rv" style="--d:.6">27</p>
+      <h2 class="wartitle rv" style="--d:1.6">Na początku lipca 1941 r. Niemcy zamordowali 27 młodych mężczyzn, którzy mieli rzekomo trafić do prac przymusowych.</h2>
+    </div>
+  </section>
+
+  <!-- ═══ 22 · GETTO ═══ -->
+  <section class="slide s22" data-theme="night" data-cine>
+    <div class="grain"></div><div class="vignette"></div>
+    <div class="slide-inner two-col">
+      <div>
+        <p class="warfate kicker rv" style="--d:.2">Getto · IX 1941</p>
+        <h2 class="wartitle rv" style="--d:.6">Ludzie mieszkali w piwnicach spalonych domów. Zimą getto zredukowano do dwóch budynków.</h2>
+        <h2 class="wartitle rv muted" style="--d:1.6">Więźniów zatrudniano przy poszerzaniu drogi Sokółka–Janów.</h2>
+      </div>
+      <div class="darkplan rv" style="--d:.9">
+        <svg viewBox="0 0 400 300" aria-hidden="true">
+          <path class="dp-road" d="M20,40 C120,110 240,170 386,258"/>
+          <path class="dp-zone" d="M130,180 L260,172 L276,240 L122,246 Z"/>
+          <rect class="dp-bldg" x="170" y="196" width="26" height="17"/>
+          <rect class="dp-bldg" x="222" y="208" width="28" height="17"/>
+          <text class="dp-note" x="170" y="270">kino</text>
+          <text class="dp-note" x="222" y="242">młyn</text>
+          <text class="dp-lab" x="130" y="170">getto</text>
+        </svg>
+      </div>
+    </div>
+    <p class="src">Źródła: sztetl.org.pl · dabrowa-bial.pl</p>
+  </section>
+
+  <!-- ═══ 23 · 2 LISTOPADA 1942 ═══ -->
+  <section class="slide s23" data-theme="night" data-cine>
+    <div class="grain"></div><div class="vignette"></div>
+    <div class="slide-inner">
+      <p class="warfate kicker rv" style="--d:.2">2 listopada 1942</p>
+      <h2 class="wartitle rv" style="--d:.6">Getto zlikwidowano. Ocalałych popędzono pieszo do obozu przejściowego w&nbsp;Kiełbasinie — <b>28 kilometrów</b> od Dąbrowy. Tych, którzy nie nadążali, rozstrzeliwano po drodze.</h2>
+      <div class="routebox rv" style="--d:1.2">
+        <svg viewBox="0 0 400 220" aria-hidden="true">
+          <path class="rt-line" d="M330,150 C270,140 240,120 200,112 C160,104 120,100 70,92" pathLength="1"/>
+          <circle class="rt-a" cx="330" cy="150" r="6"/>
+          <circle class="rt-b" cx="70" cy="92" r="5"/>
+          <text x="348" y="155">Dąbrowa</text>
+          <text x="30" y="76">Kiełbasin</text>
+          <text class="rt-km" x="200" y="140">28 km</text>
+          <text class="rt-t" x="200" y="190" text-anchor="middle">Potem — Treblinka.</text>
+        </svg>
+      </div>
+    </div>
+    <p class="src">Źródło: sztetl.org.pl</p>
+  </section>
+
+  <!-- ═══ 24 · SONIA ═══ -->
+  <section class="slide s24" data-theme="night" data-cine>
+    <div class="grain"></div><div class="vignette"></div>
+    <div class="slide-inner two-col">
+      <div>
+        <p class="warfate kicker rv" style="--d:.4">Ocalała tylko jedna osoba</p>
+        <h2 class="wartitle rv" style="--d:1">Z całej dąbrowskiej społeczności przeżyła tylko jedna osoba. Sonia Grabińska-Lewkowicz pracowała w obozowej pralni.</h2>
+        <h2 class="wartitle rv" style="--d:2">Była jedyną kobietą, która przeżyła zbrojne powstanie więźniów w&nbsp;Treblince w&nbsp;sierpniu 1943&nbsp;r.</h2>
+        <p class="sonia-name rv" style="--d:3.2">Sonia Grabińska-Lewkowicz</p>
+      </div>
+      <div class="portrait rv" style="--d:1.4" aria-hidden="true">
+        <svg viewBox="0 0 300 360">
+          <path d="M150,66 a52,58 0 0 1 52,58 v22 a52,58 0 0 1 -104,0 v-22 a52,58 0 0 1 52,-58 Z"/>
+          <path d="M62,330 c8,-64 44,-92 88,-92 s80,28 88,92"/>
+          <path d="M98,96 c0,-40 32,-58 52,-58 s52,18 52,58" opacity=".5"/>
+        </svg>
+        <small>sylweta — miejsce na zdjęcie</small>
+      </div>
+    </div>
+    <p class="src">Źródło: sztetl.org.pl</p>
+  </section>
+
+  <!-- ═══ 25 · MIEJSCA PAMIĘCI ═══ -->
+  <section class="slide s25" data-theme="paper">
+    <div class="slide-inner">
+      <p class="kicker rv" style="--d:.1">Rozdział · Pamięć</p>
+      <h2 class="title rv" style="--d:.2">Miejsca pamięci</h2>
+      <p class="lead muted rv" style="--d:.3">Pomniki i miejsca pamięci w Dąbrowie Białostockiej — materiał zostanie uzupełniony po zebraniu źródeł (portal miasta / gmina).</p>
+      <div class="memorial-row">
+        <div class="mslot rv" style="--d:.5"><svg viewBox="0 0 300 200"><rect x="130" y="40" width="40" height="110"/><path d="M110,150 h80 M100,166 h100"/></svg><small>miejsce na zdjęcie pomnika</small></div>
+        <div class="mslot rv" style="--d:.8"><svg viewBox="0 0 300 200"><rect x="60" y="90" width="70" height="60"/><path d="M60,90 L95,60 L130,90 M130,150 h-70"/></svg><small>miejsce na zdjęcie tablicy</small></div>
+        <div class="mslot rv" style="--d:1.1"><svg viewBox="0 0 300 200"><circle cx="150" cy="95" r="34"/><path d="M150,129 v40 M110,169 h80"/></svg><small>miejsce na zdjęcie obelisku</small></div>
+      </div>
+    </div>
+    <p class="src">Źródło: do uzupełnienia — blok F</p>
+  </section>
+
+  <!-- ═══ 26 · CO ZOSTAŁO ═══ -->
+  <section class="slide s26" data-theme="paper">
+    <div class="slide-inner">
+      <p class="kicker rv" style="--d:.1">Rozdział · Pamięć</p>
+      <h2 class="title rv" style="--d:.2">Co zostało</h2>
+      <p class="lead rv" style="--d:.3">Po dąbrowskich Żydach zostały macewy na kirkucie — i&nbsp;pamięć.</p>
+      <div class="compare rv" style="--d:.5">
+        <div class="cmp-layer cmp-then">
+          <svg viewBox="0 0 800 340" preserveAspectRatio="xMidYMid slice"><rect width="800" height="340" fill="#e2d8bd"/><g fill="none" stroke="#8a7d5f" stroke-width="3"><path d="M120,300 v-120 a26,26 0 0 1 52,0 v120"/><path d="M250,300 v-150 a30,30 0 0 1 60,0 v150"/><path d="M420,300 v-100 a24,24 0 0 1 48,0 v100"/><path d="M560,300 v-140 a28,28 0 0 1 56,0 v140"/><path d="M690,300 v-90 a20,20 0 0 1 40,0 v90"/></g><path d="M60,300 H760" stroke="#8a7d5f" stroke-width="2"/></svg>
+          <span class="cmp-tag">wtedy</span>
+        </div>
+        <div class="cmp-layer cmp-now">
+          <svg viewBox="0 0 800 340" preserveAspectRatio="xMidYMid slice"><rect width="800" height="340" fill="#d7d3c6"/><g fill="none" stroke="#7f7a6d" stroke-width="3"><rect x="90" y="120" width="150" height="130"/><rect x="300" y="90" width="180" height="160"/><rect x="540" y="130" width="150" height="120"/></g><path d="M60,250 H760" stroke="#9a958a" stroke-width="4"/><g stroke="#9a958a" stroke-width="2" fill="none"><path d="M400,250 v-40 m-40,40 a40,40 0 0 1 80,0"/></g></svg>
+          <span class="cmp-tag cmp-tag-r">dziś</span>
+        </div>
+        <input type="range" id="cmp-range" min="0" max="100" value="50" aria-label="Porównaj: wtedy i dziś">
+      </div>
+    </div>
+    <p class="src">Źródła: sztetl.org.pl · Wikipedia — zdjęcia do uzupełnienia</p>
+  </section>
+
+  <!-- ═══ 27 · REKONSTRUKCJA 3D ═══ -->
+  <section class="slide s27" data-theme="paper">
+    <div class="slide-inner two-col">
+      <div>
+        <p class="kicker rv" style="--d:.1">Rozdział · Pamięć</p>
+        <h2 class="title rv" style="--d:.2">Rekonstrukcja 3D</h2>
+        <p class="lead rv" style="--d:.35">Poglądowa rekonstrukcja synagogi z&nbsp;1874&nbsp;r. Oryginał stał nad rzeką — zniszczony w&nbsp;czasie II&nbsp;wojny.</p>
+        <p class="lead muted rv" style="--d:.55">Model obraca się myszą — przestrzeń do wstawienia rekonstrukcji (Blok&nbsp;E).</p>
+      </div>
+      <div class="mod3d rv" style="--d:.5">
+        <div class="cube" aria-hidden="true">
+          <i class="cf1"></i><i class="cf2"></i><i class="cf3"></i><i class="cf4"></i><i class="cf5"></i><i class="cf6"></i>
+        </div>
+        <small class="illus-note">rekonstrukcja poglądowa</small>
+      </div>
+    </div>
+    <p class="src">Źródło: sztetl.org.pl</p>
+  </section>
+
+  <!-- ═══ 28 · DLACZEGO PAMIĘTAMY ═══ -->
+  <section class="slide s28" data-theme="paper">
+    <div class="warm" aria-hidden="true"></div>
+    <div class="slide-inner">
+      <p class="kicker rv" style="--d:.2">Cel pracy</p>
+      <h2 class="title rv" style="--d:.4">Celem tej pracy jest upamiętnienie. Bo pamiętać — to obowiązek żywych.</h2>
+      <p class="quote rv" style="--d:.9">„Dzisiaj w Dąbrowie nie ma już sztetla. Ale są macewy. Są nazwy ulic. I&nbsp;jest nasza pamięć."</p>
+      <div class="candles" aria-hidden="true"><i></i><i></i><i></i></div>
+    </div>
+  </section>
+
+  <!-- ═══ 29 · ŹRÓDŁA ═══ -->
+  <section class="slide s29" data-theme="paper">
+    <div class="slide-inner">
+      <p class="kicker rv" style="--d:.1">Dokumentacja</p>
+      <h2 class="title rv" style="--d:.2">Źródła</h2>
+      <ol class="sources rv" style="--d:.4">
+        <li><a href="https://sztetl.org.pl/pl/miejscowosci/d/1040-dabrowa-bialostocka/99-historia-spolecznosci/137224-historia-spolecznosci" target="_blank" rel="noopener">Wirtualny Sztetl (POLIN) — historia społeczności Dąbrowy Białostockiej</a></li>
+        <li><a href="https://sztetl.org.pl/pl/miejscowosci/d/1040-dabrowa-bialostocka/114-cmentarze/10991-cmentarz-zydowski-w-dabrowie-bialostockiej-ul-jana-pawla-ii" target="_blank" rel="noopener">Wirtualny Sztetl — cmentarz żydowski, ul. Jana Pawła II</a></li>
+        <li><a href="https://pl.wikipedia.org/wiki/D%C4%85browa_Bia%C5%82ostocka" target="_blank" rel="noopener">Wikipedia — Dąbrowa Białostocka</a></li>
+        <li><a href="https://pl.wikipedia.org/wiki/Cmentarz_%C5%BCydowski_w_D%C4%85browie_Bia%C5%82ostockiej" target="_blank" rel="noopener">Wikipedia — Cmentarz żydowski w Dąbrowie Białostockiej</a></li>
+        <li><a href="https://dabrowabial.pl/history-s5820" target="_blank" rel="noopener">Portal miasta — historia (dabrowabial.pl)</a> · <a href="https://www.dabrowa-bial.pl/strona-3314-drugi_poziom_b.html" target="_blank" rel="noopener">dabrowa-bial.pl</a></li>
+        <li><a href="https://www.jewishgen.org/yizkor/Dabrowa_Bialostocka/dab014.html" target="_blank" rel="noopener">JewishGen — Yizkor „Dubrowa"</a></li>
+        <li><a href="https://www.jewishbialystok.pl/D%C4%85browa-Bia%C5%82ostocka--Wielka-synagoga,5421,250" target="_blank" rel="noopener">Jewish Białystok — Wielka synagoga</a></li>
+      </ol>
+      <p class="lead muted rv" style="--d:.6">Literatura: księga pamięci „Dubrowa" (Yizkor). Pełna lista ze zrzutami stron — w załączonym dokumencie PDF.</p>
+    </div>
+  </section>
+
+  <!-- ═══ 30 · DĄBROWA PAMIĘTA ═══ -->
+  <section class="slide s30" data-theme="night" data-cine>
+    <div class="grain"></div><div class="vignette"></div>
+    <div class="slide-inner">
+      <div class="hexstar rv" style="--d:.6" aria-hidden="true">
+        <svg viewBox="0 0 600 380">
+          <g class="hx-lines">
+            <path d="M300,60 L205,220 L395,220 Z"/>
+            <path d="M395,140 L205,140 L300,300 Z"/>
+          </g>
+          <g class="hx-dots">
+            <circle cx="300" cy="60" style="--i:0"/><circle cx="395" cy="140" style="--i:1"/><circle cx="395" cy="220" style="--i:2"/>
+            <circle cx="300" cy="300" style="--i:3"/><circle cx="205" cy="220" style="--i:4"/><circle cx="205" cy="140" style="--i:5"/>
+            <circle class="hx-core" cx="300" cy="180"/>
+          </g>
+        </svg>
+      </div>
+      <h2 class="finale rv" style="--d:2.6">Dąbrowa pamięta.</h2>
+      <button id="btn-again" class="rv" style="--d:3.4">Powrót do historii</button>
+    </div>
+  </section>
+
+</div>
+
+<!-- letterbox kinematyki -->
+<div class="lbx top"></div><div class="lbx bot"></div>
+<!-- błysk przejścia -->
+<div id="flash"></div>
+
+<!-- HUD -->
+<div id="hud">
+  <div id="progress"><div id="progress-bar"></div></div>
+  <div id="counter"><b>01</b> / 30</div>
+  <button id="home-btn" aria-label="Menu — wybierz wątek">◈ Menu</button>
+  <button id="fs-btn" aria-label="Pełny ekran (F)">⛶</button>
+  <button id="snd-btn" aria-label="Dźwięk (M)">🔊</button>
+  <button id="nav-prev" class="nav-btn" aria-label="Poprzedni slajd (←)">‹</button>
+  <button id="nav-next" class="nav-btn" aria-label="Następny slajd (→)">›</button>
+</div>
+
+<script src="js/three.min.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/main.js"></script>
+<script src="js/brain.js"></script>
+<script src="js/maps.js"></script>
+<script src="js/content.js"></script>
+<script src="js/final.js"></script>
+</body>
+</html>
